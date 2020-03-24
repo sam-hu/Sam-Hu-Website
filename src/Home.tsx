@@ -4,22 +4,29 @@ import './Home.scss';
 import { spotifyData } from './spotify';
 // import { recommends } from './recommends';
 
-const divStyle = {
+const spotifyStyle = {
     fontSize: 48 + 'px',
     color: '#1DB954',
     textDecoration: 'underline',
+}
+
+const oktaStyle = {
+    fontSize: 18 + 'px',
+    color: '#007DC1',
+    textDecoration: 'underline',
 };
 
-var spotify =<a style={divStyle} target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/1247031860">Spotify</a>;
+var spotify =<a style={spotifyStyle} target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/1247031860">Spotify</a>;
+var okta =<a style={oktaStyle} target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
+
 
 const Home = function Home(props: { start: Function }) {
     return <div id="home">
         <header>
             <section id="info">
                 <h1>Hey, I'm Sam</h1>
-                <p>I’m a Computer Science Senior at Cornell and 2019 Kleiner Perkins Engineering Fellow.
-                    The last two summers, I've worked on Slack’s Product Security team.
-                    I’m interested in weird music, modern board games, interesting podcasts, and oxford commas.
+                <p>I graduated from Cornell University in December 2019 with a double major in computer science and economics.
+                    Currently, I'm employed as a remote software engineer at {okta}. I listen to hip hop, ski, snowboard, and referee soccer.
                 </p>
                 <ul>
                     <li><a target="_blank" rel="noopener noreferrer" href="/Sam-Hu-Resume.pdf">Resume</a></li>
