@@ -22,7 +22,7 @@ const Home = function Home(props: { start: Function }) {
                     I’m interested in weird music, modern board games, interesting podcasts, and oxford commas.
                 </p>
                 <ul>
-                    <li><a target="_blank" rel="noopener noreferrer" href="/Resume.pdf">Resume</a></li>
+                    <li><a target="_blank" rel="noopener noreferrer" href="/Sam-Hu-Resume.pdf">Resume</a></li>
                     <li><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/sam-hu">LinkedIn</a></li>
                     <li><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/_samhu_/">Instagram</a></li>
                     <li><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/samhuuu">Facebook</a></li>
