@@ -137,6 +137,11 @@ header {
         margin-bottom: 0;
         text-shadow: 0 0 5px black;
     }
+    .spotifyText {
+        font-size: 48px;
+        color: '#1DB954';
+        text-decoration: 'underline';
+    }
     p {
         font-size: 28px;
         margin-top: 10px;
@@ -162,7 +167,6 @@ header {
             transition: all 0.2s cubic-bezier(0.6, 0.15, 0.43, 1.53);
             box-shadow: 0 0 20px 2px black;
             user-select: none;
-            // --color: #b1b0b0;
             --hover: #adadad;
         }
         img:hover {
@@ -304,6 +308,9 @@ footer {
             font-size: 32px;
             margin-left: 32px;
         }
+        .spotifyText {
+            font-size: 32px;
+        }
         p {
             font-size: 14px;
         }
@@ -313,16 +320,6 @@ footer {
         }
     }
 
-    #recommends {
-        padding: 0 5% 100px;
-        h2 {
-            font-size: 48px;
-        }
-        .source,
-        .title {
-            font-size: 18px;
-        }
-    }
     footer {
         padding-left: 5%;
     }
