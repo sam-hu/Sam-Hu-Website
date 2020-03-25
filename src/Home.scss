@@ -207,7 +207,7 @@ header {
 
 #timeline {
     padding: 60px 0;
-    background: #E3E3E3;
+    background: rgb(241, 241, 241);
     background-size: cover;
     // color: white;
     // width: 110%;
@@ -215,6 +215,12 @@ header {
     // left: -5%;
     position: relative;
     min-height: 800px;
+    h2 {
+        font-family: 'Source Serif Pro', serif;
+        text-align: center;
+        font-size: 48px;
+        margin-bottom: 12px;
+    }
 }
 
 .timelineBubble {
