@@ -16,9 +16,9 @@
 .vertical-timeline::before{
     content:'';
     position:absolute;
-    top:003c66;
-    left:27px;
-    height:98%;
+    top:90px;
+    left:55px;
+    height:95%;
     width:4px;
     background:#003c66
 }
@@ -33,7 +33,7 @@
 }
 .vertical-timeline-element{
     position:relative;
-    margin:2em 0
+    margin:2em 27px
 }
 .vertical-timeline-element>div{
     min-height:1px
@@ -67,17 +67,17 @@
     width:60px;
     height:60px;
     border-radius:50%;
-    box-shadow:0 0 0 4px #fff,inset 0 2px 0 rgba(0,0,0,.08),0 3px 0 4px rgba(0,0,0,.05)
+    box-shadow:0 0 0 4px rgb(255, 255, 255),inset 0 2px 0 rgba(0,0,0,.15),0 3px 0 4px rgba(0,0,0,.25)
 }
 .vertical-timeline-element-icon svg{
     display:block;
-    width:40px;
-    height:40px;
+    width:42px;
+    height:42px;
     position:relative;
     left:50%;
     top:50%;
-    margin-left:-20px;
-    margin-top:-19px
+    margin-left:-21px;
+    margin-top:-21px
 }
 @media only screen and (min-width:1170px){
     .vertical-timeline--two-columns .vertical-timeline-element-icon{
@@ -96,9 +96,9 @@
 }
 .vertical-timeline--animate .vertical-timeline-element-icon.bounce-in{
     visibility:visible;
-    -webkit-animation:cd-bounce-1 .6s;
-    -moz-animation:cd-bounce-1 .6s;
-    animation:cd-bounce-1 .6s
+    -webkit-animation:cd-bounce-1 .8s;
+    -moz-animation:cd-bounce-1 .8s;
+    animation:cd-bounce-1 .8s
 }
 @-webkit-keyframes cd-bounce-1{
     0%{
@@ -157,7 +157,7 @@
     background:#fff;
     border-radius:.25em;
     padding:1em;
-    box-shadow:0 3px 0 #ddd
+    box-shadow:0 3px 0 #ccc
 }
 .vertical-timeline-element--no-children .vertical-timeline-element-content{
     background:0 0;
@@ -261,23 +261,23 @@
 }
 .vertical-timeline--animate .vertical-timeline-element-content.bounce-in{
     visibility:visible;
-    -webkit-animation:cd-bounce-2 .6s;
-    -moz-animation:cd-bounce-2 .6s;
-    animation:cd-bounce-2 .6s
+    -webkit-animation:cd-bounce-2 .8s;
+    -moz-animation:cd-bounce-2 .8s;
+    animation:cd-bounce-2 .8s
 }
 @media only screen and (min-width:1170px){
     .vertical-timeline--two-columns.vertical-timeline--animate .vertical-timeline-element.vertical-timeline-element--right .vertical-timeline-element-content.bounce-in,.vertical-timeline--two-columns.vertical-timeline--animate .vertical-timeline-element:nth-child(even):not(.vertical-timeline-element--left) .vertical-timeline-element-content.bounce-in{
-        -webkit-animation:cd-bounce-2-inverse .6s;
-        -moz-animation:cd-bounce-2-inverse .6s;
-        animation:cd-bounce-2-inverse .6s
+        -webkit-animation:cd-bounce-2-inverse .8s;
+        -moz-animation:cd-bounce-2-inverse .8s;
+        animation:cd-bounce-2-inverse .8s
     }
 }
 @media only screen and (max-width:1169px){
     .vertical-timeline--animate .vertical-timeline-element-content.bounce-in{
         visibility:visible;
-        -webkit-animation:cd-bounce-2-inverse .6s;
-        -moz-animation:cd-bounce-2-inverse .6s;
-        animation:cd-bounce-2-inverse .6s
+        -webkit-animation:cd-bounce-2-inverse .8s;
+        -moz-animation:cd-bounce-2-inverse .8s;
+        animation:cd-bounce-2-inverse .8s
     }
 }
 @-webkit-keyframes cd-bounce-2{

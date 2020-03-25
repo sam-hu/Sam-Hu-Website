@@ -2,33 +2,23 @@
     box-sizing: border-box;
 }
 
-// @keyframes rotating {
-//     from {
-//         transform: rotate(0deg);
-//     }
-
-//     to {
-//         transform: rotate(360deg);
-//     }
-// }
-
-// .spinner {
-//     animation: rotating 3s cubic-bezier(0.9, 0, 0.15, 1) infinite;
-//     display: inline-block;
-// }
-// BirthLogo {
-//     viewBox="0 0 100 100" 
-// }
-
 body {
     overflow-x: hidden;
     background-color: #003c66;
 }
 
+#tv {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    background: #003c66;
+    border-radius: 0% 0% 100% 100%;
+    color: #003c66;
+}
+
 #home {
     overflow: hidden;
     background: white;
-    border-top: 12px #003c66 solid;
 
     ::selection {
         color: white;
@@ -73,7 +63,7 @@ header {
 
 #info {
     max-width: 520px;
-
+    
     h1 {
         font-family: 'Source Serif Pro', serif;
         font-weight: bold;
@@ -142,18 +132,18 @@ header {
     background-size: cover;
     color: white;
     width: 110%;
-    // transform: rotate(4.5deg);
     left: -5%;
     position: relative;
     min-height: 800px;
 
     .spotifyHeader,
     ul {
-        // transform: rotate(-4.5deg);
         padding: 0 200px;
     }
 
     h2 {
+        padding-left: 32px;
+        padding-right: 32px;
         font-size: 48px;
         margin-bottom: 0;
         text-shadow: 0 0 5px black;
@@ -349,13 +339,13 @@ footer {
         display: none;
     }
 
-    #recommends {
-        padding: 0 10% 100px;
+    // #recommends {
+    //     padding: 0 10% 100px;
 
-        h2 {
-            font-size: 64px;
-        }
-    }
+    //     h2 {
+    //         font-size: 64px;
+    //     }
+    // }
 
     footer {
         padding-left: 10%;
@@ -392,6 +382,7 @@ footer {
 
         h2 {
             font-size: 32px;
+            margin-left: 32px;
         }
 
         p {
