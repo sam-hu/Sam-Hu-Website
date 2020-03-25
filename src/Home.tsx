@@ -3,14 +3,14 @@ import { spotifyData } from './spotify';
 import MyTimeline from "./timeline";
 import './Home.scss';
 
-const okta =<a style={{fontSize:"18px", color:"#007DC1", textDecoration:"underline"}} target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
+const okta =<a style={{fontSize:"18px", color:"#007DC1", fontWeight:"bold", textDecoration:"underline"}} target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
 const spotify =<a style={{color:"#1DB954", textDecoration:"underline"}} className="spotifyText" target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/1247031860">Spotify</a>;
 
 const Home = function Home(props: { start: Function }) {
     return <div id="home">
-        <div id="tv"></div>
+        <div id="topCurve"></div>
         <header>
-            <section id="info">
+            <div id="info">
                 <h1>Hey, I'm Sam.</h1>
                 <p>I graduated from Cornell University in December 2019 with a double major in computer science and economics.
                     Currently, I'm employed as a remote software engineer at {okta}. I listen to hip hop, ski, snowboard, and referee soccer.
@@ -21,10 +21,10 @@ const Home = function Home(props: { start: Function }) {
                     <li><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/samhuuu">Facebook</a></li>
                     <li><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/_samhu_/">Instagram</a></li>
                 </ul>
-            </section>
-            <aside>
+            </div>
+            <div id="aside">
                 <img src="/Sam-Hu.png" id="profilePic" alt="Sam Hu" />
-            </aside>
+            </div>
         </header>
         <div id="spotify">
             <div className="spotifyHeader">

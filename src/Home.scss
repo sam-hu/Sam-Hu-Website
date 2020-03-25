@@ -7,13 +7,14 @@ body {
     background-color: #043050;
 }
 
-#tv {
+#topCurve {
     position: relative;
     width: 100%;
     height: 20px;
     background: #043050;
     border-radius: 0% 0% 100% 100%;
     color: #003c66;
+    box-shadow: 0 0 0 5px rgba(0,0,0,.15);
 }
 
 #home {
@@ -22,7 +23,6 @@ body {
 
     ::selection {
         color: white;
-        // Use RGBA for opaque selection BG
         background-color: #003c66
     }
 
@@ -42,7 +42,6 @@ footer {
     }
 }
 
-
 a {
     text-decoration: none;
 }
@@ -56,7 +55,7 @@ ul {
 header {
     display: flex;
     justify-content: space-around;
-    margin: 100px 0 160px;
+    margin: 100px 0 150px;
 }
 
 #info {
@@ -104,7 +103,7 @@ header {
     border-radius: 100%;
     transition: all 0.3s cubic-bezier(0.59, 0.3, 0, 2.19);
     user-select: none;
-    margin-right: 48px;
+    margin-right: 15%;
     --hover: #003c66;
 }
 
@@ -239,11 +238,14 @@ footer {
         margin-top: 40px;
     }
     #info {
+        order: 1;
         margin: auto;
         width: 90%;
     }
-    img {
-        display: none;
+    #aside {
+        order: 0;
+        margin: auto;
+        padding-bottom: 20px;
     }
     #spotify {
         width: 120%;
@@ -272,13 +274,16 @@ footer {
             grid-template-columns: repeat(4, 1fr);
         }
     }
-
-    .startButton {
-        display: none;
-    }
-
     footer {
         padding-left: 10%;
+    }
+}
+@media only screen and (max-width: 590px) {
+    #info {
+        h1 {
+            text-align: center;
+            font-size: 64px;
+        }
     }
 }
 
