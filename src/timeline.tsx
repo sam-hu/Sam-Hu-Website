@@ -19,8 +19,7 @@ class MyTimeline extends React.Component {
         <VerticalTimeline>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
-                // contentStyle={{ width: '400px', marginLeft: '80px'}}
-                // contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="1998"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<BirthIcon viewBox="0 0 150 150" />}
@@ -29,6 +28,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2001"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<PlaneIcon />}
@@ -37,6 +37,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2004"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<HouseIcon />}
@@ -45,6 +46,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2006"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<PianoIcon />}
@@ -53,6 +55,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2009"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<GradIcon />}
@@ -61,6 +64,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="Circa 2010"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<NoPianoIcon />}
@@ -69,6 +73,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2012"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<GradIcon />}
@@ -77,6 +82,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2012"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<WhistleIcon />}
@@ -85,6 +91,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2014"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<VballIcon />}
@@ -93,6 +100,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2015"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<CodeIcon />}
@@ -101,6 +109,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2016"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<GradIcon />}
@@ -109,6 +118,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2019"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#003c66' }}
                 icon={<SFIcon />}
@@ -117,6 +127,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2019"
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<CornellIcon />}
@@ -125,6 +136,7 @@ class MyTimeline extends React.Component {
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
+                contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                 date="2020"
                 iconStyle={{ background: 'rgb(98, 218, 251)', color: '#fff' }}
                 icon={<DevIcon />}
