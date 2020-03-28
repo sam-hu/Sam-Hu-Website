@@ -133,8 +133,6 @@ header {
         margin-bottom: 20px;
     }
     h2 {
-        padding-left: 32px;
-        padding-right: 32px;
         font-size: 48px;
         margin-bottom: -5px;
         text-shadow: 0 0 5px black;
@@ -304,7 +302,6 @@ footer {
     header {
         flex-direction: column;
         margin-top: 40px;
-        margin-bottom: 80px;
     }
     #aside {
         order: 0;
@@ -340,9 +337,6 @@ footer {
             height: 500px;
             width: 350px;
         }
-        h2 {
-            padding: 0;
-        }
     }
 }
 
@@ -374,7 +368,6 @@ footer {
     }
     #spotify {
         .artist {
-            width: 122px;
             img {
                 width: 75px;
                 height: 75px;
