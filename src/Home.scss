@@ -126,15 +126,17 @@ header {
     left: -5%;
     position: relative;
     min-height: 800px;
-    .spotifyHeader,
-    ul {
-        padding: 0 200px;
+    overflow: hidden;
+    .spotifyHeader
+    {
+        padding: 0 12%;
+        margin-bottom: 20px;
     }
     h2 {
         padding-left: 32px;
         padding-right: 32px;
         font-size: 48px;
-        margin-bottom: 0;
+        margin-bottom: -5px;
         text-shadow: 0 0 5px black;
     }
     .spotifyText {
@@ -148,14 +150,22 @@ header {
         text-shadow: 0 0 5px black;
         color: #ddd;
     }
-    ul {
+    .artistClass {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        padding: 0 200px;
+        grid-template-columns: repeat(5, 1fr);
+        padding-left: 170px;
+        padding-right: 0px;
+        a{
+            font-size: 18px;
+        }
+    }
+    .artistContainer {
+        float: left;
+        text-align: center;
     }
     .artist {
         justify-self: center;
-        padding: 20px 0;
+        padding: 0px 0;
         text-align: center;
         img {
             width: 100px;
@@ -163,7 +173,9 @@ header {
             border-radius: 100%;
             display: block;
             object-fit: cover;
-            margin: 20px auto;
+            margin: 24px;
+            margin-top: 32px;
+            margin-bottom: 12px;
             transition: all 0.2s cubic-bezier(0.6, 0.15, 0.43, 1.53);
             box-shadow: 0 0 20px 2px black;
             user-select: none;
@@ -179,6 +191,15 @@ header {
         color: #eae9f0;
         font-size: 22px;
         text-shadow: 0 0 5px black;
+    }
+    .playlist {
+        display: block;
+        margin: auto;
+        margin-right: 200px;
+        margin-top: 48px;
+        border-radius: 2%;
+        border-width: 0;
+        box-shadow: 0 0 20px 2px black;
     }
 }
 
@@ -221,14 +242,60 @@ footer {
     border-bottom: 1px solid white;
 }
 
-@media only screen and (max-width: 1150px) {
+@media only screen and (max-width: 1400px) {
     #spotify {
-        .spotifyHeader,
-        ul {
-            padding: 0 5%;
+        .artistClass {
+            grid-template-columns: repeat(4, 1fr);
         }
-        ul {
-            grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media only screen and (max-width: 1290px) {
+    #spotify {
+        .playlist {
+            margin-right: 170px;
+        }
+        .artistClass{
+            padding-left: 120px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    #spotify {
+        .artistClass {
+            padding-left: 120px;
+        }
+        .artist {
+            img {
+                width: 75px;
+                height: 75px;
+            }
+            a {
+                font-size: 16px;
+            }
+        }
+        .playlist {
+            margin-right: 150px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1090px) {
+    #spotify {
+        .playlist {
+            width: 300px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1025px) {
+    #spotify {
+        .artistClass {
+            padding-left: 80px;
+        }
+        .playlist {
+            margin-right: 120px;
         }
     }
 }
@@ -237,6 +304,7 @@ footer {
     header {
         flex-direction: column;
         margin-top: 40px;
+        margin-bottom: 80px;
     }
     #aside {
         order: 0;
@@ -248,35 +316,41 @@ footer {
         margin: auto;
         width: 90%;
     }
-    #spotify {
-        width: 120%;
-        left: -10%;
-        .artist {
-            img {
-                width: 100px;
-                height: 100px;
-                margin: 0 auto 10px;
-            }
-
-            a {
-                font-size: 16px;
-                color: #ddd;
-            }
-        }
-        .spotifyHeader,
-        ul {
-            padding: 0 10%;
-        }
-        p {
-            font-size: 20px;
-            color: #ddd;
-        }
-        ul {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
     footer {
         padding-left: 10%;
+    }
+    #spotify {
+        .artistContainer {
+            float: none;
+            padding: 0 10%;
+        }
+        .artistClass {
+            padding: 0 0;
+            grid-template-columns: repeat(5, 1fr);
+        }
+        .artist {
+            img {
+                margin: 0 auto 10px;
+                margin-top: 24px;
+            }
+        }
+        .playlist {
+            margin: auto;
+            margin-top: 50px;
+            height: 500px;
+            width: 350px;
+        }
+        h2 {
+            padding: 0;
+        }
+    }
+}
+
+@media only screen and (max-width: 775px) {
+    #spotify {
+        .artistClass {
+            grid-template-columns: repeat(4, 1fr);
+        }
     }
 }
 
@@ -285,14 +359,6 @@ footer {
         h1 {
             text-align: center;
             font-size: 64px;
-        }
-    }
-}
-
-@media only screen and (max-width: 460px) {
-    #info {
-        h1 {
-            font-size: 52px;
         }
     }
 }
@@ -307,10 +373,8 @@ footer {
         margin: 20px 0;
     }
     #spotify {
-        width: 140%;
-        left: -20%;
         .artist {
-            width: 75px;
+            width: 122px;
             img {
                 width: 75px;
                 height: 75px;
@@ -321,7 +385,6 @@ footer {
         }
         h2 {
             font-size: 32px;
-            margin-left: 32px;
         }
         .spotifyText {
             font-size: 32px;
@@ -329,13 +392,21 @@ footer {
         p {
             font-size: 14px;
         }
-        ul {
+        .artistClass{
             grid-template-columns: repeat(3, 1fr);
-            padding: 0 20%;
+            padding: 0 0%;
         }
     }
 
     footer {
         padding-left: 5%;
+    }
+}
+
+@media only screen and (max-width: 460px) {
+    #info {
+        h1 {
+            font-size: 52px;
+        }
     }
 }

@@ -776,46 +776,46 @@ export const spotifyData: {
         "type": "artist",
         "uri": "spotify:artist:1Bl6wpkWCQ4KVgnASpvzzA"
       },
-      {
-        "external_urls": {
-          "spotify": "https://open.spotify.com/artist/3TVXtAsR1Inumwj472S9r4"
-        },
-        "followers": {
-          "href": null,
-          "total": 45487304
-        },
-        "genres": [
-          "canadian hip hop",
-          "canadian pop",
-          "hip hop",
-          "pop rap",
-          "rap",
-          "toronto rap"
-        ],
-        "href": "https://api.spotify.com/v1/artists/3TVXtAsR1Inumwj472S9r4",
-        "id": "3TVXtAsR1Inumwj472S9r4",
-        "images": [
-          {
-            "height": 640,
-            "url": "https://i.scdn.co/image/012ecd119617ac24ab56620ace4b81735b172686",
-            "width": 640
-          },
-          {
-            "height": 320,
-            "url": "https://i.scdn.co/image/55e3fb26d67b4d71321440b3a440eecd9d8f20f7",
-            "width": 320
-          },
-          {
-            "height": 160,
-            "url": "https://i.scdn.co/image/ad10179d5f27ba77c7d6c95abd6e26f6a227e0d5",
-            "width": 160
-          }
-        ],
-        "name": "Drake",
-        "popularity": 96,
-        "type": "artist",
-        "uri": "spotify:artist:3TVXtAsR1Inumwj472S9r4"
-      }
+      // {
+      //   "external_urls": {
+      //     "spotify": "https://open.spotify.com/artist/3TVXtAsR1Inumwj472S9r4"
+      //   },
+      //   "followers": {
+      //     "href": null,
+      //     "total": 45487304
+      //   },
+      //   "genres": [
+      //     "canadian hip hop",
+      //     "canadian pop",
+      //     "hip hop",
+      //     "pop rap",
+      //     "rap",
+      //     "toronto rap"
+      //   ],
+      //   "href": "https://api.spotify.com/v1/artists/3TVXtAsR1Inumwj472S9r4",
+      //   "id": "3TVXtAsR1Inumwj472S9r4",
+      //   "images": [
+      //     {
+      //       "height": 640,
+      //       "url": "https://i.scdn.co/image/012ecd119617ac24ab56620ace4b81735b172686",
+      //       "width": 640
+      //     },
+      //     {
+      //       "height": 320,
+      //       "url": "https://i.scdn.co/image/55e3fb26d67b4d71321440b3a440eecd9d8f20f7",
+      //       "width": 320
+      //     },
+      //     {
+      //       "height": 160,
+      //       "url": "https://i.scdn.co/image/ad10179d5f27ba77c7d6c95abd6e26f6a227e0d5",
+      //       "width": 160
+      //     }
+      //   ],
+      //   "name": "Drake",
+      //   "popularity": 96,
+      //   "type": "artist",
+      //   "uri": "spotify:artist:3TVXtAsR1Inumwj472S9r4"
+      // }
     ],
     "total": 50,
     "limit": 21,
