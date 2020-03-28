@@ -14,7 +14,7 @@ const Home = function Home(props: { start: Function }) {
                 <div id="info">
                     <h1>Hey, I'm Sam.</h1>
                     <p>I graduated from Cornell University in December 2019 with a double major in computer science and economics.
-                        Currently, I'm employed as a remote software engineer at {okta}. I listen to hip hop, ski, snowboard, and referee soccer.
+                        Currently, I'm a remote software engineer at {okta}. I like to ski, snowboard, listen to hip hop, and referee soccer.
                     </p>
                     <ul>
                         <li><a target="_blank" rel="noopener noreferrer" href="/Sam-Hu-Resume.pdf">Resume</a></li>
