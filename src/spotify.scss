@@ -1,0 +1,203 @@
+#spotify {
+    padding: 60px 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/albumart.jpg');
+    background-size: cover;
+    color: white;
+    width: 110%;
+    left: -5%;
+    position: relative;
+    min-height: 800px;
+    overflow: hidden;
+    .spotifyHeader
+    {
+        padding: 0 12%;
+        margin-bottom: 20px;
+    }
+    h2 {
+        font-size: 48px;
+        margin-bottom: -5px;
+        text-shadow: 0 0 5px black;
+    }
+    .spotifyText {
+        font-size: 48px;
+        color: '#1DB954';
+        text-decoration: 'underline';
+    }
+    p {
+        font-size: 28px;
+        margin-top: 10px;
+        text-shadow: 0 0 5px black;
+        color: #ddd;
+    }
+    .artistClass {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        padding-left: 170px;
+        padding-right: 0px;
+        a{
+            font-size: 18px;
+        }
+    }
+    .artistContainer {
+        float: left;
+        text-align: center;
+    }
+    .artist {
+        justify-self: center;
+        padding: 0px 0;
+        text-align: center;
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            display: block;
+            object-fit: cover;
+            margin: 24px;
+            margin-top: 32px;
+            margin-bottom: 12px;
+            transition: all 0.2s cubic-bezier(0.6, 0.15, 0.43, 1.53);
+            box-shadow: 0 0 20px 2px black;
+            user-select: none;
+            --hover: #adadad;
+        }
+        img:hover {
+            animation: pulse 0.5s;
+            box-shadow: 0 0 0 1em rgba(#fff,0);
+        }
+
+    }
+    a {
+        color: #eae9f0;
+        font-size: 22px;
+        text-shadow: 0 0 5px black;
+    }
+    .playlist {
+        display: block;
+        margin: auto;
+        margin-right: 200px;
+        margin-top: 48px;
+        border-radius: 2%;
+        border-width: 0;
+        box-shadow: 0 0 20px 2px black;
+    }
+}
+
+@media only screen and (max-width: 1400px) {
+    #spotify {
+        .artistClass {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
+@media only screen and (max-width: 1290px) {
+    #spotify {
+        .playlist {
+            margin-right: 170px;
+        }
+        .artistClass{
+            padding-left: 120px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    #spotify {
+        .artistClass {
+            padding-left: 120px;
+        }
+        .artist {
+            img {
+                width: 75px;
+                height: 75px;
+            }
+            a {
+                font-size: 16px;
+            }
+        }
+        .playlist {
+            margin-right: 150px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1090px) {
+    #spotify {
+        .playlist {
+            width: 300px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1025px) {
+    #spotify {
+        .artistClass {
+            padding-left: 80px;
+        }
+        .playlist {
+            margin-right: 120px;
+        }
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    #spotify {
+        .artistContainer {
+            float: none;
+            padding: 0 10%;
+        }
+        .artistClass {
+            padding: 0 0;
+            grid-template-columns: repeat(5, 1fr);
+        }
+        .artist {
+            img {
+                margin: 0 auto 10px;
+                margin-top: 24px;
+            }
+        }
+        .playlist {
+            margin: auto;
+            margin-top: 50px;
+            height: 500px;
+            width: 400px;
+        }
+    }
+}
+
+@media only screen and (max-width: 775px) {
+    #spotify {
+        .artistClass {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    #spotify {
+        .artist {
+            img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+        .spotifyHeader {
+            padding: 0 12%;
+        }
+        h2 {
+            font-size: 32px;
+        }
+        .spotifyText {
+            font-size: 32px;
+        }
+        p {
+            font-size: 14px;
+        }
+        .artistClass{
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .playlist {
+            width: 300px;
+        }
+    }
+}
