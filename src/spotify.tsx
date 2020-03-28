@@ -220,43 +220,38 @@ export const spotifyData: {
       },
       {
         "external_urls": {
-          "spotify": "https://open.spotify.com/artist/0huGjMyP507tBCARyzSkrv"
+          "spotify": "https://open.spotify.com/artist/0Y5tJX1MQlPlqiwlOH1tJY"
         },
         "followers": {
           "href": null,
-          "total": 981142
+          "total": 8381226
         },
         "genres": [
-          "dmv rap",
-          "hip hop",
-          "rap",
-          "trap",
-          "underground hip hop",
-          "vapor trap"
+          "rap"
         ],
-        "href": "https://api.spotify.com/v1/artists/0huGjMyP507tBCARyzSkrv",
-        "id": "0huGjMyP507tBCARyzSkrv",
+        "href": "https://api.spotify.com/v1/artists/0Y5tJX1MQlPlqiwlOH1tJY",
+        "id": "0Y5tJX1MQlPlqiwlOH1tJY",
         "images": [
           {
             "height": 640,
-            "url": "https://i.scdn.co/image/00e6df3101796044c8d89b7c8e57ede911828ab6",
+            "url": "https://i.scdn.co/image/fec51156ed94b7ee30fbd4c7fd29b4a840e7daec",
             "width": 640
           },
           {
             "height": 320,
-            "url": "https://i.scdn.co/image/3e63992c2aafe3b9bf72e84a3d032475af60df69",
+            "url": "https://i.scdn.co/image/67497c55a766af3f57860c88562314a313fc137c",
             "width": 320
           },
           {
             "height": 160,
-            "url": "https://i.scdn.co/image/9387a75211a8a6e9195c1dd676b00cd0e48ccbc6",
+            "url": "https://i.scdn.co/image/d7a58203669d00936dd5b89ba6f6e192c119532d",
             "width": 160
           }
         ],
-        "name": "YBN Cordae",
-        "popularity": 73,
+        "name": "Travis Scott",
+        "popularity": 93,
         "type": "artist",
-        "uri": "spotify:artist:0huGjMyP507tBCARyzSkrv"
+        "uri": "spotify:artist:0Y5tJX1MQlPlqiwlOH1tJY"
       },
       {
         "external_urls": {
@@ -299,6 +294,46 @@ export const spotifyData: {
       },
       {
         "external_urls": {
+          "spotify": "https://open.spotify.com/artist/0huGjMyP507tBCARyzSkrv"
+        },
+        "followers": {
+          "href": null,
+          "total": 981142
+        },
+        "genres": [
+          "dmv rap",
+          "hip hop",
+          "rap",
+          "trap",
+          "underground hip hop",
+          "vapor trap"
+        ],
+        "href": "https://api.spotify.com/v1/artists/0huGjMyP507tBCARyzSkrv",
+        "id": "0huGjMyP507tBCARyzSkrv",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/00e6df3101796044c8d89b7c8e57ede911828ab6",
+            "width": 640
+          },
+          {
+            "height": 320,
+            "url": "https://i.scdn.co/image/3e63992c2aafe3b9bf72e84a3d032475af60df69",
+            "width": 320
+          },
+          {
+            "height": 160,
+            "url": "https://i.scdn.co/image/9387a75211a8a6e9195c1dd676b00cd0e48ccbc6",
+            "width": 160
+          }
+        ],
+        "name": "YBN Cordae",
+        "popularity": 73,
+        "type": "artist",
+        "uri": "spotify:artist:0huGjMyP507tBCARyzSkrv"
+      }, 
+      {
+        "external_urls": {
           "spotify": "https://open.spotify.com/artist/1Xyo4u8uXC1ZmMpatF05PJ"
         },
         "followers": {
@@ -333,41 +368,6 @@ export const spotifyData: {
         "popularity": 96,
         "type": "artist",
         "uri": "spotify:artist:1Xyo4u8uXC1ZmMpatF05PJ"
-      },
-      {
-        "external_urls": {
-          "spotify": "https://open.spotify.com/artist/0Y5tJX1MQlPlqiwlOH1tJY"
-        },
-        "followers": {
-          "href": null,
-          "total": 8381226
-        },
-        "genres": [
-          "rap"
-        ],
-        "href": "https://api.spotify.com/v1/artists/0Y5tJX1MQlPlqiwlOH1tJY",
-        "id": "0Y5tJX1MQlPlqiwlOH1tJY",
-        "images": [
-          {
-            "height": 640,
-            "url": "https://i.scdn.co/image/fec51156ed94b7ee30fbd4c7fd29b4a840e7daec",
-            "width": 640
-          },
-          {
-            "height": 320,
-            "url": "https://i.scdn.co/image/67497c55a766af3f57860c88562314a313fc137c",
-            "width": 320
-          },
-          {
-            "height": 160,
-            "url": "https://i.scdn.co/image/d7a58203669d00936dd5b89ba6f6e192c119532d",
-            "width": 160
-          }
-        ],
-        "name": "Travis Scott",
-        "popularity": 93,
-        "type": "artist",
-        "uri": "spotify:artist:0Y5tJX1MQlPlqiwlOH1tJY"
       },
       {
         "external_urls": {
@@ -445,43 +445,6 @@ export const spotifyData: {
       },
       {
         "external_urls": {
-          "spotify": "https://open.spotify.com/artist/6U3ybJ9UHNKEdsH7ktGBZ7"
-        },
-        "followers": {
-          "href": null,
-          "total": 481194
-        },
-        "genres": [
-          "hip hop",
-          "rap",
-          "underground hip hop"
-        ],
-        "href": "https://api.spotify.com/v1/artists/6U3ybJ9UHNKEdsH7ktGBZ7",
-        "id": "6U3ybJ9UHNKEdsH7ktGBZ7",
-        "images": [
-          {
-            "height": 640,
-            "url": "https://i.scdn.co/image/462cd021c5357436b923c28759e4424b659f403a",
-            "width": 640
-          },
-          {
-            "height": 320,
-            "url": "https://i.scdn.co/image/90c88feaab7e615252c4a35a69f12146c1ecb242",
-            "width": 320
-          },
-          {
-            "height": 160,
-            "url": "https://i.scdn.co/image/850355b6dd218765cff30856442660d15d04c22e",
-            "width": 160
-          }
-        ],
-        "name": "JID",
-        "popularity": 74,
-        "type": "artist",
-        "uri": "spotify:artist:6U3ybJ9UHNKEdsH7ktGBZ7"
-      },
-      {
-        "external_urls": {
           "spotify": "https://open.spotify.com/artist/5eIbEEQnDM8yuDVB0bimSP"
         },
         "followers": {
@@ -518,6 +481,43 @@ export const spotifyData: {
         "popularity": 67,
         "type": "artist",
         "uri": "spotify:artist:5eIbEEQnDM8yuDVB0bimSP"
+      },
+      {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/artist/6U3ybJ9UHNKEdsH7ktGBZ7"
+        },
+        "followers": {
+          "href": null,
+          "total": 481194
+        },
+        "genres": [
+          "hip hop",
+          "rap",
+          "underground hip hop"
+        ],
+        "href": "https://api.spotify.com/v1/artists/6U3ybJ9UHNKEdsH7ktGBZ7",
+        "id": "6U3ybJ9UHNKEdsH7ktGBZ7",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/462cd021c5357436b923c28759e4424b659f403a",
+            "width": 640
+          },
+          {
+            "height": 320,
+            "url": "https://i.scdn.co/image/90c88feaab7e615252c4a35a69f12146c1ecb242",
+            "width": 320
+          },
+          {
+            "height": 160,
+            "url": "https://i.scdn.co/image/850355b6dd218765cff30856442660d15d04c22e",
+            "width": 160
+          }
+        ],
+        "name": "JID",
+        "popularity": 74,
+        "type": "artist",
+        "uri": "spotify:artist:6U3ybJ9UHNKEdsH7ktGBZ7"
       },
       {
         "external_urls": {
@@ -635,42 +635,6 @@ export const spotifyData: {
       },
       {
         "external_urls": {
-          "spotify": "https://open.spotify.com/artist/21mKp7DqtSNHhCAU2ugvUw"
-        },
-        "followers": {
-          "href": null,
-          "total": 1098776
-        },
-        "genres": [
-          "chillwave",
-          "ninja"
-        ],
-        "href": "https://api.spotify.com/v1/artists/21mKp7DqtSNHhCAU2ugvUw",
-        "id": "21mKp7DqtSNHhCAU2ugvUw",
-        "images": [
-          {
-            "height": 640,
-            "url": "https://i.scdn.co/image/2d45e04208b55f434f31c6a46ee33e1693d23a9b",
-            "width": 640
-          },
-          {
-            "height": 320,
-            "url": "https://i.scdn.co/image/881192d40935946e36d534e24a3df821579c5b83",
-            "width": 320
-          },
-          {
-            "height": 160,
-            "url": "https://i.scdn.co/image/356807bedf0d04859ace330d8e6bcf0c52c40cce",
-            "width": 160
-          }
-        ],
-        "name": "ODESZA",
-        "popularity": 73,
-        "type": "artist",
-        "uri": "spotify:artist:21mKp7DqtSNHhCAU2ugvUw"
-      },
-      {
-        "external_urls": {
           "spotify": "https://open.spotify.com/artist/5MbNzCW3qokGyoo9giHA3V"
         },
         "followers": {
@@ -706,6 +670,42 @@ export const spotifyData: {
         "popularity": 72,
         "type": "artist",
         "uri": "spotify:artist:5MbNzCW3qokGyoo9giHA3V"
+      },
+      {
+        "external_urls": {
+          "spotify": "https://open.spotify.com/artist/21mKp7DqtSNHhCAU2ugvUw"
+        },
+        "followers": {
+          "href": null,
+          "total": 1098776
+        },
+        "genres": [
+          "chillwave",
+          "ninja"
+        ],
+        "href": "https://api.spotify.com/v1/artists/21mKp7DqtSNHhCAU2ugvUw",
+        "id": "21mKp7DqtSNHhCAU2ugvUw",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/2d45e04208b55f434f31c6a46ee33e1693d23a9b",
+            "width": 640
+          },
+          {
+            "height": 320,
+            "url": "https://i.scdn.co/image/881192d40935946e36d534e24a3df821579c5b83",
+            "width": 320
+          },
+          {
+            "height": 160,
+            "url": "https://i.scdn.co/image/356807bedf0d04859ace330d8e6bcf0c52c40cce",
+            "width": 160
+          }
+        ],
+        "name": "ODESZA",
+        "popularity": 73,
+        "type": "artist",
+        "uri": "spotify:artist:21mKp7DqtSNHhCAU2ugvUw"
       },
       {
         "external_urls": {
