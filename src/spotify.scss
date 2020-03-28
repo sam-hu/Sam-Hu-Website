@@ -17,6 +17,7 @@
         font-size: 48px;
         margin-bottom: -5px;
         text-shadow: 0 0 5px black;
+        padding-left: 4%;
     }
     .spotifyText {
         font-size: 48px;
@@ -80,6 +81,22 @@
         border-width: 0;
         box-shadow: 0 0 20px 2px black;
     }
+    #musicContainer {
+        max-width: 1920px;
+        display: flex;
+        margin: auto;
+    }
+}
+
+@media only screen and (min-width: 1575px) {
+    #spotify {
+        .artistClass {
+            padding-left: 200px;
+        }
+        .playlist {
+            margin-right: 14%;
+        }
+    }
 }
 
 @media only screen and (max-width: 1400px) {
@@ -142,6 +159,9 @@
 
 @media only screen and (max-width: 960px) {
     #spotify {
+        h2 {
+            padding: 0;
+        }
         .artistContainer {
             float: none;
             padding: 0 10%;

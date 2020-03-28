@@ -31,20 +31,22 @@ const Home = function Home(props: { start: Function }) {
             <div className="spotifyHeader">
                 <h2>Here's what I listen to on {spotify}</h2>
             </div>
-            <div className="artistContainer">
-                <ul className="artistClass">
-                    {spotifyData.items.map((artist, i) => {
-                        if (document.body.clientWidth > 550 || i < 12) {
-                            return (<li className="artist" key={artist.id}>
-                                <a target="_blank" rel="noopener noreferrer" href={artist.uri}>
-                                    <img src={artist.images[1].url} alt="" />
-                                {artist.name}</a>
-                            </li>)
-                        }
-                    })}
-                </ul>
+            <div id="musicContainer">
+                <div className="artistContainer">
+                    <ul className="artistClass">
+                        {spotifyData.items.map((artist, i) => {
+                            if (document.body.clientWidth > 550 || i < 12) {
+                                return (<li className="artist" key={artist.id}>
+                                    <a target="_blank" rel="noopener noreferrer" href={artist.uri}>
+                                        <img src={artist.images[1].url} alt="" />
+                                    {artist.name}</a>
+                                </li>)
+                            }
+                        })}
+                    </ul>
+                </div>
+                <iframe src="https://open.spotify.com/embed/playlist/7dSBjc6YMggxd0IlgvCV9j" className="playlist" width="380" height="650" allow="encrypted-media"></iframe>
             </div>
-            <iframe src="https://open.spotify.com/embed/playlist/7dSBjc6YMggxd0IlgvCV9j" className="playlist" width="380" height="650" allow="encrypted-media"></iframe>
         </div>
         <div id="timeline">
             <h2>My timeline</h2>
