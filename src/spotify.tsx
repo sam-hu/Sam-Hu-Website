@@ -752,43 +752,40 @@ export const spotifyData: {
       },
       {
         "external_urls": {
-          "spotify": "https://open.spotify.com/artist/6nxWCVXbOlEVRexSbLsTer"
+          "spotify": "https://open.spotify.com/artist/3MZsBdqDrRTJihTHQrO6Dq"
         },
         "followers": {
           "href": null,
-          "total": 1968463
+          "total": 2377940
         },
         "genres": [
-          "australian dance",
-          "australian electropop",
-          "australian indie",
-          "downtempo",
-          "edm"
+          "alternative r&b",
+          "viral pop"
         ],
-        "href": "https://api.spotify.com/v1/artists/6nxWCVXbOlEVRexSbLsTer",
-        "id": "6nxWCVXbOlEVRexSbLsTer",
+        "href": "https://api.spotify.com/v1/artists/3MZsBdqDrRTJihTHQrO6Dq",
+        "id": "3MZsBdqDrRTJihTHQrO6Dq",
         "images": [
           {
             "height": 640,
-            "url": "https://i.scdn.co/image/b3b6a3cb62f0b31bf30c5441c0c1a5a2c5f0a013",
+            "url": "https://i.scdn.co/image/e34cd7fa36d1be67204f5bd83a8a0ef09bd89a7d",
             "width": 640
           },
           {
             "height": 320,
-            "url": "https://i.scdn.co/image/2248031fd9c23a70e17e32efc653673dc1bca83f",
+            "url": "https://i.scdn.co/image/fc92291fc2e98301bb22ee805cb7a61215d6e9ed",
             "width": 320
           },
           {
             "height": 160,
-            "url": "https://i.scdn.co/image/4de17e04084c6e1a580f8051305679ca0988abf7",
+            "url": "https://i.scdn.co/image/5386e44d5e07dc662c0d6f14c3ae9c47e8898e06",
             "width": 160
           }
         ],
-        "name": "Flume",
-        "popularity": 77,
+        "name": "Joji",
+        "popularity": 83,
         "type": "artist",
-        "uri": "spotify:artist:6nxWCVXbOlEVRexSbLsTer"
-      },
+        "uri": "spotify:artist:3MZsBdqDrRTJihTHQrO6Dq"
+      }
     ],
     "total": 50,
     "limit": 20,
