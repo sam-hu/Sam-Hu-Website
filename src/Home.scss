@@ -55,7 +55,9 @@ ul {
 header {
     display: flex;
     justify-content: space-around;
-    margin: 100px 0 150px;
+    margin: auto;
+    padding: 100px 0 150px;
+    max-width: 1920px;
 }
 
 #info {
