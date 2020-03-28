@@ -2,6 +2,7 @@ import React from 'react';
 import { spotifyData } from './spotify';
 import MyTimeline from "./timeline";
 import './Home.scss';
+import './spotify.scss';
 
 const okta =<a style={{fontSize:"18px", color:"#007DC1", fontWeight:"bold", textDecoration:"underline"}} target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
 const spotify =<a style={{color:"#1DB954", textDecoration:"underline"}} className="spotifyText" target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/1247031860">Spotify</a>;
