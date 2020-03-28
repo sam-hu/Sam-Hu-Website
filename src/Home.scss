@@ -335,7 +335,7 @@ footer {
             margin: auto;
             margin-top: 50px;
             height: 500px;
-            width: 300px;
+            width: 400px;
         }
     }
 }
@@ -388,6 +388,9 @@ footer {
         .artistClass{
             grid-template-columns: repeat(3, 1fr);
             padding: 0 0%;
+        }
+        .playlist {
+            width: 300px;
         }
     }
 
