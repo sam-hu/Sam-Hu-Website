@@ -70,6 +70,7 @@ class MyTimeline extends React.Component {
                 icon={<NoPianoIcon />}
             >
                 <h3 className="vertical-timeline-element-title">Forgot how to play piano</h3>
+                <p>That was fast</p>
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
@@ -105,7 +106,8 @@ class MyTimeline extends React.Component {
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                 icon={<CodeIcon />}
             >
-                <h3 className="vertical-timeline-element-title">Took my first coding class (shoutout to AP CS)</h3>
+                <h3 className="vertical-timeline-element-title">Took my first coding class</h3>
+                <p>Shoutout to AP Comp Sci</p>
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
@@ -123,7 +125,7 @@ class MyTimeline extends React.Component {
                 iconStyle={{ background: 'rgb(250, 250, 250)', color: '#003c66' }}
                 icon={<SFIcon />}
             >
-                <h3 className="vertical-timeline-element-title">Discovered how much I like San Francisco</h3>
+                <h3 className="vertical-timeline-element-title">Discovered San Francisco</h3>
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
@@ -141,8 +143,8 @@ class MyTimeline extends React.Component {
                 iconStyle={{ background: 'rgb(98, 218, 251)', color: '#fff' }}
                 icon={<DevIcon />}
             >
-                <h3 className="vertical-timeline-element-title">Made my first website</h3>
-                <p>Congrats on making it to the end!</p>
+                <h3 className="vertical-timeline-element-title">Made my first website (in React)</h3>
+                <p>Congrats on making it to the end</p>
             </VerticalTimelineElement>
         </VerticalTimeline>
     );}
