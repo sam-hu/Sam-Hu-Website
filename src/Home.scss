@@ -162,7 +162,8 @@ footer {
 @media only screen and (max-width: 960px) {
     header {
         flex-direction: column;
-        padding-top: 75px;
+        padding-top: 50px;
+        padding-bottom: 100px;
     }
     #aside {
         order: 0;
@@ -189,6 +190,9 @@ footer {
 }
 
 @media only screen and (max-width: 550px) {
+    header {
+        padding-bottom: 150px;
+    }
     ul {
         flex-wrap: wrap;
     }
