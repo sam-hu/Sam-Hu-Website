@@ -70,7 +70,6 @@ class MyTimeline extends React.Component {
                 icon={<NoPianoIcon />}
             >
                 <h3 className="vertical-timeline-element-title">Forgot how to play piano</h3>
-                <p>That was fast</p>
             </VerticalTimelineElement>
             <VerticalTimelineElement
                 className="vertical-timeline-element"
