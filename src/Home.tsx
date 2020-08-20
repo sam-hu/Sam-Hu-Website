@@ -1,6 +1,6 @@
 import React from 'react';
 import { spotifyData } from './spotify';
-import MyTimeline from "./timeline";
+import MyTimeline from './timeline';
 import './Home.scss';
 import './spotify.scss';
 
