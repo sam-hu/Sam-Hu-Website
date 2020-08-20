@@ -8,53 +8,62 @@
     position: relative;
     min-height: 800px;
     overflow: hidden;
-    .spotifyHeader
-    {
+
+    .spotifyHeader {
         padding-left: 150px;
         padding-right: 150px;
         margin-bottom: 20px;
         max-width: 1920px;
         margin: auto;
     }
+
     h2 {
         font-size: 48px;
         margin-bottom: -5px;
         text-shadow: 0 0 5px black;
         padding-left: 4%;
     }
+
     .spotifyText {
         font-size: 48px;
         color: '#1DB954';
         text-decoration: 'underline';
     }
+
     p {
         font-size: 28px;
         margin-top: 10px;
         text-shadow: 0 0 5px black;
         color: #ddd;
     }
+
     #musicContainer {
         max-width: 1920px;
         display: flex;
         margin: auto;
     }
+
     .artistClass {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         padding-left: 170px;
         padding-right: 0px;
-        a{
+
+        a {
             font-size: 18px;
         }
     }
+
     .artistContainer {
         float: left;
         text-align: center;
     }
+
     .artist {
         justify-self: center;
         padding: 0px 0;
         text-align: center;
+
         img {
             width: 100px;
             height: 100px;
@@ -69,17 +78,20 @@
             user-select: none;
             --hover: #adadad;
         }
+
         img:hover {
             animation: pulse 0.5s;
-            box-shadow: 0 0 0 1em rgba(#fff,0);
+            box-shadow: 0 0 0 1em rgba(#fff, 0);
         }
 
     }
+
     a {
         color: #eae9f0;
         font-size: 22px;
         text-shadow: 0 0 5px black;
     }
+
     .playlist {
         display: block;
         margin: auto;
@@ -96,6 +108,7 @@
         .artistClass {
             padding-left: 200px;
         }
+
         .playlist {
             margin-right: 14%;
         }
@@ -112,9 +125,10 @@
 
 @media only screen and (max-width: 1290px) {
     #spotify {
-        .artistClass{
+        .artistClass {
             padding-left: 120px;
         }
+
         .playlist {
             margin-right: 170px;
         }
@@ -126,15 +140,18 @@
         .artistClass {
             padding-left: 120px;
         }
+
         .artist {
             img {
                 width: 75px;
                 height: 75px;
             }
+
             a {
                 font-size: 16px;
             }
         }
+
         .playlist {
             margin-right: 150px;
         }
@@ -154,6 +171,7 @@
         .artistClass {
             padding-left: 80px;
         }
+
         .playlist {
             margin-right: 120px;
         }
@@ -165,23 +183,28 @@
         h2 {
             padding: 0;
         }
+
         #musicContainer {
             display: block;
         }
+
         .artistContainer {
             float: none;
             padding: 0 10%;
         }
+
         .artistClass {
             padding: 0 0;
             grid-template-columns: repeat(5, 1fr);
         }
+
         .artist {
             img {
                 margin: 0 auto 10px;
                 margin-top: 24px;
             }
         }
+
         .playlist {
             margin: auto;
             margin-top: 50px;
@@ -196,6 +219,7 @@
         .spotifyHeader {
             padding: 0 14%
         }
+
         .artistClass {
             grid-template-columns: repeat(4, 1fr);
         }
@@ -207,24 +231,30 @@
         .spotifyHeader {
             padding: 0 12%;
         }
+
         h2 {
             font-size: 32px;
         }
+
         .spotifyText {
             font-size: 32px;
         }
+
         p {
             font-size: 14px;
         }
-        .artistClass{
+
+        .artistClass {
             grid-template-columns: repeat(3, 1fr);
         }
+
         .artist {
             img {
                 width: 75px;
                 height: 75px;
             }
         }
+
         .playlist {
             width: 300px;
         }
