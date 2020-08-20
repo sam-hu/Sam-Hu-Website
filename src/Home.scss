@@ -1,4 +1,5 @@
 $navy: #003c66;
+$slightly_darker_navy: #043050;
 
 * {
     box-sizing: border-box;
@@ -6,14 +7,14 @@ $navy: #003c66;
 
 body {
     overflow-x: hidden;
-    background-color: #043050;
+    background-color: $slightly_darker_navy;
 }
 
 #topCurve {
     position: relative;
     width: 100%;
     height: 8px;
-    background: #043050;
+    background: $slightly_darker_navy;
     border-radius: 0% 0% 75% 75%;
     color: $navy;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
@@ -147,7 +148,7 @@ header {
 }
 
 footer {
-    background-color: #043050;
+    background-color: $slightly_darker_navy;
     width: 100%;
     color: white;
     padding: 10px 200px;

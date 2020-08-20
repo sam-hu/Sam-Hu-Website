@@ -1,18 +1,19 @@
-import React from "react";
+import React from 'react';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
-import { ReactComponent as BirthIcon } from "./assets/birth.svg"
-import { ReactComponent as PlaneIcon } from "./assets/plane.svg";
-import { ReactComponent as HouseIcon } from "./assets/house.svg";
-import { ReactComponent as PianoIcon } from "./assets/piano.svg";
-import { ReactComponent as GradIcon } from "./assets/graduation.svg";
-import { ReactComponent as NoPianoIcon } from "./assets/nopiano.svg";
-import { ReactComponent as WhistleIcon } from "./assets/whistle.svg";
-import { ReactComponent as VballIcon } from "./assets/vball.svg";
-import { ReactComponent as CodeIcon } from "./assets/code.svg";
-import { ReactComponent as SFIcon } from "./assets/sf.svg";
-import { ReactComponent as CornellIcon } from "./assets/cornell.svg";
-import { ReactComponent as DevIcon } from "./assets/react-white.svg";
-import { ReactComponent as MITIcon } from "./assets/mit.svg";
+import { ReactComponent as BirthIcon } from './assets/birth.svg'
+import { ReactComponent as PlaneIcon } from './assets/plane.svg';
+import { ReactComponent as HouseIcon } from './assets/house.svg';
+import { ReactComponent as PianoIcon } from './assets/piano.svg';
+import { ReactComponent as GradIcon } from './assets/graduation.svg';
+import { ReactComponent as NoPianoIcon } from './assets/nopiano.svg';
+import { ReactComponent as WhistleIcon } from './assets/whistle.svg';
+import { ReactComponent as VballIcon } from './assets/vball.svg';
+import { ReactComponent as CodeIcon } from './assets/code.svg';
+import { ReactComponent as SFIcon } from './assets/sf.svg';
+import { ReactComponent as CornellIcon } from './assets/cornell.svg';
+import { ReactComponent as DevIcon } from './assets/react-white.svg';
+import { ReactComponent as MITIcon } from './assets/mit.svg';
+import Emoji from './emoji'
 import './timeline.scss';
 
 class MyTimeline extends React.Component {
@@ -78,15 +79,6 @@ class MyTimeline extends React.Component {
                     contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
                     date="2012"
                     iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
-                    icon={<GradIcon />}
-                >
-                    <h3 className="vertical-timeline-element-title">Graduated from middle school</h3>
-                </VerticalTimelineElement>
-                <VerticalTimelineElement
-                    className="vertical-timeline-element"
-                    contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
-                    date="2012"
-                    iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
                     icon={<WhistleIcon />}
                 >
                     <h3 className="vertical-timeline-element-title">Certified as a USSF soccer referee</h3>
@@ -108,7 +100,7 @@ class MyTimeline extends React.Component {
                     icon={<CodeIcon />}
                 >
                     <h3 className="vertical-timeline-element-title">Took my first coding class</h3>
-                    <p>Shoutout to AP Comp Sci</p>
+                    <p>Shoutout to AP Comp Sci <Emoji symbol="🤙" /></p>
                 </VerticalTimelineElement>
                 <VerticalTimelineElement
                     className="vertical-timeline-element"
