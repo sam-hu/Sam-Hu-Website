@@ -4,8 +4,8 @@ import MyTimeline from './timeline';
 import './Home.scss';
 import './spotify.scss';
 
-const okta = <a style={{ fontSize: "18px", color: "#1662DD", fontWeight: "bold", textDecoration: "underline" }} target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
-const spotify = <a style={{ color: "#1DB954", textDecoration: "underline" }} className="spotifyText" target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/1247031860">Spotify</a>;
+const okta = <a style={{ color: "#1662DD", fontSize: "18px", fontWeight: "bold" }} className="link" target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
+const spotify = <a style={{ color: "#1DB954" }} className="spotifyText link" target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/1247031860">Spotify</a>;
 
 const Home = function Home(props: { start: Function }) {
     return <div id="home">
@@ -13,10 +13,11 @@ const Home = function Home(props: { start: Function }) {
         <header>
             <div id="info">
                 <h1>Hey, I'm Sam.</h1>
-                <p>I graduated from Cornell University in 2019 with a double major in computer science and economics.
-                        I'm currently working remotely as software engineer at {okta} until I begin my MBA at MIT Sloan.
-                        In my free time I like to ski, snowboard, listen to hip hop, and referee soccer.
-                    </p>
+                <p>
+                    I graduated from Cornell University in 2019 with a double major in computer science and economics.
+                    I'm currently working remotely as a software engineer at {okta} until I begin my MBA at MIT.
+                    In my free time I like to ski, snowboard, listen to hip hop, and referee soccer.
+                </p>
                 <ul>
                     <li><a target="_blank" rel="noopener noreferrer" href="/Sam-Hu-Resume.pdf">Resume</a></li>
                     <li><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/sam-hu">LinkedIn</a></li>
@@ -35,23 +36,26 @@ const Home = function Home(props: { start: Function }) {
             <div id="musicContainer">
                 <div className="artistContainer">
                     <ul className="artistClass">
-                        {spotifyData.items
-                            .filter((_, i) => document.body.clientWidth > 550 || i < 12)
-                            .map((artist, _) => {
-                                return (<li className="artist" key={artist.id}>
-                                    <a target="_blank" rel="noopener noreferrer" href={artist.uri}>
-                                        <img src={artist.images[1].url} alt="" />
-                                        {artist.name}</a>
-                                </li>)
-                            })}
+                        {spotifyData.items.filter((_, i) => document.body.clientWidth > 550 || i < 12).map((artist, _) => {
+                            return (<li className="artist" key={artist.id}>
+                                <a target="_blank" rel="noopener noreferrer" href={artist.uri}>
+                                    <img src={artist.images[1].url} alt="" />
+                                    {artist.name}
+                                </a>
+                            </li>)
+                        })}
                     </ul>
                 </div>
-                <iframe title="my playlist" src="https://open.spotify.com/embed/playlist/7dSBjc6YMggxd0IlgvCV9j" className="playlist" width="380" height="650" allow="encrypted-media"></iframe>
+                <iframe title="my playlist"
+                    className="playlist"
+                    src="https://open.spotify.com/embed/playlist/7dSBjc6YMggxd0IlgvCV9j"
+                    width="380" height="650" allow="encrypted-media"
+                />
             </div>
         </div>
         <div id="timeline">
             <h2>My timeline</h2>
-            <MyTimeline></MyTimeline>
+            <MyTimeline />
         </div>
         <footer>Sam Hu © 2020</footer>
     </div>;

@@ -145,7 +145,7 @@ class MyTimeline extends React.Component {
                     iconStyle={{ background: 'rgb(165, 27, 48)', color: '#fff' }}
                     icon={<MITIcon />}
                 >
-                    <h3 className="vertical-timeline-element-title">Admitted early to MIT Sloan!</h3>
+                    <h3 className="vertical-timeline-element-title">Admitted to MIT Sloan!</h3>
                 </VerticalTimelineElement>
             </VerticalTimeline>
         );
