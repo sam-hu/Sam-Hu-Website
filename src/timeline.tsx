@@ -64,6 +64,7 @@ class MyTimeline extends React.Component {
                     icon={<GradIcon />}
                 >
                     <h3 className="vertical-timeline-element-title">Graduated from elementary school</h3>
+                    <p>summa cum laude in arts & crafts</p>
                 </VerticalTimelineElement>
                 <VerticalTimelineElement
                     className="vertical-timeline-element"
@@ -137,6 +138,7 @@ class MyTimeline extends React.Component {
                     icon={<DevIcon />}
                 >
                     <h3 className="vertical-timeline-element-title">Made my first website (using React)</h3>
+                    <p>Thanks, quarantine</p>
                 </VerticalTimelineElement>
                 <VerticalTimelineElement
                     className="vertical-timeline-element"

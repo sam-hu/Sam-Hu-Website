@@ -26,7 +26,7 @@ const Home = function Home(props: { start: Function }) {
                 </ul>
             </div>
             <div id="aside">
-                <img src="/Sam-Hu.jpeg" id="profilePic" alt="Sam Hu" />
+                <img src="/Sam-Hu.png" id="profilePic" alt="Sam Hu" />
             </div>
         </header>
         <div id="spotify">

@@ -208,7 +208,12 @@
 .vertical-timeline-element-content p {
     font-size: 13px;
     font-size: .8125rem;
-    font-weight: 500
+    font-style: italic;
+    font-weight: 500;
+
+    .emoji {
+        font-style: normal;
+    }
 }
 
 .vertical-timeline-element-content .vertical-timeline-element-date {
@@ -216,7 +221,7 @@
 }
 
 .vertical-timeline-element-content p {
-    margin: 1em 0 0;
+    margin: 0.75em 0 0;
     line-height: 1.6
 }
 
