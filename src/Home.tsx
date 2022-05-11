@@ -15,7 +15,7 @@ const Home = function Home(props: { start: Function }) {
                 <h1>Hey, I'm Sam.</h1>
                 <p>
                     I graduated from Cornell University in 2019 with a double major in computer science and economics.
-                    I'm currently working remotely as a software engineer at {okta} until I begin my MBA at MIT.
+                    I'm currently working remotely as a software engineer at {okta}.
                     In my free time I like to ski, snowboard, listen to hip hop, and referee soccer.
                 </p>
                 <ul>
@@ -57,7 +57,7 @@ const Home = function Home(props: { start: Function }) {
             <h2>My timeline</h2>
             <MyTimeline />
         </div>
-        <footer>Sam Hu © 2020</footer>
+        <footer>Sam Hu © 2022</footer>
     </div>;
 }
 

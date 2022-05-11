@@ -137,8 +137,8 @@ class MyTimeline extends React.Component {
                     iconStyle={{ background: 'rgb(98, 218, 251)', color: '#fff' }}
                     icon={<DevIcon />}
                 >
-                    <h3 className="vertical-timeline-element-title">Made my first website (using React)</h3>
-                    <p>Thanks, quarantine</p>
+                    <h3 className="vertical-timeline-element-title">Made my first website in React</h3>
+                    <p>(This one)</p>
                 </VerticalTimelineElement>
                 <VerticalTimelineElement
                     className="vertical-timeline-element"
@@ -147,7 +147,7 @@ class MyTimeline extends React.Component {
                     iconStyle={{ background: 'rgb(165, 27, 48)', color: '#fff' }}
                     icon={<MITIcon />}
                 >
-                    <h3 className="vertical-timeline-element-title">Admitted to MIT Sloan!</h3>
+                    <h3 className="vertical-timeline-element-title">Admitted to MIT Sloan! (Deferred MBA)</h3>
                 </VerticalTimelineElement>
             </VerticalTimeline>
         );
