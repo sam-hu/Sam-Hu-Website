@@ -25,7 +25,8 @@
     "react-rnd": "^10.4.1",
     "react-scripts": "^5.0.1",
     "react-spotify-player": "^1.0.4",
-    "react-vertical-timeline-component": "^3.6.0"
+    "react-vertical-timeline-component": "^3.6.0",
+    "typescript": "^5.1.6"
   },
   "browserslist": {
     "production": [
