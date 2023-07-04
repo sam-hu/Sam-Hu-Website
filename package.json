@@ -1,23 +1,6 @@
 {
-  "name": "win",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@types/jest": "^24.0.15",
-    "@types/node": "^12.6.8",
-    "@types/react-dom": "^16.8.4",
-    "@types/react-vertical-timeline-component": "^2.5.0",
-    "eslint": "^6.6.0",
-    "node-sass": "^4.14.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-iframe": "^1.8.0",
-    "react-rnd": "^10.0.0",
-    "react-scripts": "^3.4.3",
-    "react-spotify-player": "^1.0.4",
-    "react-vertical-timeline-component": "^2.5.0",
-    "typescript": "^3.5.3"
-  },
+  "name": "sam-hu-website",
+  "version": "1.0.0",
   "scripts": {
     "start": "react-scripts start",
     "s": "react-scripts start",
@@ -26,14 +9,34 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jest": "^29.5.2",
+    "@types/node": "^20.3.3",
+    "@types/react-dom": "^18.2.6",
+    "@types/react-vertical-timeline-component": "^3.3.3",
+    "eslint": "^8.44.0",
+    "node": "^20.3.1",
+    "node-sass": "^7.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-iframe": "^1.8.5",
+    "react-rnd": "^10.4.1",
+    "react-scripts": "^5.0.1",
+    "react-spotify-player": "^1.0.4",
+    "react-vertical-timeline-component": "^3.6.0"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "pre-push": []
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
