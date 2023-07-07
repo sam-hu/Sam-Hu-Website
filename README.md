@@ -1,5 +1,5 @@
-# samhu.me
+# sam-hu.com
 
-Work in progress for my personal website. Credit for the original codebase goes to Ryan Slama.
+Repo for my personal website. Credit for the original codebase goes to Ryan Slama.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
