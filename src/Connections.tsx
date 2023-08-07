@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { useState } from "react";
 
 type ConnectionCategory = {
     description: string;
@@ -9,7 +9,7 @@ type ConnectionCategory = {
 type ConnectionCategories = ConnectionCategory[];
 
 const Box = ({ word, solved }: { word: string, solved: boolean }) => {
-    return <div>{word}</div>
+    return <div>{word} {solved}</div>
 }
 
 type WordState = {

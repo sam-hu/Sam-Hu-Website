@@ -1,9 +1,8 @@
-import React from 'react';
 import { spotifyData } from './spotify';
 import MyTimeline from './timeline';
 import './Home.scss';
 import './spotify.scss';
-import { WordsContainer } from './Connections';
+// import { WordsContainer } from './Connections';
 
 const found = <a style={{ color: "#1662DD", fontSize: "18px", fontWeight: "bold" }} className="link" target="_blank" rel="noopener noreferrer" href="https://found.com">Found</a>;
 const okta = <a style={{ color: "#1662DD", fontSize: "18px", fontWeight: "bold" }} className="link" target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
