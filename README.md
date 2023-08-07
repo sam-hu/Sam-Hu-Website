@@ -1,5 +1,5 @@
 # sam-hu.com
 
-Repo for my personal website. Credit for the original codebase goes to Ryan Slama.
+Repo for my personal website implemented in React + TypeScript + Vite.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+`npm install && npm run dev`
