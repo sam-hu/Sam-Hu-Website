@@ -1,43 +1,33 @@
 {
-  "name": "sam-hu-website",
-  "version": "1.0.0",
+  "name": "sam-hu-test",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "s": "react-scripts start",
-    "build": "react-scripts build",
-    "b": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@types/jest": "^29.5.2",
-    "@types/node": "^20.3.3",
-    "@types/react-dom": "^18.2.6",
-    "@types/react-vertical-timeline-component": "^3.3.3",
-    "eslint": "^8.44.0",
-    "node": "^20.3.1",
-    "node-sass": "^7.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-iframe": "^1.8.5",
-    "react-rnd": "^10.4.1",
-    "react-scripts": "^5.0.1",
     "react-spotify-player": "^1.0.4",
     "react-vertical-timeline-component": "^3.6.0",
-    "typescript": "^5.1.6"
+    "vite-plugin-svgr": "^3.2.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
+    "@typescript-eslint/parser": "^6.2.1",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "sass": "^1.64.2",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
   }
 }
