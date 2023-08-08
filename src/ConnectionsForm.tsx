@@ -50,6 +50,7 @@ const copyToClipboard = (value: string) => {
 
 export const ConnectionsForm = () => {
     const [categories, setCategories] = useState<ConnectionCategories>(defaultCategories);
+    const [copied, setCopied] = useState(false);
     const navigate = useNavigate();
 
     const validateCategories = () => {
@@ -173,14 +174,21 @@ export const ConnectionsForm = () => {
 
             <Form.Item>
                 <Button
+                    style={{ width: "256px" }}
                     onClick={() => {
+                        if (!copied) {
+                            setCopied(true);
+                            setTimeout(() => {
+                                setCopied(false);
+                            }, 2000);
+                        }
                         const jsonString = JSON.stringify(categories);
                         const encodedBase64String = encodeURIComponent(btoa(jsonString));
                         const link = `${window.location.origin}/connections?categories=${encodedBase64String}`;
                         copyToClipboard(link);
                     }}
                 >
-                    Generate link
+                    {copied ? "Copied!" : "Generate and copy link"}
                 </Button>
             </Form.Item>
 

@@ -30,7 +30,7 @@ type RecordedGuess = {
 }
 
 export const WordsContainer = ({ connections }: { connections: ConnectionCategories }) => {
-    const sortedConnections = connections.sort((a, b) => a.id - b.id);
+    const sortedConnections = connections.sort((a, b) => a.id - b.id).map((c) => ({ ...c, words: c.words.map((w) => w.toUpperCase()) }));
     const allWords: { [key: string]: WordState } = {};
     const wordArr: string[] = [];
     for (const connection of sortedConnections) {
@@ -190,20 +190,42 @@ function shuffleArray(array: string[]): string[] {
     return shuffledArray;
 }
 
+const decodeCategories = (encodedValue: string | null): ConnectionCategory[] | null => {
+    if (!encodedValue) {
+        return null;
+    }
+
+    let parsedConnections;
+    try {
+        const decodedConnections = atob(decodeURIComponent(encodedValue));
+        parsedConnections = JSON.parse(decodedConnections);
+    } catch {
+        return null;
+    }
+
+    if (!validateCategories(parsedConnections)) {
+        return null;
+    }
+
+    return parsedConnections;
+}
+
+const validateCategories = (categories: ConnectionCategory[]): boolean => {
+    return categories?.every((cat: any) => cat.id && cat.description && cat.words?.length === 4)
+}
+
 export const Test = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
 
-    let parsedConnections: ConnectionCategory[] = [];
-    const encodedValue = searchParams.get('categories');
-    if (encodedValue) {
-        const decodedValue = atob(decodeURIComponent(encodedValue));
-        parsedConnections = JSON.parse(decodedValue);
-    }
-
-    return <WordsContainer connections={
-        parsedConnections || location.state?.categories ||
-        [
+    let connections: ConnectionCategory[] = [];
+    const urlCategories = decodeCategories(searchParams.get('categories'));
+    if (urlCategories) {
+        connections = urlCategories;
+    } else if (location.state?.categories && validateCategories(location.state.categories)) {
+        connections = location.state.categories;
+    } else {
+        connections = [
             {
                 description: "test1",
                 id: 1,
@@ -225,5 +247,7 @@ export const Test = () => {
                 words: ["test13", "test14", "test15", "test16"]
             }
         ]
-    } />
+    }
+
+    return <WordsContainer connections={connections} />
 }
