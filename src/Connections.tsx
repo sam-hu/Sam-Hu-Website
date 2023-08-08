@@ -1,5 +1,7 @@
 import { Button } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useLocation } from 'react-router-dom';
+import Papa from 'papaparse';
 
 type ConnectionCategory = {
     description: string;
@@ -8,7 +10,7 @@ type ConnectionCategory = {
     solved?: boolean;
 }
 
-type ConnectionCategories = ConnectionCategory[];
+export type ConnectionCategories = ConnectionCategory[];
 
 const Box = ({ word, selected, solved, onClick }: { word: string, selected: boolean, solved: boolean, onClick: () => void }) => {
     return <Button onClick={onClick} type={selected ? "primary" : "default"} disabled={solved} style={{ height: "64px", margin: "4px" }}>
@@ -25,10 +27,6 @@ type RecordedGuess = {
     words: string[];
     correct: boolean;
     off: number
-}
-
-function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export const WordsContainer = ({ connections }: { connections: ConnectionCategories }) => {
@@ -53,10 +51,8 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
     const [selectedWords, setSelectedWords] = useState<string[]>([]);
     const [guesses, setGuesses] = useState<RecordedGuess[]>([]);
 
-    const checkIfSolved = async () => {
+    const checkIfSolved = () => {
         if (selectedWords.length === 4) {
-            await sleep(1000);
-
             const firstWord = selectedWords[0];
             const index = wordState[firstWord].index;
             const solved = selectedWords.every(word => wordState[word].index === index);
@@ -83,16 +79,27 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
 
             setGuesses([...guesses, { words: selectedWords, correct: solved, off: 0 }]);
             setSelectedWords([]);
-
-
         }
     }
 
-    useEffect(() => {
-        checkIfSolved();
-    }, [selectedWords])
+    const serializeAndDownloadCSV = () => {
+        const c = sortedConnections.map(({ description, words }) => ([description, ...words]));
+        const csv = Papa.unparse(c);
+        const blob = new Blob([csv], { type: 'text/csv' });
+
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'connections.csv';
+        link.click();
+        URL.revokeObjectURL(url);
+    };
 
     const onClick = (word: string) => {
+        if (selectedWords.length === 4) {
+            return;
+        }
+
         if (selectedWords.includes(word)) {
             setSelectedWords(selectedWords.filter(w => w !== word));
         } else {
@@ -147,20 +154,24 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 }
             </div>
 
-            <Button onClick={() => {
-                setWordOrder(shuffleArray(wordOrder));
-            }}>
+            <Button onClick={() => setWordOrder(shuffleArray(wordOrder))}>
                 Shuffle
             </Button>
 
-            <Button onClick={() => {
-                setSelectedWords([]);
-            }}>
+            <Button onClick={() => setSelectedWords([])}>
                 Deselect all
             </Button>
 
+            <Button onClick={() => checkIfSolved()}>
+                Submit
+            </Button>
+
+            <Button onClick={() => serializeAndDownloadCSV()}>
+                Export as CSV
+            </Button>
+
             {
-                guesses.map((guess, index) => <div key={index} style={{ color: guess.off === 0 ? 'green' : 'white' }}>{guess.words.join(", ")}</div>)
+                guesses.map((guess, index) => <div key={index} style={{ color: guess.correct ? 'green' : 'white' }}>{guess.words.join(", ")}</div>)
             }
         </>
     )
@@ -179,25 +190,32 @@ function shuffleArray(array: string[]): string[] {
     return shuffledArray;
 }
 
-export const Test = () => <WordsContainer connections={[
-    {
-        description: "test1",
-        id: 1,
-        words: ["test1", "test2", "test3", "test4"]
-    },
-    {
-        description: "test2",
-        id: 2,
-        words: ["test5", "test6", "test7", "test8"]
-    },
-    {
-        description: "test3",
-        id: 3,
-        words: ["test9", "test10", "test11", "test12"]
-    },
-    {
-        description: "test4",
-        id: 4,
-        words: ["test13", "test14", "test15", "test16"]
-    }
-]} />
+export const Test = () => {
+    const location = useLocation();
+
+    return <WordsContainer connections={
+        location.state?.categories ||
+        [
+            {
+                description: "test1",
+                id: 1,
+                words: ["test1", "test2", "test3", "test4"]
+            },
+            {
+                description: "test2",
+                id: 2,
+                words: ["test5", "test6", "test7", "test8"]
+            },
+            {
+                description: "test3",
+                id: 3,
+                words: ["test9", "test10", "test11", "test12"]
+            },
+            {
+                description: "test4",
+                id: 4,
+                words: ["test13", "test14", "test15", "test16"]
+            }
+        ]
+    } />
+}
