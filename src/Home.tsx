@@ -59,29 +59,6 @@ const Home = function Home() {
             <h2>My timeline</h2>
             <MyTimeline />
         </div>
-
-        {/* <WordsContainer connections={[
-            {
-                description: "test1",
-                id: 1,
-                words: ["test1", "test2", "test3", "test4"]
-            },
-            {
-                description: "test2",
-                id: 2,
-                words: ["test5", "test6", "test7", "test8"]
-            },
-            {
-                description: "test3",
-                id: 3,
-                words: ["test9", "test10", "test11", "test12"]
-            },
-            {
-                description: "test4",
-                id: 4,
-                words: ["test13", "test14", "test15", "test16"]
-            }
-        ]} /> */}
         <footer>Sam Hu © 2023</footer>
     </div>;
 }
