@@ -192,9 +192,17 @@ function shuffleArray(array: string[]): string[] {
 
 export const Test = () => {
     const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+
+    let parsedConnections: ConnectionCategory[] = [];
+    const encodedValue = searchParams.get('categories');
+    if (encodedValue) {
+        const decodedValue = atob(decodeURIComponent(encodedValue));
+        parsedConnections = JSON.parse(decodedValue);
+    }
 
     return <WordsContainer connections={
-        location.state?.categories ||
+        parsedConnections || location.state?.categories ||
         [
             {
                 description: "test1",

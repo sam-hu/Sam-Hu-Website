@@ -38,6 +38,16 @@ const formItemLayout = {
     },
 };
 
+const copyToClipboard = (value: string) => {
+    navigator.clipboard.writeText(value)
+        .then(() => {
+            console.log('Copied to clipboard:', value);
+        })
+        .catch((error) => {
+            console.error('Copy to clipboard failed:', error);
+        });
+}
+
 export const ConnectionsForm = () => {
     const [categories, setCategories] = useState<ConnectionCategories>(defaultCategories);
     const navigate = useNavigate();
@@ -158,6 +168,19 @@ export const ConnectionsForm = () => {
                     }}
                 >
                     Submit
+                </Button>
+            </Form.Item>
+
+            <Form.Item>
+                <Button
+                    onClick={() => {
+                        const jsonString = JSON.stringify(categories);
+                        const encodedBase64String = encodeURIComponent(btoa(jsonString));
+                        const link = `${window.location.origin}/connections?categories=${encodedBase64String}`;
+                        copyToClipboard(link);
+                    }}
+                >
+                    Generate link
                 </Button>
             </Form.Item>
 
