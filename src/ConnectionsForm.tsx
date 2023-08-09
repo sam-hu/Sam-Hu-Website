@@ -1,8 +1,11 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Upload } from "antd";
 import { useState } from "react";
 import { ConnectionCategories } from "./Connections";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
+import './connections.scss';
+import Title from "antd/es/typography/Title";
+import { UploadOutlined } from '@ant-design/icons';
 
 const defaultCategories: ConnectionCategories = [
     {
@@ -48,8 +51,11 @@ const copyToClipboard = (value: string) => {
         });
 }
 
+const difficulties = ["Easy", "Medium", "Hard", "Very hard"];
+
 export const ConnectionsForm = () => {
-    const [categories, setCategories] = useState<ConnectionCategories>(defaultCategories);
+    const location = useLocation();
+    const [categories, setCategories] = useState<ConnectionCategories>(location.state?.categories || defaultCategories);
     const [copied, setCopied] = useState(false);
     const navigate = useNavigate();
 
@@ -88,13 +94,22 @@ export const ConnectionsForm = () => {
 
 
     return (
-        <Form style={{ color: "white", padding: "24px 48px" }} {...formItemLayout}>
-            <h1>ConnectionsForm</h1>
+        <Form
+            style={{ color: "black", padding: "48px calc(48px + (100vw - 400px) * 0.4)" }}
+            {...formItemLayout}
+            labelCol={{ flex: '100px' }}
+            labelAlign="left"
+            labelWrap
+            wrapperCol={{ flex: 1 }}
+            colon={false}>
+            <Form.Item >
+                <Title level={1}>Connections</Title>
+            </Form.Item>
 
             {
                 categories.map((category, index) => (
                     <div key={index} >
-                        <h2>Category {index + 1}</h2>
+                        <Title level={3}>{difficulties[index]}</Title>
 
                         <Form.Item label="Description">
                             <Input
@@ -161,20 +176,22 @@ export const ConnectionsForm = () => {
 
             <Form.Item>
                 <Button
+                    className="button"
                     onClick={() => {
                         const valid = validateCategories();
                         if (valid) {
                             navigate("/connections", { state: { categories } });
                         }
                     }}
+                    type="primary"
                 >
-                    Submit
+                    Play!
                 </Button>
             </Form.Item>
 
             <Form.Item>
                 <Button
-                    style={{ width: "256px" }}
+                    className="button"
                     onClick={() => {
                         if (!copied) {
                             setCopied(true);
@@ -193,7 +210,14 @@ export const ConnectionsForm = () => {
             </Form.Item>
 
             <Form.Item>
-                <Input type="file" accept=".csv" onChange={handleFileChange} />
+                <Upload>
+                    <Button
+                        className="button"
+                        icon={<UploadOutlined />}
+                    >
+                        Upload CSV
+                    </Button>
+                </Upload>
             </Form.Item>
         </Form>
     );

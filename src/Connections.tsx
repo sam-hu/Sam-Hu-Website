@@ -1,7 +1,8 @@
 import { Button } from "antd";
 import { useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
+import { DownloadOutlined, BackwardOutlined } from '@ant-design/icons';
 
 type ConnectionCategory = {
     description: string;
@@ -12,8 +13,23 @@ type ConnectionCategory = {
 
 export type ConnectionCategories = ConnectionCategory[];
 
+const correctFontSize = (str: string, elementWidth: number) => {
+    const originalSize = 16;
+    const length = str.length;
+    const mult = elementWidth / (originalSize * length);
+    let fontSize = originalSize * mult * 2.5;
+    if (fontSize > originalSize) fontSize = originalSize;
+    return Math.round(fontSize);
+};
+
 const Box = ({ word, selected, solved, onClick }: { word: string, selected: boolean, solved: boolean, onClick: () => void }) => {
-    return <Button onClick={onClick} type={selected ? "primary" : "default"} disabled={solved} style={{ height: "64px", margin: "4px" }}>
+    return <Button
+        onClick={onClick}
+        type={selected ? "primary" : "default"}
+        disabled={solved}
+        style={{
+            minWidth: '50px', padding: '2px', height: "72px", margin: "4px", overflow: "hidden", fontSize: correctFontSize(word, 50),
+        }}>
         {word}
     </Button>
 }
@@ -50,6 +66,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
     const [categoriesState, setCategoriesState] = useState(categoryMap);
     const [selectedWords, setSelectedWords] = useState<string[]>([]);
     const [guesses, setGuesses] = useState<RecordedGuess[]>([]);
+    const navigate = useNavigate();
 
     const checkIfSolved = () => {
         if (selectedWords.length === 4) {
@@ -96,19 +113,20 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
     };
 
     const onClick = (word: string) => {
+        if (selectedWords.includes(word)) {
+            setSelectedWords(selectedWords.filter(w => w !== word));
+            return;
+        }
+
         if (selectedWords.length === 4) {
             return;
         }
 
-        if (selectedWords.includes(word)) {
-            setSelectedWords(selectedWords.filter(w => w !== word));
-        } else {
-            setSelectedWords([...selectedWords, word]);
-        }
+        setSelectedWords([...selectedWords, word]);
     }
 
     return (
-        <>
+        <div style={{ padding: "48px calc(20px + (100vw - 400px) * 0.3)" }}>
             {
                 Object.entries(categoriesState).map(([key, value]) => {
                     if (!value.solved) {
@@ -118,8 +136,8 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                     return (
                         <div
                             style={{
-                                color: "white",
-                                border: "1px solid white",
+                                color: "black",
+                                border: "1px solid black",
                                 borderRadius: "8px",
                                 display: "flex",
                                 justifyContent: "center",
@@ -136,7 +154,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 })
             }
 
-            <div style={{ display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr" }}>
+            <div style={{ display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr", marginBottom: "36px" }}>
                 {
                     wordOrder.map((word, index) => {
                         if (wordState[word].solved) {
@@ -154,26 +172,36 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 }
             </div>
 
-            <Button onClick={() => setWordOrder(shuffleArray(wordOrder))}>
-                Shuffle
-            </Button>
+            <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginBottom: '24px' }} >
+                <Button className="button with-margin" type="primary" onClick={() => checkIfSolved()} disabled={selectedWords.length !== 4}>
+                    Submit
+                </Button>
 
-            <Button onClick={() => setSelectedWords([])}>
-                Deselect all
-            </Button>
+                <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+                    <Button className="button with-margin" onClick={() => setWordOrder(shuffleArray(wordOrder))}>
+                        Shuffle
+                    </Button>
 
-            <Button onClick={() => checkIfSolved()}>
-                Submit
-            </Button>
+                    <Button className="button with-margin" onClick={() => setSelectedWords([])}>
+                        Deselect all
+                    </Button>
+                </div>
+            </div>
 
-            <Button onClick={() => serializeAndDownloadCSV()}>
-                Export as CSV
-            </Button>
+            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+                <Button className="button with-margin" onClick={() => navigate("/connections-create", { state: { categories: sortedConnections } })} icon={<BackwardOutlined />}>
+                    Back to create
+                </Button>
+
+                <Button className="button with-margin" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
+                    Export as CSV
+                </Button>
+            </div>
 
             {
-                guesses.map((guess, index) => <div key={index} style={{ color: guess.correct ? 'green' : 'white' }}>{guess.words.join(", ")}</div>)
+                guesses.map((guess, index) => <div key={index} style={{ color: guess.correct ? 'green' : 'black' }}>{guess.words.join(", ")}</div>)
             }
-        </>
+        </div >
     )
 }
 
@@ -239,7 +267,7 @@ export const Test = () => {
             {
                 description: "test3",
                 id: 3,
-                words: ["test9", "test10", "test11", "test12"]
+                words: ["test9", "test10", "Reminisce", "Californiacation"]
             },
             {
                 description: "test4",
