@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
-import { DownloadOutlined, BackwardOutlined } from '@ant-design/icons';
+import { DownloadOutlined, BackwardOutlined, CopyOutlined } from '@ant-design/icons';
 
 type ConnectionCategory = {
     description: string;
@@ -66,6 +66,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
     const [categoriesState, setCategoriesState] = useState(categoryMap);
     const [selectedWords, setSelectedWords] = useState<string[]>([]);
     const [guesses, setGuesses] = useState<RecordedGuess[]>([]);
+    const [copied, setCopied] = useState(false);
     const navigate = useNavigate();
 
     const checkIfSolved = () => {
@@ -188,14 +189,41 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 </div>
             </div>
 
-            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                <Button className="button with-margin" onClick={() => navigate("/connections-create", { state: { categories: sortedConnections } })} icon={<BackwardOutlined />}>
-                    Back to create
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                padding: "8px calc(20px + (100vw - 400px) * 0.3)",
+                width: "100%",
+            }}>
+                <Button
+                    className="button with-margin"
+                    type="dashed"
+                    onClick={() => {
+                        if (!copied) {
+                            setCopied(true);
+                            setTimeout(() => {
+                                setCopied(false);
+                            }, 2000);
+                        }
+                        navigator.clipboard.writeText(window.location.href)
+                    }}
+                    icon={<CopyOutlined />}
+                >
+                    {copied ? "Copied!" : "Copy link"}
                 </Button>
+                <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+                    <Button className="button with-margin" onClick={() => navigate("/connections-create", { state: { categories: sortedConnections } })} icon={<BackwardOutlined />}>
+                        Back to create
+                    </Button>
 
-                <Button className="button with-margin" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
-                    Export as CSV
-                </Button>
+                    <Button className="button with-margin" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
+                        Export as CSV
+                    </Button>
+                </div>
             </div>
 
             {

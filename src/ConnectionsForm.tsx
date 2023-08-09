@@ -1,4 +1,4 @@
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input, Upload, UploadFile } from "antd";
 import { useState } from "react";
 import { ConnectionCategories } from "./Connections";
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import Papa from 'papaparse';
 import './connections.scss';
 import Title from "antd/es/typography/Title";
 import { UploadOutlined } from '@ant-design/icons';
+import { RcFile } from "antd/es/upload";
 
 const defaultCategories: ConnectionCategories = [
     {
@@ -41,22 +42,12 @@ const formItemLayout = {
     },
 };
 
-const copyToClipboard = (value: string) => {
-    navigator.clipboard.writeText(value)
-        .then(() => {
-            console.log('Copied to clipboard:', value);
-        })
-        .catch((error) => {
-            console.error('Copy to clipboard failed:', error);
-        });
-}
-
 const difficulties = ["Easy", "Medium", "Hard", "Very hard"];
 
 export const ConnectionsForm = () => {
     const location = useLocation();
     const [categories, setCategories] = useState<ConnectionCategories>(location.state?.categories || defaultCategories);
-    const [copied, setCopied] = useState(false);
+    // const [copied, setCopied] = useState(false);
     const navigate = useNavigate();
 
     const validateCategories = () => {
@@ -75,11 +66,10 @@ export const ConnectionsForm = () => {
         return true;
     }
 
-    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const text = await file.text();
-            const result = Papa.parse(text, {
+    const handleUpload = (file: RcFile) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const result = Papa.parse(event.target?.result as string, {
                 skipEmptyLines: true,
                 header: false, // No header row
             });
@@ -90,8 +80,16 @@ export const ConnectionsForm = () => {
             });
             setCategories(categoriesList);
         }
-    };
+        reader.readAsText(file);
+        return false;
+    }
 
+    const generateLink = (): string => {
+        const jsonString = JSON.stringify(categories);
+        const encodedBase64String = encodeURIComponent(btoa(jsonString));
+        const link = `/connections?categories=${encodedBase64String}`;
+        return link
+    }
 
     return (
         <Form
@@ -180,7 +178,8 @@ export const ConnectionsForm = () => {
                     onClick={() => {
                         const valid = validateCategories();
                         if (valid) {
-                            navigate("/connections", { state: { categories } });
+                            const link = generateLink();
+                            navigate(link);
                         }
                     }}
                     type="primary"
@@ -190,27 +189,12 @@ export const ConnectionsForm = () => {
             </Form.Item>
 
             <Form.Item>
-                <Button
-                    className="button"
-                    onClick={() => {
-                        if (!copied) {
-                            setCopied(true);
-                            setTimeout(() => {
-                                setCopied(false);
-                            }, 2000);
-                        }
-                        const jsonString = JSON.stringify(categories);
-                        const encodedBase64String = encodeURIComponent(btoa(jsonString));
-                        const link = `${window.location.origin}/connections?categories=${encodedBase64String}`;
-                        copyToClipboard(link);
-                    }}
+                <Upload
+                    accept=".csv"
+                    maxCount={1}
+                    beforeUpload={handleUpload}
+                    showUploadList={false}
                 >
-                    {copied ? "Copied!" : "Generate and copy link"}
-                </Button>
-            </Form.Item>
-
-            <Form.Item>
-                <Upload>
                     <Button
                         className="button"
                         icon={<UploadOutlined />}
