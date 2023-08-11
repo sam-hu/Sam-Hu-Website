@@ -1,4 +1,4 @@
-import { Button, Form, Input, Upload, UploadFile } from "antd";
+import { Button, Form, Input, Upload } from "antd";
 import { useState } from "react";
 import { ConnectionCategories } from "./Connections";
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -101,7 +101,7 @@ export const ConnectionsForm = () => {
             wrapperCol={{ flex: 1 }}
             colon={false}>
             <Form.Item >
-                <Title level={1}>Connections</Title>
+                <Title level={1} style={{ marginBottom: 0 }}>Connections</Title>
             </Form.Item>
 
             {

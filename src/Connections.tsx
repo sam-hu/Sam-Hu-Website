@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import { useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
@@ -24,11 +24,12 @@ const correctFontSize = (str: string, elementWidth: number) => {
 
 const Box = ({ word, selected, solved, onClick }: { word: string, selected: boolean, solved: boolean, onClick: () => void }) => {
     return <Button
+        className="word-box"
         onClick={onClick}
         type={selected ? "primary" : "default"}
         disabled={solved}
         style={{
-            minWidth: '50px', padding: '2px', height: "72px", margin: "4px", overflow: "hidden", fontSize: correctFontSize(word, 50),
+            fontSize: correctFontSize(word, 50),
         }}>
         {word}
     </Button>
@@ -45,11 +46,16 @@ type RecordedGuess = {
     off: number
 }
 
+const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
+const iconsByDifficulty = ["🟨", "🟩", "🟦", "🟪"];
+
 export const WordsContainer = ({ connections }: { connections: ConnectionCategories }) => {
     const sortedConnections = connections.sort((a, b) => a.id - b.id).map((c) => ({ ...c, words: c.words.map((w) => w.toUpperCase()) }));
     const allWords: { [key: string]: WordState } = {};
     const wordArr: string[] = [];
-    for (const connection of sortedConnections) {
+    for (let i = 0; i < sortedConnections.length; i++) {
+        const connection = sortedConnections[i];
+        connection.id = i; // normalize to 0, 1, 2, 3
         for (const word of connection.words) {
             allWords[word] = { solved: false, index: connection.id };
             wordArr.push(word);
@@ -67,6 +73,8 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
     const [selectedWords, setSelectedWords] = useState<string[]>([]);
     const [guesses, setGuesses] = useState<RecordedGuess[]>([]);
     const [copied, setCopied] = useState(false);
+    const [victory, setVictory] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
     const checkIfSolved = () => {
@@ -88,7 +96,8 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 if (newCategoryState[index].solved) {
                     const allSolved = Object.values(newCategoryState).every(category => category.solved);
                     if (allSolved) {
-                        console.log("all solved");
+                        setVictory(true);
+                        setShowModal(true);
                     }
                 }
             } else {
@@ -127,7 +136,8 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
     }
 
     return (
-        <div style={{ padding: "48px calc(20px + (100vw - 400px) * 0.3)" }}>
+        <div style={{ padding: "48px calc(20px + (100vw - 400px) * 0.3)", paddingBottom: "144px" }}>
+            {guesses.length > 0 && <VictoryModal guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
             {
                 Object.entries(categoriesState).map(([key, value]) => {
                     if (!value.solved) {
@@ -137,25 +147,25 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                     return (
                         <div
                             style={{
-                                color: "black",
-                                border: "1px solid black",
+                                color: 'white',
+                                backgroundColor: colorsByDifficulty[value.id],
                                 borderRadius: "8px",
                                 display: "flex",
                                 justifyContent: "center",
                                 flexDirection: "column",
                                 alignItems: "center",
-                                height: "64px",
-                                margin: "4px"
+                                height: "72px",
+                                margin: "0 0 8px",
                             }}
                             key={key}>
                             <div>{value.description}</div>
-                            <div>{value.words.join(", ")}</div>
+                            <div style={{ fontSize: correctFontSize(value.words.join(", "), 200) }}>{value.words.join(", ")}</div>
                         </div>
                     )
                 })
             }
 
-            <div style={{ display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr", marginBottom: "36px" }}>
+            <div style={{ display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr", margin: "0 -4px 36px -4px" }}>
                 {
                     wordOrder.map((word, index) => {
                         if (wordState[word].solved) {
@@ -173,21 +183,24 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 }
             </div>
 
-            <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginBottom: '24px' }} >
-                <Button className="button with-margin" type="primary" onClick={() => checkIfSolved()} disabled={selectedWords.length !== 4}>
-                    Submit
-                </Button>
-
-                <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                    <Button className="button with-margin" onClick={() => setWordOrder(shuffleArray(wordOrder))}>
-                        Shuffle
+            {!victory
+                && <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginBottom: '24px' }} >
+                    <Button className="button with-margin" type="primary" onClick={() => checkIfSolved()} disabled={selectedWords.length !== 4}>
+                        Submit
                     </Button>
 
-                    <Button className="button with-margin" onClick={() => setSelectedWords([])}>
-                        Deselect all
-                    </Button>
+                    <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+                        <Button className="button with-margin" onClick={() => setWordOrder(shuffleArray(wordOrder))}>
+                            Shuffle
+                        </Button>
+
+                        <Button className="button with-margin" onClick={() => setSelectedWords([])}>
+                            Deselect all
+                        </Button>
+                    </div>
                 </div>
-            </div>
+            }
+
 
             <div style={{
                 display: "flex",
@@ -198,7 +211,11 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 left: 0,
                 padding: "8px calc(20px + (100vw - 400px) * 0.3)",
                 width: "100%",
+                backgroundColor: "white",
             }}>
+                {victory && <Button className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
+                    View results
+                </Button>}
                 <Button
                     className="button with-margin"
                     type="dashed"
@@ -226,8 +243,24 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 </div>
             </div>
 
+            {/* Guesses */}
             {
-                guesses.map((guess, index) => <div key={index} style={{ color: guess.correct ? 'green' : 'black' }}>{guess.words.join(", ")}</div>)
+                guesses.map((guess, index) => <div
+                    key={index}
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        color: guess.correct ? 'green' : 'gray',
+                        border: `1px solid`,
+                        borderRadius: "8px",
+                        height: '36px',
+                        marginBottom: '8px',
+                        fontSize: correctFontSize(guess.words.join(", "), 200),
+                    }}
+                >
+                    {guess.words.join(", ")}
+                </div>)
             }
         </div >
     )
@@ -306,4 +339,25 @@ export const Test = () => {
     }
 
     return <WordsContainer connections={connections} />
+}
+
+const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: RecordedGuess[], allWords: { [key: string]: WordState }, visible: boolean, onClose: () => void }) => {
+    const guessList = guesses.map((guess) => guess.words.map((word) => iconsByDifficulty[allWords[word].index]).join(" "));
+
+    const footer = <div style={{ display: "flex", flexDirection: "column", marginTop: "24px" }}>
+        <Button className="button with-margin" onClick={() => navigator.clipboard.writeText(guessList.join("\n"))}>
+            Copy
+        </Button>
+        <Button className="button with-margin" type="primary" onClick={onClose}>
+            Close
+        </Button>
+    </div>
+
+    return <Modal open={visible} title="You won!" style={{ textAlign: "center" }} centered onCancel={onClose} cancelButtonProps={{ hidden: true }} footer={footer}>
+        {
+            guessList.map((guess, index) => <div key={index} style={{ fontSize: "24px" }}>{guess}</div>)
+        }
+
+
+    </Modal>
 }

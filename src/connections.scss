@@ -14,3 +14,33 @@ div.ant-upload {
 .with-margin {
     margin-bottom: 12px;
 }
+
+.ant-form-item {
+    margin-bottom: 8px !important;
+}
+
+.ant-form-item-no-colon {
+    font-size: 16px !important;
+}
+
+.ant-input {
+    font-size: 16px;
+}
+
+.ant-modal-footer {
+    display: flex;
+    flex-direction: column;
+
+    .ant-btn {
+        margin: 4px 0 !important;
+        width: 100%;
+    }
+}
+
+.word-box {
+    min-width: 50px;
+    padding: 2px;
+    height: 72px;
+    margin: 0 4px 8px 4px;
+    overflow: hidden;
+}
