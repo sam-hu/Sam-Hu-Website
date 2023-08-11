@@ -1,6 +1,6 @@
 import { Button, Modal } from "antd";
 import { useState } from "react";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import { DownloadOutlined, BackwardOutlined, CopyOutlined } from '@ant-design/icons';
 import Title from "antd/es/typography/Title";
@@ -14,8 +14,7 @@ type ConnectionCategory = {
 
 export type ConnectionCategories = ConnectionCategory[];
 
-const correctFontSize = (str: string, elementWidth?: number) => {
-    if (!elementWidth) elementWidth = isMobile() ? 50 : 200;
+const correctFontSize = (str: string, elementWidth: number) => {
     const originalSize = 16;
     const length = str.length;
     const mult = elementWidth / (originalSize * length);
@@ -85,7 +84,7 @@ const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
 const iconsByDifficulty = ["🟨", "🟩", "🟦", "🟪"];
 const bodiedTexts = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
 
-export const WordsContainer = ({ connections }: { connections: ConnectionCategories }) => {
+export const ConnectionsGame = ({ connections, debug }: { connections: ConnectionCategories, debug?: boolean }) => {
     const sortedConnections = connections.sort((a, b) => a.id - b.id).map((c) => ({ ...c, words: c.words.map((w) => w.toUpperCase()) }));
     const allWords: { [key: string]: WordState } = {};
     const wordArr: string[] = [];
@@ -105,7 +104,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
         categoryMap[category.id] = category;
     }
 
-    const [wordOrder, setWordOrder] = useState<string[]>(shuffleArray(wordArr));
+    const [wordOrder, setWordOrder] = useState<string[]>(debug ? wordArr : shuffleArray(wordArr));
     const [wordState, setWordState] = useState<{ [key: string]: WordState }>(allWords);
     const [categoriesState, setCategoriesState] = useState(categoryMap);
     const [selectedWords, setSelectedWords] = useState<string[]>([]);
@@ -210,7 +209,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                                 }}
                                 key={index}>
                                 <div>{category.description}</div>
-                                <div style={{ fontSize: correctFontSize(guess.words.join(", "), 200) }}>{guess.words.join(", ")}</div>
+                                <div style={{ fontSize: correctFontSize(guess.words.join(", "), isMobile() ? 250 : 300) }}>{guess.words.join(", ")}</div>
                             </div>
                         </>
                     )
@@ -275,7 +274,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                         color: 'white',
                     }}
                 >
-                    <span style={{ margin: "0 24px", fontSize: correctFontSize(guess.words.join(", "), isMobile() ? 150 : 200) }}>{guess.words.join(", ")}</span>
+                    <span style={{ margin: "0 24px", fontSize: correctFontSize(guess.words.join(", "), isMobile() ? 250 : 300) }}>{guess.words.join(", ")}</span>
                     <span style={{ paddingRight: "24px", minWidth: "84px", display: "flex", justifyContent: "right" }}> {guess.off > 0 ? `Off by ${guess.off}` : "Correct!"}</span>
                 </div>)
             }
@@ -306,7 +305,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                     {copied ? "Copied!" : "Copy link"}
                 </Button>
                 <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                    <Button className="button" onClick={() => navigate("/connections-create", { state: { categories: sortedConnections } })} icon={<BackwardOutlined />}>
+                    <Button className="button" onClick={() => navigate("/connections", { state: { categories: sortedConnections } })} icon={<BackwardOutlined />}>
                         Back to create
                     </Button>
 
@@ -352,46 +351,50 @@ const decodeCategories = (encodedValue: string | null): ConnectionCategory[] | n
     return parsedConnections;
 }
 
-const validateCategories = (categories: ConnectionCategory[]): boolean => {
-    return categories?.every((cat: any) => cat.id && cat.description && cat.words?.length === 4)
+export const validateCategories = (categories: ConnectionCategory[]): boolean => {
+    return categories?.every((cat) => cat.words?.length === 4 && cat.words.every((word) => word.length > 0))
 }
 
-export const Test = () => {
+export const ConnectionsContainer = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
 
     let connections: ConnectionCategory[] = [];
     const urlCategories = decodeCategories(searchParams.get('categories'));
+    let debug;
     if (urlCategories) {
         connections = urlCategories;
     } else if (location.state?.categories && validateCategories(location.state.categories)) {
         connections = location.state.categories;
-    } else {
+    } else if (searchParams.get('debug') === 'true') {
+        debug = true
         connections = [
             {
-                description: "test1",
+                description: "Test Description 1",
                 id: 1,
                 words: ["test1", "test2", "test3", "test4"]
             },
             {
-                description: "test2",
+                description: "Test Description 2",
                 id: 2,
                 words: ["test5", "test6", "test7", "test8"]
             },
             {
-                description: "test3",
+                description: "Test Description 3",
                 id: 3,
-                words: ["AAAAAAAAAAAAAA", "ABRACADABRA", "Reminisce", "Californiacation"]
+                words: ["AAAAAAAAAAAAAA", "ABRACADABRA", "reallylongword", "Californiacation"]
             },
             {
-                description: "test4",
+                description: "Test Description 4",
                 id: 4,
                 words: ["test13", "test14", "test15", "test16"]
             }
         ]
+    } else {
+        return <Navigate to="/connections" />
     }
 
-    return <WordsContainer connections={connections} />
+    return <ConnectionsGame connections={connections} debug />
 }
 
 const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: RecordedGuess[], allWords: { [key: string]: WordState }, visible: boolean, onClose: () => void }) => {
