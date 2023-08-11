@@ -398,7 +398,7 @@ export const ConnectionsContainer = () => {
         return <Navigate to="/connections" />
     }
 
-    return <ConnectionsGame connections={connections} debug />
+    return <ConnectionsGame connections={connections} debug={debug} />
 }
 
 const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: RecordedGuess[], allWords: { [key: string]: WordState }, visible: boolean, onClose: () => void }) => {
@@ -413,7 +413,6 @@ const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: Record
         if (navigator.share) {
             const shareData = {
                 text: text,
-                url: window.location.href,
             };
             navigator.share(shareData)
         } else {
