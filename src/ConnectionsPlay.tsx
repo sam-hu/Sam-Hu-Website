@@ -260,7 +260,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                     </div>
                 }
 
-                <div style={{ borderBottom: "1px solid #efefe6", marginTop: "24px", marginBottom: `${isMobile() ? "12px" : "24px"}` }} />
+                <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: `${isMobile() ? "12px" : "24px"}` }} />
 
                 {/* Guesses */}
                 {guesses.length > 0 && <Title level={4} style={{ display: "flex", justifyContent: "center" }}>
@@ -309,11 +309,11 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                         }}
                         icon={<CopyOutlined />}
                     >
-                        {copied ? "Copied!" : "Copy link to puzzle"}
+                        {copied ? "Copied!" : "Copy puzzle link"}
                     </Button>
                     <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
                         <Button className="button" onClick={() => navigate("/connections", { state: { categories: sortedConnections } })} icon={<CaretLeftOutlined />}>
-                            Back to edit
+                            Edit puzzle
                         </Button>
 
                         <Button className="button" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
