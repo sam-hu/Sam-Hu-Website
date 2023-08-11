@@ -2,7 +2,7 @@ import { Button, Modal } from "antd";
 import { useState } from "react";
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import Papa from 'papaparse';
-import { DownloadOutlined, BackwardOutlined, CopyOutlined } from '@ant-design/icons';
+import { DownloadOutlined, CaretLeftOutlined, CopyOutlined } from '@ant-design/icons';
 import Title from "antd/es/typography/Title";
 
 type ConnectionCategory = {
@@ -186,139 +186,141 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
     }
 
     return (
-        <div style={{ padding: "36px calc(20px + (100vw - 400px) * 0.3)" }}>
-            {guesses.length > 0 && <VictoryModal guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ padding: "36px 12px", maxWidth: "1048px" }}>
+                {guesses.length > 0 && <VictoryModal guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
 
-            {
-                guesses.map((guess, index) => {
-                    if (!guess.correct) {
-                        return null;
-                    }
-
-                    const category = categoryMap[allWords[guess.words[0]].difficulty];
-                    return (
-                        <>
-                            <div
-                                style={{
-                                    color: 'white',
-                                    backgroundColor: colorsByDifficulty[category.id],
-                                    borderRadius: "8px",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    flexDirection: "column",
-                                    gap: "4px",
-                                    alignItems: "center",
-                                    height: "72px",
-                                    margin: "0 0 8px",
-                                }}
-                                key={index}>
-                                <div>{category.description}</div>
-                                <div style={{ fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(", ")}</div>
-                            </div>
-                        </>
-                    )
-                })
-            }
-
-            <div style={{ display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr", margin: "0 -4px 24px -4px" }}>
                 {
-                    wordOrder.map((word, index) => {
-                        if (wordState[word].solved) {
+                    guesses.map((guess, index) => {
+                        if (!guess.correct) {
                             return null;
                         }
 
-                        return <Box
-                            key={index}
-                            onClick={() => onClick(word)}
-                            word={word}
-                            selected={selectedWords.includes(word)}
-                            solved={wordState[word].solved}
-                        />
+                        const category = categoryMap[allWords[guess.words[0]].difficulty];
+                        return (
+                            <>
+                                <div
+                                    style={{
+                                        color: 'white',
+                                        backgroundColor: colorsByDifficulty[category.id],
+                                        borderRadius: "8px",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        flexDirection: "column",
+                                        gap: "4px",
+                                        alignItems: "center",
+                                        height: "72px",
+                                        margin: "0 0 8px",
+                                    }}
+                                    key={index}>
+                                    <div>{category.description}</div>
+                                    <div style={{ fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(", ")}</div>
+                                </div>
+                            </>
+                        )
                     })
                 }
-            </div>
 
-            {victory
-                ? <Button style={{ height: "54px" }} className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
-                    View results
-                </Button>
-                : <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginBottom: '12px' }} >
-                    <Button className="button with-margin" type="primary" onClick={() => checkIfSolved()} disabled={selectedWords.length !== 4}>
-                        Submit
+                <div style={{ display: 'grid', gridTemplateColumns: "1fr 1fr 1fr 1fr", margin: "0 -4px 24px -4px" }}>
+                    {
+                        wordOrder.map((word, index) => {
+                            if (wordState[word].solved) {
+                                return null;
+                            }
+
+                            return <Box
+                                key={index}
+                                onClick={() => onClick(word)}
+                                word={word}
+                                selected={selectedWords.includes(word)}
+                                solved={wordState[word].solved}
+                            />
+                        })
+                    }
+                </div>
+
+                {victory
+                    ? <Button style={{ height: "54px" }} className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
+                        View results
                     </Button>
-
-                    <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                        <Button className="button with-margin" onClick={() => setWordOrder(shuffleArray(wordOrder))}>
-                            Shuffle
+                    : <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginBottom: '12px' }} >
+                        <Button className="button with-margin" type="primary" onClick={() => checkIfSolved()} disabled={selectedWords.length !== 4}>
+                            Submit
                         </Button>
 
-                        <Button className="button with-margin" onClick={() => setSelectedWords([])}>
-                            Deselect all
+                        <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+                            <Button className="button with-margin" onClick={() => setWordOrder(shuffleArray(wordOrder))}>
+                                Shuffle
+                            </Button>
+
+                            <Button className="button with-margin" onClick={() => setSelectedWords([])}>
+                                Deselect all
+                            </Button>
+                        </div>
+                    </div>
+                }
+
+                {/* Guesses */}
+                {guesses.length > 0 && <Title level={5} style={{ display: "flex", justifyContent: "center", marginTop: `${isMobile() ? "12px" : "24px"}` }}>
+                    Guesses
+                </Title>}
+                {
+                    guesses.map((guess, index) => <div
+                        key={index}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            backgroundColor: guess.correct ? colorsByDifficulty[allWords[guess.words[0]].difficulty] : 'gray',
+                            border: `1px solid`,
+                            borderRadius: "8px",
+                            height: '42px',
+                            marginBottom: '8px',
+                            color: 'white',
+                        }}
+                    >
+                        <span style={{ margin: "0 24px", fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(", ")}</span>
+                        <span style={{ paddingRight: "24px", minWidth: "64px", display: "flex", justifyContent: "right" }}> {guess.off > 0 ? `${guess.off} off` : "Correct!"}</span>
+                    </div>)
+                }
+                {bodiedText && <div style={{ display: "flex", justifyContent: "center" }}>{bodiedText}</div>}
+
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    marginTop: "48px",
+                    width: "100%",
+                    backgroundColor: "white",
+                }}>
+                    <Button
+                        className="button with-margin"
+                        type="dashed"
+                        onClick={() => {
+                            if (!copied) {
+                                setCopied(true);
+                                setTimeout(() => {
+                                    setCopied(false);
+                                }, 2000);
+                            }
+                            navigator.clipboard.writeText(window.location.href)
+                        }}
+                        icon={<CopyOutlined />}
+                    >
+                        {copied ? "Copied!" : "Copy link"}
+                    </Button>
+                    <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+                        <Button className="button" onClick={() => navigate("/connections", { state: { categories: sortedConnections } })} icon={<CaretLeftOutlined />}>
+                            Back to edit
+                        </Button>
+
+                        <Button className="button" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
+                            Export as CSV
                         </Button>
                     </div>
                 </div>
-            }
-
-            {/* Guesses */}
-            {guesses.length > 0 && <Title level={5} style={{ display: "flex", justifyContent: "center", marginTop: `${isMobile() ? "12px" : "24px"}` }}>
-                Guesses
-            </Title>}
-            {
-                guesses.map((guess, index) => <div
-                    key={index}
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        backgroundColor: guess.correct ? colorsByDifficulty[allWords[guess.words[0]].difficulty] : 'gray',
-                        border: `1px solid`,
-                        borderRadius: "8px",
-                        height: '42px',
-                        marginBottom: '8px',
-                        color: 'white',
-                    }}
-                >
-                    <span style={{ margin: "0 24px", fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(", ")}</span>
-                    <span style={{ paddingRight: "24px", minWidth: "64px", display: "flex", justifyContent: "right" }}> {guess.off > 0 ? `${guess.off} off` : "Correct!"}</span>
-                </div>)
-            }
-            {bodiedText && <div style={{ display: "flex", justifyContent: "center" }}>{bodiedText}</div>}
-
-            <div style={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                marginTop: "48px",
-                width: "100%",
-                backgroundColor: "white",
-            }}>
-                <Button
-                    className="button with-margin"
-                    type="dashed"
-                    onClick={() => {
-                        if (!copied) {
-                            setCopied(true);
-                            setTimeout(() => {
-                                setCopied(false);
-                            }, 2000);
-                        }
-                        navigator.clipboard.writeText(window.location.href)
-                    }}
-                    icon={<CopyOutlined />}
-                >
-                    {copied ? "Copied!" : "Copy link"}
-                </Button>
-                <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                    <Button className="button" onClick={() => navigate("/connections", { state: { categories: sortedConnections } })} icon={<BackwardOutlined />}>
-                        Back to create
-                    </Button>
-
-                    <Button className="button" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
-                        Export as CSV
-                    </Button>
-                </div>
-            </div>
-        </div >
+            </div >
+        </div>
     )
 }
 
