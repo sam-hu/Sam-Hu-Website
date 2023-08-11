@@ -83,6 +83,7 @@ type RecordedGuess = {
 
 const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
 const iconsByDifficulty = ["🟨", "🟩", "🟦", "🟪"];
+const bodiedTexts = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
 
 export const WordsContainer = ({ connections }: { connections: ConnectionCategories }) => {
     const sortedConnections = connections.sort((a, b) => a.id - b.id).map((c) => ({ ...c, words: c.words.map((w) => w.toUpperCase()) }));
@@ -112,6 +113,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
     const [copied, setCopied] = useState(false);
     const [victory, setVictory] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [bodiedText, setBodiedText] = useState("");
     const navigate = useNavigate();
 
     const checkIfSolved = () => {
@@ -119,12 +121,14 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
             return;
         }
 
-
         const firstWord = selectedWords[0];
         const index = wordState[firstWord].difficulty;
         const solved = selectedWords.every(word => wordState[word].difficulty === index);
-
         const newMap = { ...wordState };
+        const newGuesses = [...guesses, {
+            words: selectedWords, correct: solved, off: calcOffBy(groupedWords, selectedWords)
+        }]
+
         if (solved) {
             for (const word of selectedWords) {
                 newMap[word].solved = true;
@@ -140,13 +144,16 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                     setShowModal(true);
                 }
             }
+            setBodiedText("");
         } else {
-            console.log("reset");
+            const last3 = newGuesses.slice(-3);
+            const bodiedText = newGuesses.length >= 3 && last3.every(g => !g.correct);
+            if (bodiedText) {
+                setBodiedText(bodiedTexts[Math.floor(Math.random() * bodiedTexts.length)]);
+            }
         }
 
-        setGuesses([...guesses, {
-            words: selectedWords, correct: solved, off: calcOffBy(groupedWords, selectedWords)
-        }]);
+        setGuesses(newGuesses);
         setSelectedWords([]);
     }
 
@@ -188,22 +195,24 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
 
                     const category = categoryMap[allWords[guess.words[0]].difficulty];
                     return (
-                        <div
-                            style={{
-                                color: 'white',
-                                backgroundColor: colorsByDifficulty[category.id],
-                                borderRadius: "8px",
-                                display: "flex",
-                                justifyContent: "center",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                height: "72px",
-                                margin: "0 0 8px",
-                            }}
-                            key={index}>
-                            <div>{category.description}</div>
-                            <div style={{ fontSize: correctFontSize(guess.words.join(", "), 200) }}>{guess.words.join(", ")}</div>
-                        </div>
+                        <>
+                            <div
+                                style={{
+                                    color: 'white',
+                                    backgroundColor: colorsByDifficulty[category.id],
+                                    borderRadius: "8px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    height: "72px",
+                                    margin: "0 0 8px",
+                                }}
+                                key={index}>
+                                <div>{category.description}</div>
+                                <div style={{ fontSize: correctFontSize(guess.words.join(", "), 200) }}>{guess.words.join(", ")}</div>
+                            </div>
+                        </>
                     )
                 })
             }
@@ -288,7 +297,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
             </div>
 
             {/* Guesses */}
-            {guesses.length > 0 && <Title level={5} style={{ display: "flex", justifyContent: "center" }}>
+            {guesses.length > 0 && <Title level={5} style={{ display: "flex", justifyContent: "center", marginTop: `${isMobile() ? "12px" : "24px"}` }}>
                 Guesses
             </Title>}
             {
@@ -310,6 +319,7 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                     <span style={{ paddingRight: "24px", minWidth: "84px", display: "flex", justifyContent: "right" }}> {guess.off > 0 ? `Off by ${guess.off}` : "Correct!"}</span>
                 </div>)
             }
+            {bodiedText && <div style={{ display: "flex", justifyContent: "center" }}>{bodiedText}</div>}
         </div >
     )
 }
@@ -390,11 +400,34 @@ export const Test = () => {
 }
 
 const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: RecordedGuess[], allWords: { [key: string]: WordState }, visible: boolean, onClose: () => void }) => {
+    const [copied, setCopied] = useState(false);
     const guessList = guesses.map((guess) => guess.words.map((word) => iconsByDifficulty[allWords[word].difficulty]).join(" "));
 
+    const onShare = () => {
+        let text = guessList.join("\n");
+        if (guessList.length > 8) {
+            text = text + "\n💀 Bodied 💀";
+        }
+        if (navigator.share) {
+            const shareData = {
+                text: text,
+                url: window.location.href,
+            };
+            navigator.share(shareData)
+        } else {
+            if (!copied) {
+                setCopied(true);
+                setTimeout(() => {
+                    setCopied(false);
+                }, 2000);
+            }
+            navigator.clipboard.writeText(text)
+        }
+    }
+
     const footer = <div style={{ display: "flex", flexDirection: "column", marginTop: "24px" }}>
-        <Button className="button with-margin" onClick={() => navigator.clipboard.writeText(guessList.join("\n"))}>
-            Copy
+        <Button className="button with-margin" onClick={onShare}>
+            {copied ? "Copied!" : "Share"}
         </Button>
         <Button className="button with-margin" type="primary" onClick={onClose}>
             Close
@@ -405,7 +438,5 @@ const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: Record
         {
             guessList.map((guess, index) => <div key={index} style={{ fontSize: "24px" }}>{guess}</div>)
         }
-
-
     </Modal>
 }
