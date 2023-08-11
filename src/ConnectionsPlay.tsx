@@ -243,7 +243,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                     ? <Button style={{ height: "54px" }} className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
                         View results
                     </Button>
-                    : <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginBottom: '12px' }} >
+                    : <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }} >
                         <Button className="button with-margin" type="primary" onClick={() => checkIfSolved()} disabled={selectedWords.length !== 4}>
                             Submit
                         </Button>
@@ -260,8 +260,10 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                     </div>
                 }
 
+                <div style={{ borderBottom: "1px solid #efefe6", marginTop: "24px", marginBottom: `${isMobile() ? "12px" : "24px"}` }} />
+
                 {/* Guesses */}
-                {guesses.length > 0 && <Title level={4} style={{ display: "flex", justifyContent: "center", marginTop: `${isMobile() ? "12px" : "24px"}` }}>
+                {guesses.length > 0 && <Title level={4} style={{ display: "flex", justifyContent: "center" }}>
                     Guesses
                 </Title>}
                 {
@@ -289,7 +291,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "column",
-                    marginTop: "48px",
+                    marginTop: "36px",
                     width: "100%",
                     backgroundColor: "white",
                 }}>
@@ -307,7 +309,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                         }}
                         icon={<CopyOutlined />}
                     >
-                        {copied ? "Copied!" : "Copy link"}
+                        {copied ? "Copied!" : "Copy link to puzzle"}
                     </Button>
                     <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
                         <Button className="button" onClick={() => navigate("/connections", { state: { categories: sortedConnections } })} icon={<CaretLeftOutlined />}>
@@ -405,7 +407,7 @@ export const ConnectionsContainer = () => {
 
 const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: RecordedGuess[], allWords: { [key: string]: WordState }, visible: boolean, onClose: () => void }) => {
     const [copied, setCopied] = useState(false);
-    const guessList = guesses.map((guess) => guess.words.map((word) => iconsByDifficulty[allWords[word].difficulty]).join(" "));
+    const guessList = guesses.map((guess) => guess.words.map((word) => iconsByDifficulty[allWords[word].difficulty]).join(""));
 
     const onShare = () => {
         let text = guessList.join("\n");
@@ -439,7 +441,7 @@ const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: Record
 
     return <Modal
         open={visible}
-        title={<div style={{ fontSize: "24px" }}>You won!</div>}
+        title={<div style={{ fontSize: "24px" }}>Nice!</div>}
         style={{ textAlign: "center" }}
         centered
         onCancel={onClose}
@@ -447,7 +449,7 @@ const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: Record
         footer={footer}>
         <div style={{ paddingTop: "16px" }}>
             {
-                guessList.map((guess, index) => <div key={index} style={{ fontSize: "24px" }}>{guess}</div>)
+                guessList.map((guess, index) => <div key={index} style={{ fontSize: "24px", height: "24px" }}>{guess}</div>)
             }
         </div>
     </Modal>
