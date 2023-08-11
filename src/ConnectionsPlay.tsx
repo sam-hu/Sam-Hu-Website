@@ -14,14 +14,17 @@ type ConnectionCategory = {
 
 export type ConnectionCategories = ConnectionCategory[];
 
-const correctFontSize = (str: string, elementWidth: number) => {
-    const originalSize = 16;
+const correctFontSize = (str: string, elementWidth: number, originalSize = 16) => {
     const length = str.length;
     const mult = elementWidth / (originalSize * length);
     let fontSize = originalSize * mult * 2.5;
     if (fontSize > originalSize) fontSize = originalSize;
     return Math.round(fontSize);
 };
+
+const correctFontSizeForAnswers = (guess: string[]) => {
+    return correctFontSize(guess.join(", "), isMobile() ? 200 : 300, 14)
+}
 
 const minChangesToEqualLists = (list1: string[], list2: string[]): number => {
     const freq1: { [key: string]: number } = {};
@@ -63,7 +66,7 @@ const Box = ({ word, selected, solved, onClick }: { word: string, selected: bool
         type={selected ? "primary" : "default"}
         disabled={solved}
         style={{
-            fontSize: correctFontSize(word, isMobile() ? 50 : 75),
+            fontSize: correctFontSize(word, isMobile() ? 45 : 75),
         }}>
         {word}
     </Button>
@@ -183,7 +186,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
     }
 
     return (
-        <div style={{ padding: "36px calc(20px + (100vw - 400px) * 0.3)", paddingBottom: "144px" }}>
+        <div style={{ padding: "36px calc(20px + (100vw - 400px) * 0.3)" }}>
             {guesses.length > 0 && <VictoryModal guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
 
             {
@@ -203,13 +206,14 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                                     display: "flex",
                                     justifyContent: "center",
                                     flexDirection: "column",
+                                    gap: "4px",
                                     alignItems: "center",
                                     height: "72px",
                                     margin: "0 0 8px",
                                 }}
                                 key={index}>
                                 <div>{category.description}</div>
-                                <div style={{ fontSize: correctFontSize(guess.words.join(", "), isMobile() ? 250 : 300) }}>{guess.words.join(", ")}</div>
+                                <div style={{ fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(", ")}</div>
                             </div>
                         </>
                     )
@@ -269,13 +273,13 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                         backgroundColor: guess.correct ? colorsByDifficulty[allWords[guess.words[0]].difficulty] : 'gray',
                         border: `1px solid`,
                         borderRadius: "8px",
-                        height: '36px',
+                        height: '42px',
                         marginBottom: '8px',
                         color: 'white',
                     }}
                 >
-                    <span style={{ margin: "0 24px", fontSize: correctFontSize(guess.words.join(", "), isMobile() ? 250 : 300) }}>{guess.words.join(", ")}</span>
-                    <span style={{ paddingRight: "24px", minWidth: "84px", display: "flex", justifyContent: "right" }}> {guess.off > 0 ? `Off by ${guess.off}` : "Correct!"}</span>
+                    <span style={{ margin: "0 24px", fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(", ")}</span>
+                    <span style={{ paddingRight: "24px", minWidth: "64px", display: "flex", justifyContent: "right" }}> {guess.off > 0 ? `${guess.off} off` : "Correct!"}</span>
                 </div>)
             }
             {bodiedText && <div style={{ display: "flex", justifyContent: "center" }}>{bodiedText}</div>}
@@ -372,22 +376,22 @@ export const ConnectionsContainer = () => {
             {
                 description: "Test Description 1",
                 id: 1,
-                words: ["test1", "test2", "test3", "test4"]
+                words: ["a", "ew", "yaw", "goop"]
             },
             {
                 description: "Test Description 2",
                 id: 2,
-                words: ["test5", "test6", "test7", "test8"]
+                words: ["Lodge", "Tithed", "awesome", "Hardware"]
             },
             {
                 description: "Test Description 3",
                 id: 3,
-                words: ["AAAAAAAAAAAAAA", "ABRACADABRA", "reallylongword", "Californiacation"]
+                words: ["beautiful", "beneficial", "adjudicator", "jeopardizing"]
             },
             {
                 description: "Test Description 4",
                 id: 4,
-                words: ["test13", "test14", "test15", "test16"]
+                words: ["jabberwockies", "abdominoplasty", "objectification", "hieroglyphically"]
             }
         ]
     } else {
