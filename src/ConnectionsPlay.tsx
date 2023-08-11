@@ -187,7 +187,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ padding: "36px 12px", maxWidth: "1048px" }}>
+            <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%" }}>
                 {guesses.length > 0 && <VictoryModal guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
 
                 {
@@ -213,7 +213,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                                         margin: "0 0 8px",
                                     }}
                                     key={index}>
-                                    <div>{category.description}</div>
+                                    <strong>{category.description}</strong>
                                     <div style={{ fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(", ")}</div>
                                 </div>
                             </>
@@ -261,7 +261,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                 }
 
                 {/* Guesses */}
-                {guesses.length > 0 && <Title level={5} style={{ display: "flex", justifyContent: "center", marginTop: `${isMobile() ? "12px" : "24px"}` }}>
+                {guesses.length > 0 && <Title level={4} style={{ display: "flex", justifyContent: "center", marginTop: `${isMobile() ? "12px" : "24px"}` }}>
                     Guesses
                 </Title>}
                 {
@@ -271,7 +271,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            backgroundColor: guess.correct ? colorsByDifficulty[allWords[guess.words[0]].difficulty] : 'gray',
+                            backgroundColor: guess.correct ? colorsByDifficulty[allWords[guess.words[0]].difficulty] : 'darkgray',
                             border: `1px solid`,
                             borderRadius: "8px",
                             height: '42px',
@@ -283,7 +283,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                         <span style={{ paddingRight: "24px", minWidth: "64px", display: "flex", justifyContent: "right" }}> {guess.off > 0 ? `${guess.off} off` : "Correct!"}</span>
                     </div>)
                 }
-                {bodiedText && <div style={{ display: "flex", justifyContent: "center" }}>{bodiedText}</div>}
+                {bodiedText && <div style={{ display: "flex", justifyContent: "center", paddingTop: '8px' }}>{bodiedText}</div>}
 
                 <div style={{
                     display: "flex",
