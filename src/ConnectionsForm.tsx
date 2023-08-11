@@ -79,7 +79,7 @@ export const ConnectionsForm = () => {
                 <Form
                     style={{ color: "black", padding: "0 12px" }}
                     {...formItemLayout}
-                    labelCol={{ flex: '100px' }}
+                    labelCol={{ flex: '64px' }}
                     labelAlign="left"
                     labelWrap
                     wrapperCol={{ flex: 1 }}
@@ -92,7 +92,7 @@ export const ConnectionsForm = () => {
                             <div key={index} >
                                 <Title level={4} style={{ color: colorsByDifficulty[index] }}>{difficulties[index]}</Title>
 
-                                <Form.Item label="Description">
+                                <Form.Item label="Title">
                                     <Input
                                         type="text"
                                         value={category.description}
@@ -180,7 +180,7 @@ const WordsInput = ({ label, initialValues, onSuccess }: { label: string, initia
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onBlur={validateAndSet}
-            placeholder="Comma-separated"
+            placeholder="Four comma-separated words"
         />
     </Form.Item>
 }
