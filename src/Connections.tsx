@@ -235,8 +235,11 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 }
             </div>
 
-            {!victory
-                && <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginBottom: '12px' }} >
+            {victory
+                ? <Button style={{ height: "54px" }} className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
+                    View results
+                </Button>
+                : <div style={{ display: "flex", justifyContent: "center", flexDirection: "column", marginBottom: '12px' }} >
                     <Button className="button with-margin" type="primary" onClick={() => checkIfSolved()} disabled={selectedWords.length !== 4}>
                         Submit
                     </Button>
@@ -253,22 +256,39 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                 </div>
             }
 
+            {/* Guesses */}
+            {guesses.length > 0 && <Title level={5} style={{ display: "flex", justifyContent: "center", marginTop: `${isMobile() ? "12px" : "24px"}` }}>
+                Guesses
+            </Title>}
+            {
+                guesses.map((guess, index) => <div
+                    key={index}
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        backgroundColor: guess.correct ? colorsByDifficulty[allWords[guess.words[0]].difficulty] : 'gray',
+                        border: `1px solid`,
+                        borderRadius: "8px",
+                        height: '36px',
+                        marginBottom: '8px',
+                        color: 'white',
+                    }}
+                >
+                    <span style={{ margin: "0 24px", fontSize: correctFontSize(guess.words.join(", "), isMobile() ? 150 : 200) }}>{guess.words.join(", ")}</span>
+                    <span style={{ paddingRight: "24px", minWidth: "84px", display: "flex", justifyContent: "right" }}> {guess.off > 0 ? `Off by ${guess.off}` : "Correct!"}</span>
+                </div>)
+            }
+            {bodiedText && <div style={{ display: "flex", justifyContent: "center" }}>{bodiedText}</div>}
 
             <div style={{
                 display: "flex",
                 justifyContent: "center",
                 flexDirection: "column",
-                position: 'fixed',
-                bottom: 0,
-                left: 0,
-                padding: "8px calc(20px + (100vw - 400px) * 0.3)",
-                paddingTop: "12px",
+                marginTop: "48px",
                 width: "100%",
                 backgroundColor: "white",
             }}>
-                {victory && <Button className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
-                    View results
-                </Button>}
                 <Button
                     className="button with-margin"
                     type="dashed"
@@ -295,31 +315,6 @@ export const WordsContainer = ({ connections }: { connections: ConnectionCategor
                     </Button>
                 </div>
             </div>
-
-            {/* Guesses */}
-            {guesses.length > 0 && <Title level={5} style={{ display: "flex", justifyContent: "center", marginTop: `${isMobile() ? "12px" : "24px"}` }}>
-                Guesses
-            </Title>}
-            {
-                guesses.map((guess, index) => <div
-                    key={index}
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        backgroundColor: guess.correct ? colorsByDifficulty[allWords[guess.words[0]].difficulty] : 'gray',
-                        border: `1px solid`,
-                        borderRadius: "8px",
-                        height: '36px',
-                        marginBottom: '8px',
-                        color: 'white',
-                    }}
-                >
-                    <span style={{ margin: "0 24px", fontSize: correctFontSize(guess.words.join(", "), isMobile() ? 150 : 200) }}>{guess.words.join(", ")}</span>
-                    <span style={{ paddingRight: "24px", minWidth: "84px", display: "flex", justifyContent: "right" }}> {guess.off > 0 ? `Off by ${guess.off}` : "Correct!"}</span>
-                </div>)
-            }
-            {bodiedText && <div style={{ display: "flex", justifyContent: "center" }}>{bodiedText}</div>}
         </div >
     )
 }
@@ -405,7 +400,7 @@ const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: Record
 
     const onShare = () => {
         let text = guessList.join("\n");
-        if (guessList.length > 8) {
+        if (guessList.length >= 8) {
             text = text + "\n💀 Bodied 💀";
         }
         if (navigator.share) {
@@ -434,9 +429,18 @@ const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: Record
         </Button>
     </div>
 
-    return <Modal open={visible} title="You won!" style={{ textAlign: "center" }} centered onCancel={onClose} cancelButtonProps={{ hidden: true }} footer={footer}>
-        {
-            guessList.map((guess, index) => <div key={index} style={{ fontSize: "24px" }}>{guess}</div>)
-        }
+    return <Modal
+        open={visible}
+        title={<div style={{ fontSize: "24px" }}>You won!</div>}
+        style={{ textAlign: "center" }}
+        centered
+        onCancel={onClose}
+        cancelButtonProps={{ hidden: true }}
+        footer={footer}>
+        <div style={{ paddingTop: "16px" }}>
+            {
+                guessList.map((guess, index) => <div key={index} style={{ fontSize: "24px" }}>{guess}</div>)
+            }
+        </div>
     </Modal>
 }
