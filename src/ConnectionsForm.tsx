@@ -1,11 +1,11 @@
 import { Button, Form, Input, Upload } from "antd";
 import { useEffect, useState } from "react";
-import { ConnectionCategories, validateCategories } from "./ConnectionsPlay";
+import { ConnectionCategories, colorsByDifficulty, validateCategories } from "./ConnectionsPlay";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import './connections.scss';
 import Title from "antd/es/typography/Title";
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { RcFile } from "antd/es/upload";
 
 const defaultCategories: ConnectionCategories = [
@@ -59,7 +59,7 @@ export const ConnectionsForm = () => {
 
             const rows = result.data as string[][];
             const categoriesList: ConnectionCategories = rows.map((row, index) => {
-                return { id: index + 1, description: row[0], words: row.slice(1) };
+                return { id: index, description: row[0], words: row.slice(1) };
             });
             setCategories(categoriesList);
         }
@@ -74,82 +74,83 @@ export const ConnectionsForm = () => {
     }
 
     return (
-        <Form
-            style={{ color: "black", padding: "48px calc(48px + (100vw - 400px) * 0.4)" }}
-            {...formItemLayout}
-            labelCol={{ flex: '100px' }}
-            labelAlign="left"
-            labelWrap
-            wrapperCol={{ flex: 1 }}
-            colon={false}>
-            <Form.Item >
-                <Title level={1} style={{ marginTop: 0, marginBottom: 0 }}>Connections</Title>
-            </Form.Item>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%" }}>
+                <Form
+                    style={{ color: "black", padding: "0 12px" }}
+                    {...formItemLayout}
+                    labelCol={{ flex: '100px' }}
+                    labelAlign="left"
+                    labelWrap
+                    wrapperCol={{ flex: 1 }}
+                    colon={false}>
 
-            {
-                categories.map((category, index) => (
-                    <div key={index} >
-                        <Title level={4}>{difficulties[index]}</Title>
+                    <Title level={1} style={{ marginTop: 0, marginBottom: 0 }}>Connections</Title>
 
-                        <Form.Item label="Description">
-                            <Input
-                                type="text"
-                                value={category.description}
-                                onChange={(event) => {
-                                    const newCategories = [...categories];
-                                    newCategories[index].description = event.target.value;
-                                    setCategories(newCategories);
-                                }}
-                            />
-                        </Form.Item>
+                    {
+                        categories.map((category, index) => (
+                            <div key={index} >
+                                <Title level={4} style={{ color: colorsByDifficulty[index] }}>{difficulties[index]}</Title>
 
-                        <WordsInput
-                            label="Words"
-                            initialValues={category.words}
-                            onSuccess={(value) => {
-                                const newCategories = [...categories];
-                                newCategories[index].words = value;
-                                setCategories(newCategories);
-                            }}
-                        />
-                    </div>
-                ))
-            }
+                                <Form.Item label="Description">
+                                    <Input
+                                        type="text"
+                                        value={category.description}
+                                        onChange={(event) => {
+                                            const newCategories = [...categories];
+                                            newCategories[index].description = event.target.value;
+                                            setCategories(newCategories);
+                                        }}
+                                        placeholder="Name this category"
+                                    />
+                                </Form.Item>
 
-            <Form.Item>
-                <Button
-                    style={{ marginTop: "24px" }}
-                    className="button"
-                    disabled={!validateCategories(categories)}
-                    onClick={() => {
-                        const valid = validateCategories(categories);
-                        if (valid) {
-                            const link = generateLink();
-                            navigate(link);
-                        }
-                    }}
-                    type="primary"
-                >
-                    Play!
-                </Button>
-            </Form.Item>
+                                <WordsInput
+                                    label="Words"
+                                    initialValues={category.words}
+                                    onSuccess={(value) => {
+                                        const newCategories = [...categories];
+                                        newCategories[index].words = value;
+                                        setCategories(newCategories);
+                                    }}
+                                />
+                            </div>
+                        ))
+                    }
 
-            <Form.Item>
-                <Upload
-                    accept=".csv"
-                    maxCount={1}
-                    beforeUpload={handleUpload}
-                    showUploadList={false}
-                >
                     <Button
-                        className="button"
-                        icon={<UploadOutlined />}
+                        style={{ marginTop: "24px" }}
+                        className="button with-margin"
+                        icon={<CaretRightOutlined />}
+                        disabled={!validateCategories(categories)}
+                        onClick={() => {
+                            const valid = validateCategories(categories);
+                            if (valid) {
+                                const link = generateLink();
+                                navigate(link);
+                            }
+                        }}
+                        type="primary"
                     >
-                        Upload CSV
+                        Create puzzle
                     </Button>
-                </Upload>
-            </Form.Item>
-        </Form>
+
+                    <Upload
+                        accept=".csv"
+                        maxCount={1}
+                        beforeUpload={handleUpload}
+                        showUploadList={false}
+                    >
+                        <Button
+                            className="button with-margin"
+                            icon={<UploadOutlined />}
+                        >
+                            Upload CSV
+                        </Button>
+                    </Upload>
+                </Form>
+            </div>
+        </div>
     );
 }
 
@@ -179,6 +180,7 @@ const WordsInput = ({ label, initialValues, onSuccess }: { label: string, initia
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onBlur={validateAndSet}
+            placeholder="Comma-separated"
         />
     </Form.Item>
 }

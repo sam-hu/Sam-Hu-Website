@@ -83,7 +83,7 @@ type RecordedGuess = {
     off: number
 }
 
-const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
+export const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
 const iconsByDifficulty = ["🟨", "🟩", "🟦", "🟪"];
 const bodiedTexts = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
 
@@ -412,7 +412,7 @@ const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: Record
     const onShare = () => {
         let text = guessList.join("\n");
         if (guessList.length >= 8) {
-            text = text + "\n💀 Bodied 💀";
+            text = text + "\n💀Bodied💀";
         }
         if (navigator.share) {
             const shareData = {
