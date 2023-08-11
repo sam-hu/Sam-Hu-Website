@@ -2,7 +2,6 @@ import { spotifyData } from './spotify';
 import MyTimeline from './timeline';
 import './Home.scss';
 import './spotify.scss';
-// import { WordsContainer } from './Connections';
 
 const found = <a style={{ color: "#1662DD", fontSize: "18px", fontWeight: "bold" }} className="link" target="_blank" rel="noopener noreferrer" href="https://found.com">Found</a>;
 const okta = <a style={{ color: "#1662DD", fontSize: "18px", fontWeight: "bold" }} className="link" target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
@@ -59,29 +58,6 @@ const Home = function Home() {
             <h2>My timeline</h2>
             <MyTimeline />
         </div>
-
-        {/* <WordsContainer connections={[
-            {
-                description: "test1",
-                id: 1,
-                words: ["test1", "test2", "test3", "test4"]
-            },
-            {
-                description: "test2",
-                id: 2,
-                words: ["test5", "test6", "test7", "test8"]
-            },
-            {
-                description: "test3",
-                id: 3,
-                words: ["test9", "test10", "test11", "test12"]
-            },
-            {
-                description: "test4",
-                id: 4,
-                words: ["test13", "test14", "test15", "test16"]
-            }
-        ]} /> */}
         <footer>Sam Hu © 2023</footer>
     </div>;
 }
