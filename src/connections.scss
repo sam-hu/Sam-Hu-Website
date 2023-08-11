@@ -27,6 +27,10 @@ div.ant-upload {
     font-size: 16px;
 }
 
+.ant-btn {
+    height: 42px;
+}
+
 .ant-modal-footer {
     display: flex;
     flex-direction: column;
@@ -43,4 +47,21 @@ div.ant-upload {
     height: 72px;
     margin: 0 4px 8px 4px;
     overflow: hidden;
+    border: none;
+    background-color: #efefe6;
+}
+
+.word-box:hover {
+    background-color: #c8c8bd !important;
+    color: black !important;
+}
+
+.word-box:active {
+    background-color: darkgray !important;
+    color: black !important;
+}
+
+.word-box.ant-btn-primary {
+    background-color: gray !important;
+    color: white !important;
 }
