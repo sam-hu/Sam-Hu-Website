@@ -44,9 +44,16 @@ const formItemLayout = {
 
 const difficulties = ["Easy", "Medium", "Hard", "Very hard"];
 
+const generateLink = (categories: ConnectionCategories): string => {
+    const jsonString = JSON.stringify(normalizeCategories(categories));
+    const encodedBase64String = encodeURIComponent(btoa(jsonString));
+    return `/connections-play?categories=${encodedBase64String}`;
+}
+
 export const ConnectionsForm = () => {
     const location = useLocation();
     const [categories, setCategories] = useState<ConnectionCategories>(location.state?.categories || defaultCategories);
+    const [clearInputs, setClearInputs] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -73,10 +80,9 @@ export const ConnectionsForm = () => {
         return false;
     }
 
-    const generateLink = (categories: ConnectionCategories): string => {
-        const jsonString = JSON.stringify(categories);
-        const encodedBase64String = encodeURIComponent(btoa(jsonString));
-        return `/connections-play?categories=${encodedBase64String}`;
+    const onClear = () => {
+        setClearInputs(false)
+        setCategories([...defaultCategories])
     }
 
     return (
@@ -97,29 +103,28 @@ export const ConnectionsForm = () => {
                         categories.map((category, index) => (
                             <div key={index} >
                                 <Title level={4} style={{ color: colorsByDifficulty[index] }}>{difficulties[index]}</Title>
-
-                                <Form.Item label="Title">
-                                    <Input
-                                        type="text"
-                                        value={category.description}
-                                        onChange={(event) => {
-                                            const newCategories = [...categories];
-                                            newCategories[index].description = event.target.value;
-                                            setCategories(newCategories);
-                                        }}
-                                        placeholder="Name this category"
-                                    />
-                                </Form.Item>
+                                <DescriptionInput
+                                    label="Title"
+                                    value={category.description}
+                                    onChange={(s) => {
+                                        const newCategories = [...categories];
+                                        newCategories[index].description = s;
+                                        setCategories(newCategories);
+                                    }}
+                                    clear={clearInputs}
+                                    onClear={onClear}
+                                />
 
                                 <WordsInput
                                     label="Words"
                                     value={listToString(category.words)}
-                                    onChange={(e) => {
-                                        const words: string[] = stringToList(e)
+                                    onChange={(s) => {
                                         const newCategories = [...categories];
-                                        newCategories[index].words = words;
+                                        newCategories[index].words = stringToList(s);
                                         setCategories(newCategories);
                                     }}
+                                    clear={clearInputs}
+                                    onClear={onClear}
                                 />
                             </div>
                         ))
@@ -133,8 +138,7 @@ export const ConnectionsForm = () => {
                         onClick={() => {
                             const valid = validateCategories(categories);
                             if (valid) {
-                                const normalized = normalizeCategories(categories);
-                                const link = generateLink(normalized);
+                                const link = generateLink(categories);
                                 navigate(link);
                             }
                         }}
@@ -156,9 +160,18 @@ export const ConnectionsForm = () => {
                             Upload CSV
                         </Button>
                     </Upload>
+
+                    <Button
+                        className="button with-margin"
+                        onClick={() => {
+                            setClearInputs(true);
+                        }}
+                    >
+                        Clear all
+                    </Button>
                 </Form>
             </div>
-        </div>
+        </div >
     );
 }
 
@@ -174,17 +187,48 @@ const listToString = (list: string[]): string => {
     return list.join(",");
 }
 
-type WordsInputProps = {
+type TextInputProps = {
     label: string,
     value: string,
     onChange: (s: string) => void,
+    clear: boolean,
+    onClear: () => void,
 }
 
-const WordsInput = ({ label, value, onChange }: WordsInputProps) => {
+const DescriptionInput = ({ label, value, onChange, clear, onClear }: TextInputProps) => {
+    const [valueInBox, setValueInBox] = useState(value);
+
+    useEffect(() => {
+        setValueInBox(value);
+    }, [value])
+
+    useEffect(() => {
+        if (clear) {
+            setValueInBox("");
+            onClear();
+        }
+    }, [clear, onClear])
+
+    return < Form.Item label={label} >
+        <Input
+            type="text"
+            value={valueInBox}
+            onChange={(e) => {
+                onChange(e.target.value);
+            }}
+            placeholder="Name this category"
+        />
+    </Form.Item >
+}
+
+const WordsInput = ({ label, value, onChange, clear, onClear }: TextInputProps) => {
     const [valueList, setValueList] = useState(stringToList(value));
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        if (value.length === 0) {
+            setValueList([]);
+        }
         const wordlist = stringToList(value);
         if (wordlist.every(w => w.length > 0)) {
             setValueList(wordlist);
@@ -193,6 +237,14 @@ const WordsInput = ({ label, value, onChange }: WordsInputProps) => {
             setError(null);
         }
     }, [value])
+
+    useEffect(() => {
+        if (clear) {
+            setValueList([]);
+            setError(null);
+            onClear();
+        }
+    }, [clear, onClear])
 
     const isValid = (): boolean => {
         const list = valueList.map((word) => word.trim());

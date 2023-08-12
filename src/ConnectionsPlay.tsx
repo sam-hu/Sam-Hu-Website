@@ -366,8 +366,8 @@ export const normalizeCategories = (categories: ConnectionCategories): Connectio
     for (let i = 0; i < categories.length; i++) {
         const c = categories[i];
         c.id = i;
-        c.description = c.description.trim().toUpperCase();
-        c.words = c.words.map((word) => word.trim());
+        c.description = c.description.trim();
+        c.words = c.words.map((word) => word.trim().toUpperCase());
     }
     return categories;
 }
