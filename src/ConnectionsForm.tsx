@@ -1,5 +1,5 @@
 import { Button, Form, Input, Upload } from "antd";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { ConnectionCategories, colorsByDifficulty, normalizeCategories, validateCategories } from "./ConnectionsPlay";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
@@ -123,7 +123,7 @@ export const ConnectionsForm = () => {
                     wrapperCol={{ flex: 1 }}
                     colon={false}>
 
-                    <Title level={1} style={{ marginTop: 0, marginBottom: "18px", marginLeft: "8px" }}>Connections</Title>
+                    <Title level={1} style={{ marginTop: 0, marginBottom: "24px", marginLeft: "8px" }}>Connections</Title>
 
                     <DragDropContext onDragEnd={onDragEnd}>
                         <Droppable droppableId="list">
@@ -143,15 +143,17 @@ export const ConnectionsForm = () => {
                                                             border: `1px solid ${colorsByDifficulty[index]}`,
                                                             borderRadius: "8px",
                                                             padding: "16px 12px",
+                                                            backgroundColor: colorsByDifficulty[index],
                                                         }}>
                                                             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                                                <Title level={4} style={{ color: colorsByDifficulty[index], margin: 0, paddingBottom: "4px" }}>{difficulties[index]}</Title>
-                                                                <HolderOutlined style={{ fontSize: '18px' }} />
+                                                                <Title level={4} style={{ color: "white", margin: 0, paddingBottom: "4px" }}>{difficulties[index]}</Title>
+                                                                <HolderOutlined style={{ fontSize: '18px', color: "white" }} />
                                                             </div>
 
                                                             <DescriptionInput
-                                                                label="Title"
+                                                                label={<span style={{ color: "white" }}>Title</span>}
                                                                 value={category.description}
+                                                                placeholder={`Category ${category.id + 1}`}
                                                                 onChange={(s) => {
                                                                     const newCategories = [...categories];
                                                                     newCategories[index].description = s;
@@ -162,8 +164,9 @@ export const ConnectionsForm = () => {
                                                             />
 
                                                             <WordsInput
-                                                                label="Words"
+                                                                label={<span style={{ color: "white" }}>Words</span>}
                                                                 value={listToString(category.words)}
+                                                                placeholder="Four comma-separated words"
                                                                 onChange={(s) => {
                                                                     const newCategories = [...categories];
                                                                     newCategories[index].words = stringToList(s);
@@ -242,14 +245,15 @@ const listToString = (list: string[]): string => {
 }
 
 type TextInputProps = {
-    label: string,
+    label: ReactNode,
     value: string,
+    placeholder?: string,
     onChange: (s: string) => void,
     clear: boolean,
     onClear: () => void,
 }
 
-const DescriptionInput = ({ label, value, onChange, clear, onClear }: TextInputProps) => {
+const DescriptionInput = ({ label, value, placeholder, onChange, clear, onClear }: TextInputProps) => {
     const [valueInBox, setValueInBox] = useState(value);
 
     useEffect(() => {
@@ -270,12 +274,12 @@ const DescriptionInput = ({ label, value, onChange, clear, onClear }: TextInputP
             onChange={(e) => {
                 onChange(e.target.value);
             }}
-            placeholder="Name this category"
+            placeholder={placeholder}
         />
     </Form.Item >
 }
 
-const WordsInput = ({ label, value, onChange, clear, onClear }: TextInputProps) => {
+const WordsInput = ({ label, value, placeholder, onChange, clear, onClear }: TextInputProps) => {
     const [valueList, setValueList] = useState(stringToList(value));
     const [error, setError] = useState<string | null>(null);
 
@@ -324,7 +328,7 @@ const WordsInput = ({ label, value, onChange, clear, onClear }: TextInputProps) 
                 onChange(e.target.value);
             }}
             onBlur={validate}
-            placeholder="Four comma-separated words"
+            placeholder={placeholder}
         />
     </Form.Item>
 }
