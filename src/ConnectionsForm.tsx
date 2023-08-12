@@ -5,8 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import './connections.scss';
 import Title from "antd/es/typography/Title";
-import { UploadOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { UploadOutlined, CaretRightOutlined, HolderOutlined } from '@ant-design/icons';
 import { RcFile } from "antd/es/upload";
+import { DragDropContext, DropResult, Draggable, Droppable } from 'react-beautiful-dnd';
 
 const defaultCategories: ConnectionCategories = [
     {
@@ -50,6 +51,13 @@ const generateLink = (categories: ConnectionCategories): string => {
     return `/connections-play?categories=${encodedBase64String}`;
 }
 
+const reorder = (list: ConnectionCategories, startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+};
+
 export const ConnectionsForm = () => {
     const location = useLocation();
     const [categories, setCategories] = useState<ConnectionCategories>(location.state?.categories || defaultCategories);
@@ -85,11 +93,29 @@ export const ConnectionsForm = () => {
         setCategories([...defaultCategories])
     }
 
+    const onDragEnd = (result: DropResult) => {
+        if (!result.destination) {
+            return;
+        }
+
+        if (result.destination.index === result.source.index) {
+            return;
+        }
+
+        const newCategories = reorder(
+            categories,
+            result.source.index,
+            result.destination.index
+        );
+
+        setCategories(newCategories);
+    }
+
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%" }}>
                 <Form
-                    style={{ color: "black", padding: "0 12px" }}
+                    style={{ color: "black" }}
                     {...formItemLayout}
                     labelCol={{ flex: '64px' }}
                     labelAlign="left"
@@ -97,38 +123,66 @@ export const ConnectionsForm = () => {
                     wrapperCol={{ flex: 1 }}
                     colon={false}>
 
-                    <Title level={1} style={{ marginTop: 0, marginBottom: 0 }}>Connections</Title>
+                    <Title level={1} style={{ marginTop: 0, marginBottom: "18px", marginLeft: "8px" }}>Connections</Title>
 
-                    {
-                        categories.map((category, index) => (
-                            <div key={index} >
-                                <Title level={4} style={{ color: colorsByDifficulty[index] }}>{difficulties[index]}</Title>
-                                <DescriptionInput
-                                    label="Title"
-                                    value={category.description}
-                                    onChange={(s) => {
-                                        const newCategories = [...categories];
-                                        newCategories[index].description = s;
-                                        setCategories(newCategories);
-                                    }}
-                                    clear={clearInputs}
-                                    onClear={onClear}
-                                />
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        <Droppable droppableId="list">
+                            {(provided) => (
+                                <div ref={provided.innerRef} {...provided.droppableProps}>
+                                    {
+                                        categories.map((category, index) => (
+                                            <Draggable draggableId={category.id.toString()} index={index} key={category.id.toString()}>
+                                                {provided => (
+                                                    <div
+                                                        className="difficulty-draggable"
+                                                        ref={provided.innerRef}
+                                                        {...provided.draggableProps}
+                                                        {...provided.dragHandleProps}
+                                                    >
+                                                        <div style={{
+                                                            border: `1px solid ${colorsByDifficulty[index]}`,
+                                                            borderRadius: "8px",
+                                                            padding: "16px 12px",
+                                                        }}>
+                                                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                                                <Title level={4} style={{ color: colorsByDifficulty[index], margin: 0, paddingBottom: "4px" }}>{difficulties[index]}</Title>
+                                                                <HolderOutlined style={{ fontSize: '18px' }} />
+                                                            </div>
 
-                                <WordsInput
-                                    label="Words"
-                                    value={listToString(category.words)}
-                                    onChange={(s) => {
-                                        const newCategories = [...categories];
-                                        newCategories[index].words = stringToList(s);
-                                        setCategories(newCategories);
-                                    }}
-                                    clear={clearInputs}
-                                    onClear={onClear}
-                                />
-                            </div>
-                        ))
-                    }
+                                                            <DescriptionInput
+                                                                label="Title"
+                                                                value={category.description}
+                                                                onChange={(s) => {
+                                                                    const newCategories = [...categories];
+                                                                    newCategories[index].description = s;
+                                                                    setCategories(newCategories);
+                                                                }}
+                                                                clear={clearInputs}
+                                                                onClear={onClear}
+                                                            />
+
+                                                            <WordsInput
+                                                                label="Words"
+                                                                value={listToString(category.words)}
+                                                                onChange={(s) => {
+                                                                    const newCategories = [...categories];
+                                                                    newCategories[index].words = stringToList(s);
+                                                                    setCategories(newCategories);
+                                                                }}
+                                                                clear={clearInputs}
+                                                                onClear={onClear}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </Draggable>
+                                        ))
+                                    }
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
 
                     <Button
                         style={{ marginTop: "24px" }}

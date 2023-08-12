@@ -272,7 +272,7 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
                             justifyContent: 'space-between',
                             alignItems: 'center',
                             backgroundColor: guess.correct ? colorsByDifficulty[allWords[guess.words[0]].difficulty] : 'darkgray',
-                            border: `1px solid`,
+                            border: '1px solid',
                             borderRadius: "8px",
                             height: '42px',
                             marginBottom: '8px',
@@ -362,7 +362,6 @@ export const validateCategories = (categories: ConnectionCategories): boolean =>
 }
 
 export const normalizeCategories = (categories: ConnectionCategories): ConnectionCategories => {
-    categories.sort((a, b) => a.id - b.id)
     for (let i = 0; i < categories.length; i++) {
         const c = categories[i];
         c.id = i;

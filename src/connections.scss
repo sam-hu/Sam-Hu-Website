@@ -16,7 +16,8 @@ div.ant-upload {
 }
 
 .ant-form-item {
-    margin-bottom: 8px !important;
+    margin: 0px !important;
+    padding-top: 8px !important;
 }
 
 .ant-form-item-no-colon {
@@ -64,4 +65,8 @@ div.ant-upload {
 .word-box.ant-btn-primary {
     background-color: gray !important;
     color: white !important;
+}
+
+.difficulty-draggable {
+    margin-bottom: 12px;
 }

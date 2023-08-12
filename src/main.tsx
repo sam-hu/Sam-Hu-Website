@@ -8,14 +8,12 @@ import { ConnectionsForm } from './ConnectionsForm.tsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/connections-play" Component={ConnectionsContainer} />
-        <Route path="/connections" Component={ConnectionsForm} />
+  <Router>
+    <Routes>
+      <Route path="/connections-play" Component={ConnectionsContainer} />
+      <Route path="/connections" Component={ConnectionsForm} />
 
-        <Route path="*" Component={Home} />
-      </Routes>
-    </Router>
-  </React.StrictMode>,
+      <Route path="*" Component={Home} />
+    </Routes>
+  </Router>
 )
