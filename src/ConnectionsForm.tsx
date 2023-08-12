@@ -1,6 +1,6 @@
 import { Button, Form, Input, Upload } from "antd";
 import { useEffect, useState } from "react";
-import { ConnectionCategories, colorsByDifficulty, validateCategories } from "./ConnectionsPlay";
+import { ConnectionCategories, colorsByDifficulty, normalizeCategories, validateCategories } from "./ConnectionsPlay";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import './connections.scss';
@@ -12,22 +12,22 @@ const defaultCategories: ConnectionCategories = [
     {
         id: 0,
         description: "",
-        words: ["", "", "", ""]
+        words: []
     },
     {
         id: 1,
         description: "",
-        words: ["", "", "", ""]
+        words: []
     },
     {
         id: 2,
         description: "",
-        words: ["", "", "", ""]
+        words: []
     },
     {
         id: 3,
         description: "",
-        words: ["", "", "", ""]
+        words: []
     }
 ]
 
@@ -49,6 +49,12 @@ export const ConnectionsForm = () => {
     const [categories, setCategories] = useState<ConnectionCategories>(location.state?.categories || defaultCategories);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (location.state?.categories) {
+            setCategories(location.state.categories);
+        }
+    }, [location.state?.categories]);
+
     const handleUpload = (file: RcFile) => {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -67,7 +73,7 @@ export const ConnectionsForm = () => {
         return false;
     }
 
-    const generateLink = (): string => {
+    const generateLink = (categories: ConnectionCategories): string => {
         const jsonString = JSON.stringify(categories);
         const encodedBase64String = encodeURIComponent(btoa(jsonString));
         return `/connections-play?categories=${encodedBase64String}`;
@@ -107,10 +113,11 @@ export const ConnectionsForm = () => {
 
                                 <WordsInput
                                     label="Words"
-                                    initialValues={category.words}
-                                    onSuccess={(value) => {
+                                    value={listToString(category.words)}
+                                    onChange={(e) => {
+                                        const words: string[] = stringToList(e)
                                         const newCategories = [...categories];
-                                        newCategories[index].words = value;
+                                        newCategories[index].words = words;
                                         setCategories(newCategories);
                                     }}
                                 />
@@ -126,7 +133,8 @@ export const ConnectionsForm = () => {
                         onClick={() => {
                             const valid = validateCategories(categories);
                             if (valid) {
-                                const link = generateLink();
+                                const normalized = normalizeCategories(categories);
+                                const link = generateLink(normalized);
                                 navigate(link);
                             }
                         }}
@@ -154,32 +162,62 @@ export const ConnectionsForm = () => {
     );
 }
 
-const WordsInput = ({ label, initialValues, onSuccess }: { label: string, initialValues: string[], onSuccess: (value: string[]) => void }) => {
-    const [value, setValue] = useState("");
+const stringToList = (s: string): string[] => {
+    if (s.length === 0) {
+        return [];
+    }
+    const split = s.split(",");
+    return split
+}
+
+const listToString = (list: string[]): string => {
+    return list.join(",");
+}
+
+type WordsInputProps = {
+    label: string,
+    value: string,
+    onChange: (s: string) => void,
+}
+
+const WordsInput = ({ label, value, onChange }: WordsInputProps) => {
+    const [valueList, setValueList] = useState(stringToList(value));
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (initialValues.some(v => v.length > 0)) {
-            setValue(initialValues.join(", "));
+        const wordlist = stringToList(value);
+        if (wordlist.every(w => w.length > 0)) {
+            setValueList(wordlist);
         }
-    }, [initialValues])
-
-    const validateAndSet = () => {
-        const list = value.split(",").map((word) => word.trim());
-        if (list.length !== 4 || list.some((word) => word.length === 0)) {
-            setError("Input not valid");
-        } else {
+        if (!shouldShowError()) {
             setError(null);
-            onSuccess(list);
+        }
+    }, [value])
+
+    const isValid = (): boolean => {
+        const list = valueList.map((word) => word.trim());
+        return list.length === 4 && list.every((word) => word.length >= 0)
+    }
+
+    const shouldShowError = (): boolean => !isValid() && valueList.length > 0;
+
+    const validate = () => {
+        if (!shouldShowError()) {
+            setError(null);
+        } else {
+            setError("Input not valid");
         }
     }
 
     return <Form.Item label={label} validateStatus={error ? "error" : ""} help={error}>
         <Input
             type="text"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onBlur={validateAndSet}
+            value={listToString(valueList)}
+            onChange={e => {
+                setValueList(stringToList(e.target.value));
+                onChange(e.target.value);
+            }}
+            onBlur={validate}
             placeholder="Four comma-separated words"
         />
     </Form.Item>

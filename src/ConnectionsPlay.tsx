@@ -87,23 +87,21 @@ export const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
 const iconsByDifficulty = ["🟨", "🟩", "🟦", "🟪"];
 const bodiedTexts = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
 
-export const ConnectionsGame = ({ connections, debug }: { connections: ConnectionCategories, debug?: boolean }) => {
-    const sortedConnections = connections.sort((a, b) => a.id - b.id).map((c) => ({ ...c, words: c.words.map((w) => w.toUpperCase()) }));
+export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionCategories, debug?: boolean }) => {
+    const normalizedCategories = normalizeCategories(categories);
     const allWords: { [key: string]: WordState } = {};
     const wordArr: string[] = [];
-    const groupedWords: string[][] = [[], [], [], []];
-    for (let i = 0; i < sortedConnections.length; i++) {
-        const connection = sortedConnections[i];
-        connection.id = i; // normalize to 0, 1, 2, 3
+    const groupedWords: string[][] = [];
+    for (const connection of normalizedCategories) {
+        groupedWords.push(connection.words);
         for (const word of connection.words) {
             allWords[word] = { solved: false, difficulty: connection.id };
             wordArr.push(word);
-            groupedWords[i].push(word);
         }
     }
 
     const categoryMap: { [id: number]: ConnectionCategory } = {};
-    for (const category of sortedConnections) {
+    for (const category of normalizedCategories) {
         categoryMap[category.id] = category;
     }
 
@@ -119,7 +117,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
     const navigate = useNavigate();
 
     const checkIfSolved = () => {
-        if (selectedWords.length !== sortedConnections.length) {
+        if (selectedWords.length !== normalizedCategories.length) {
             return;
         }
 
@@ -160,7 +158,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
     }
 
     const serializeAndDownloadCSV = () => {
-        const c = sortedConnections.map(({ description, words }) => ([description, ...words]));
+        const c = normalizedCategories.map(({ description, words }) => ([description, ...words]));
         const csv = Papa.unparse(c);
         const blob = new Blob([csv], { type: 'text/csv' });
 
@@ -312,7 +310,7 @@ export const ConnectionsGame = ({ connections, debug }: { connections: Connectio
                         {copied ? "Copied!" : "Copy puzzle link"}
                     </Button>
                     <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                        <Button className="button" onClick={() => navigate("/connections", { state: { categories: sortedConnections } })} icon={<CaretLeftOutlined />}>
+                        <Button className="button" onClick={() => navigate("/connections", { state: { categories: normalizedCategories } })} icon={<CaretLeftOutlined />}>
                             Edit puzzle
                         </Button>
 
@@ -339,44 +337,55 @@ function shuffleArray(array: string[]): string[] {
     return shuffledArray;
 }
 
-const decodeCategories = (encodedValue: string | null): ConnectionCategory[] | null => {
+const decodeCategories = (encodedValue: string | null): ConnectionCategories | null => {
     if (!encodedValue) {
         return null;
     }
 
-    let parsedConnections;
+    let parsedCategories;
     try {
-        const decodedConnections = atob(decodeURIComponent(encodedValue));
-        parsedConnections = JSON.parse(decodedConnections);
+        const decodedCategories = atob(decodeURIComponent(encodedValue));
+        parsedCategories = JSON.parse(decodedCategories);
     } catch {
         return null;
     }
 
-    if (!validateCategories(parsedConnections)) {
+    if (!validateCategories(parsedCategories)) {
         return null;
     }
 
-    return parsedConnections;
+    return parsedCategories;
 }
 
-export const validateCategories = (categories: ConnectionCategory[]): boolean => {
-    return categories?.every((cat) => cat.words?.length === 4 && cat.words.every((word) => word.length > 0))
+export const validateCategories = (categories: ConnectionCategories): boolean => {
+    return categories?.every((cat) => cat.words?.length === 4 && cat.words.every((word) => word.trim().length > 0))
+}
+
+export const normalizeCategories = (categories: ConnectionCategories): ConnectionCategories => {
+    categories.sort((a, b) => a.id - b.id)
+    for (let i = 0; i < categories.length; i++) {
+        const c = categories[i];
+        c.id = i;
+        c.description = c.description.trim().toUpperCase();
+        c.words = c.words.map((word) => word.trim());
+    }
+    return categories;
 }
 
 export const ConnectionsContainer = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
 
-    let connections: ConnectionCategory[] = [];
+    let categories: ConnectionCategories = [];
     const urlCategories = decodeCategories(searchParams.get('categories'));
     let debug;
     if (urlCategories) {
-        connections = urlCategories;
+        categories = urlCategories;
     } else if (location.state?.categories && validateCategories(location.state.categories)) {
-        connections = location.state.categories;
+        categories = location.state.categories;
     } else if (searchParams.get('debug') === 'true') {
         debug = true
-        connections = [
+        categories = [
             {
                 description: "Test Description 1",
                 id: 1,
@@ -402,7 +411,7 @@ export const ConnectionsContainer = () => {
         return <Navigate to="/connections" />
     }
 
-    return <ConnectionsGame connections={connections} debug={debug} />
+    return <ConnectionsGame categories={categories} debug={debug} />
 }
 
 const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: RecordedGuess[], allWords: { [key: string]: WordState }, visible: boolean, onClose: () => void }) => {
