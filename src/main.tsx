@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Home from './Home.tsx'
 import './index.css'
@@ -8,14 +7,12 @@ import { ConnectionsForm } from './ConnectionsForm.tsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/connections-play" Component={ConnectionsContainer} />
-        <Route path="/connections" Component={ConnectionsForm} />
+  <Router>
+    <Routes>
+      <Route path="/connections-play" Component={ConnectionsContainer} />
+      <Route path="/connections" Component={ConnectionsForm} />
 
-        <Route path="*" Component={Home} />
-      </Routes>
-    </Router>
-  </React.StrictMode>,
+      <Route path="*" Component={Home} />
+    </Routes>
+  </Router>
 )
