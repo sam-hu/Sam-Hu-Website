@@ -2,7 +2,7 @@ import { Button, Modal } from "antd";
 import { useState } from "react";
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import Papa from 'papaparse';
-import { DownloadOutlined, CaretLeftOutlined, CopyOutlined } from '@ant-design/icons';
+import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
 import Title from "antd/es/typography/Title";
 
 type ConnectionCategory = {
@@ -295,19 +295,25 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
                 }}>
                     <Button
                         className="button with-margin"
-                        type="dashed"
                         onClick={() => {
-                            if (!copied) {
-                                setCopied(true);
-                                setTimeout(() => {
-                                    setCopied(false);
-                                }, 2000);
+                            if (navigator.share) {
+                                const shareData = {
+                                    text: window.location.href,
+                                };
+                                navigator.share(shareData)
+                            } else {
+                                if (!copied) {
+                                    setCopied(true);
+                                    setTimeout(() => {
+                                        setCopied(false);
+                                    }, 2000);
+                                }
+                                navigator.clipboard.writeText(window.location.href)
                             }
-                            navigator.clipboard.writeText(window.location.href)
                         }}
-                        icon={<CopyOutlined />}
+                        icon={<ShareAltOutlined />}
                     >
-                        {copied ? "Copied!" : "Copy puzzle link"}
+                        {copied ? "Copied to clipboard!" : "Share puzzle"}
                     </Button>
                     <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
                         <Button className="button" onClick={() => navigate("/connections", { state: { categories: normalizedCategories } })} icon={<CaretLeftOutlined />}>
@@ -319,7 +325,7 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
                         </Button>
                     </div>
                 </div>
-            </div >
+            </div>
         </div>
     )
 }
@@ -439,10 +445,10 @@ const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: Record
     }
 
     const footer = <div style={{ display: "flex", flexDirection: "column", marginTop: "24px" }}>
-        <Button className="button with-margin" onClick={onShare}>
-            {copied ? "Copied!" : "Share"}
+        <Button className="button with-margin" onClick={onShare} type="primary" icon={<ShareAltOutlined />}>
+            {copied ? "Copied to clipboard!" : "Share results"}
         </Button>
-        <Button className="button with-margin" type="primary" onClick={onClose}>
+        <Button className="button with-margin" onClick={onClose}>
             Close
         </Button>
     </div>

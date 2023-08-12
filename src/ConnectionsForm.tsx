@@ -228,7 +228,7 @@ export const ConnectionsForm = () => {
                     </Button>
                 </Form>
             </div>
-        </div >
+        </div>
     );
 }
 
