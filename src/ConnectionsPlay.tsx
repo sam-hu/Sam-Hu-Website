@@ -4,6 +4,7 @@ import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
 import Title from "antd/es/typography/Title";
+import { ConnectionsNYTToday } from "./ConnectionsNYT";
 
 type ConnectionCategory = {
     description: string;
@@ -388,7 +389,9 @@ export const ConnectionsContainer = () => {
         categories = urlCategories;
     } else if (location.state?.categories && validateCategories(location.state.categories)) {
         categories = location.state.categories;
-    } else if (searchParams.get('debug') === 'true') {
+    } else if (searchParams.has('nyt')) {
+        return <ConnectionsNYTToday />
+    } else if (searchParams.has('debug')) {
         debug = true
         categories = [
             {

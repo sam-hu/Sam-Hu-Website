@@ -45,7 +45,7 @@ const formItemLayout = {
 
 const difficulties = ["Easy", "Medium", "Hard", "Very hard"];
 
-const generateLink = (categories: ConnectionCategories): string => {
+export const generateLink = (categories: ConnectionCategories): string => {
     const jsonString = JSON.stringify(normalizeCategories(categories));
     const encodedBase64String = encodeURIComponent(btoa(jsonString));
     return `/connections-play?categories=${encodedBase64String}`;
