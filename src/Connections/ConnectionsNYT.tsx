@@ -47,6 +47,7 @@ export const ConnectionsNYTArchive = () => {
                         const link = generateLink(connection);
                         navigate(link, { state: { backTo: "archive" } });
                     }}
+                    type={index > todayOffset ? "dashed" : "default"}
                 >
                     {index === todayOffset ? <strong>{buttonText}</strong> : buttonText}
                 </Button>
