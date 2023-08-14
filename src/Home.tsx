@@ -2,28 +2,30 @@ import { spotifyData } from './Spotify/spotify';
 import MyTimeline from './Timeline/timeline';
 import './Home.scss';
 import './Spotify/spotify.scss';
+import { useNavigate } from 'react-router-dom';
 
 const found = <a style={{ color: "#1662DD", fontSize: "18px", fontWeight: "bold" }} className="link" target="_blank" rel="noopener noreferrer" href="https://found.com">Found</a>;
 const okta = <a style={{ color: "#1662DD", fontSize: "18px", fontWeight: "bold" }} className="link" target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
 const spotify = <a style={{ color: "#1DB954" }} className="spotifyText link" target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/1247031860">Spotify</a>;
 
 const Home = function Home() {
+    const navigate = useNavigate();
+
     return <div id="home">
         <div id="topCurve"></div>
         <header>
             <div id="info">
                 <h1>Hey, I'm Sam.</h1>
                 <p>
-                    I'm currently at {found} improving banking for the self-employed.
+                    I'm currently at {found} building banking for the self-employed.
                     Previously, I was a software engineer at {okta}.
                     Before that, I studied computer science and economics at Cornell University.
-                    In my free time I like to ski, snowboard, listen to hip hop, and referee soccer.
+                    In my free time I like to ski, snowboard, listen to hip hop, and watch soccer.
                 </p>
                 <ul>
                     <li><a target="_blank" rel="noopener noreferrer" href="/Sam-Hu-Resume.pdf">Resume</a></li>
                     <li><a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/sam-hu">LinkedIn</a></li>
-                    {/* <li><a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/samhuuu">Facebook</a></li> */}
-                    {/* <li><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/_samhu_/">Instagram</a></li> */}
+                    <li><a onClick={() => navigate("/connections")}>Play a game</a></li>
                 </ul>
             </div>
             <div id="aside">
