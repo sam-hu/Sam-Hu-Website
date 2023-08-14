@@ -4,7 +4,7 @@ import './index.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ConnectionsContainer } from './ConnectionsPlay.tsx';
 import { ConnectionsForm } from './ConnectionsForm.tsx';
-import { ConnectionsNYTArchive } from './ConnectionsNYT.tsx';
+import { ConnectionsNYTArchive, ConnectionsNYTToday } from './ConnectionsNYT.tsx';
 import { ConnectionsProvider } from './ConnectionsContext.tsx';
 
 
@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <Router>
     <Routes>
       <Route
-        path="/connections-play"
+        path="/connections/play"
         element={
           <ConnectionsProvider>
             <ConnectionsContainer />
@@ -20,10 +20,26 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         }
       />
       <Route
-        path="/connections-nyt"
+        path="/connections/today"
+        element={
+          <ConnectionsProvider>
+            <ConnectionsNYTToday />
+          </ConnectionsProvider>
+        }
+      />
+      <Route
+        path="/connections/archive"
         element={
           <ConnectionsProvider>
             <ConnectionsNYTArchive />
+          </ConnectionsProvider>
+        }
+      />
+      <Route
+        path="/connections/create"
+        element={
+          <ConnectionsProvider>
+            <ConnectionsForm />
           </ConnectionsProvider>
         }
       />

@@ -1,5 +1,5 @@
 import { Button, Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
@@ -88,7 +88,7 @@ export const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
 const iconsByDifficulty = ["🟨", "🟩", "🟦", "🟪"];
 const bodiedTexts = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
 
-export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionCategories, debug?: boolean }) => {
+export const ConnectionsGame = ({ categories, backTo, debug }: { categories: ConnectionCategories, backTo?: "archive", debug?: boolean }) => {
     const normalizedCategories = normalizeCategories(categories);
     const allWords: { [key: string]: WordState } = {};
     const wordArr: string[] = [];
@@ -115,7 +115,15 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
     const [victory, setVictory] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [bodiedText, setBodiedText] = useState("");
+    const [back, setBack] = useState(backTo);
     const navigate = useNavigate();
+    const searchParams = new URLSearchParams(location.search);
+
+    useEffect(() => {
+        if (searchParams.get("from") === "archive") {
+            setBack("archive");
+        }
+    }, [searchParams])
 
     const checkIfSolved = () => {
         if (selectedWords.length !== normalizedCategories.length) {
@@ -182,6 +190,19 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
         }
 
         setSelectedWords([...selectedWords, word]);
+    }
+
+    const backButton = () => {
+        switch (back) {
+            case "archive":
+                return <Button className="button" onClick={() => navigate("/connections/archive")} icon={<CaretLeftOutlined />}>
+                    Back to archive
+                </Button>
+            default:
+                return <Button className="button" onClick={() => navigate("/connections/create", { state: { categories: normalizedCategories } })} icon={<CaretLeftOutlined />}>
+                    Edit puzzle
+                </Button>
+        }
     }
 
     return (
@@ -317,9 +338,7 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
                         {copied ? "Copied to clipboard!" : "Share puzzle"}
                     </Button>
                     <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                        <Button className="button" onClick={() => navigate("/connections", { state: { categories: normalizedCategories } })} icon={<CaretLeftOutlined />}>
-                            Edit puzzle
-                        </Button>
+                        {backButton()}
 
                         <Button className="button" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
                             Export as CSV
@@ -389,8 +408,6 @@ export const ConnectionsContainer = () => {
         categories = urlCategories;
     } else if (location.state?.categories && validateCategories(location.state.categories)) {
         categories = location.state.categories;
-    } else if (searchParams.has('nyt')) {
-        return <ConnectionsNYTToday />
     } else if (searchParams.has('debug')) {
         debug = true
         categories = [

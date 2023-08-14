@@ -48,7 +48,7 @@ const difficulties = ["Easy", "Medium", "Hard", "Very hard"];
 export const generateLink = (categories: ConnectionCategories): string => {
     const jsonString = JSON.stringify(normalizeCategories(categories));
     const encodedBase64String = encodeURIComponent(btoa(jsonString));
-    return `/connections-play?categories=${encodedBase64String}`;
+    return `/connections/play?categories=${encodedBase64String}`;
 }
 
 const reorder = (list: ConnectionCategories, startIndex: number, endIndex: number) => {

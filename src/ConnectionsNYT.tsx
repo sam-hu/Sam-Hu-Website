@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Button, Spin } from "antd";
 import { generateLink } from "./ConnectionsForm";
 import { useNavigate } from "react-router-dom";
@@ -31,28 +31,32 @@ export const ConnectionsNYTArchive = () => {
 
     const todayOffset = daysBetween(new Date(), FIRST_DAY);
 
+    const contents = allConnections.length === 0
+        ? <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
+            <Spin size="large" />
+        </div>
+        : allConnections.map((connection, index) => {
+            const buttonText = `${getDate(index)} - #${index + 1}`
+            return (
+                <Button
+                    style={{ margin: "6px 0" }}
+                    key={index}
+                    onClick={() => {
+                        const link = generateLink(connection);
+                        navigate(link + '&from=archive');
+                    }}
+                >
+                    {index === todayOffset ? <strong>{buttonText}</strong> : buttonText}
+                </Button>
+            )
+        }).reverse()
+
     return (
         <ConnectionsProvider>
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%", display: "flex", flexDirection: "column" }}>
                     <Title level={1} style={{ marginTop: 0, marginBottom: "24px", marginLeft: "8px" }}>NYT Archive</Title>
-                    {
-                        allConnections.map((connection, index) => {
-                            const buttonText = `${getDate(index)} - #${index + 1}`
-                            return (
-                                <Button
-                                    style={{ margin: "6px 0" }}
-                                    key={index}
-                                    onClick={() => {
-                                        const link = generateLink(connection);
-                                        navigate(link);
-                                    }}
-                                >
-                                    {index === todayOffset ? <strong>{buttonText}</strong> : buttonText}
-                                </Button>
-                            )
-                        }).reverse()
-                    }
+                    {contents}
                 </div>
             </div>
         </ConnectionsProvider>
@@ -61,20 +65,15 @@ export const ConnectionsNYTArchive = () => {
 
 export const ConnectionsNYTToday = () => {
     const { NYTConnections } = useContext(ConnectionsContext)
-    const [connections, setConnections] = useState(NYTConnections);
-
-    useEffect(() => {
-        setConnections(NYTConnections);
-    }, [NYTConnections])
 
     const todayOffset = daysBetween(new Date(), FIRST_DAY);
-    const categories = connections[todayOffset]
+    const categories = NYTConnections[todayOffset]
 
-    if (connections.length === 0) {
+    if (NYTConnections.length === 0) {
         return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
             <Spin size="large" />
         </div>
     }
 
-    return <ConnectionsGame categories={categories} />
+    return <ConnectionsGame categories={categories} backTo="archive" />
 }
