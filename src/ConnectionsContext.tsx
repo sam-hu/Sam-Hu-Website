@@ -19,6 +19,8 @@ type ConnectionsProviderProps = {
 export const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
     const [connections, setConnections] = useState<ConnectionCategories[]>([]);
     const [loaded, setLoaded] = useState(false);
+    const svgDataURL = `data:image/svg+xml;base64,${btoa(ConnectionsSVG)}`;
+
 
     useEffect(() => {
         if (loaded) {
@@ -39,7 +41,7 @@ export const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
                 <title>Connections</title>
                 <meta property="title" content="Connections" />
                 <meta property="og:title" content="Connections" />
-                <meta property="og:image" content={ConnectionsSVG} />
+                <meta property="og:image" content={svgDataURL} />
             </Helmet>
             {children}
         </ConnectionsContext.Provider>
