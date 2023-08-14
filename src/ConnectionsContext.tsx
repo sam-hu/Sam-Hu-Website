@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useState } from 'react';
 import { ConnectionCategories } from './ConnectionsPlay';
 import axios from "axios";
 import { Helmet } from 'react-helmet';
-import ConnectionsSVG from '../public/Connections.svg';
 
 type ConnectionsContextType = {
     NYTConnections: ConnectionCategories[];
@@ -19,8 +18,6 @@ type ConnectionsProviderProps = {
 export const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
     const [connections, setConnections] = useState<ConnectionCategories[]>([]);
     const [loaded, setLoaded] = useState(false);
-    const svgDataURL = `data:image/svg+xml;base64,${btoa(ConnectionsSVG)}`;
-
 
     useEffect(() => {
         if (loaded) {
@@ -41,8 +38,8 @@ export const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
                 <title>Connections</title>
                 <meta property="title" content="Connections" />
                 <meta property="og:title" content="Connections" />
-                <meta property="og:image" content="/Connections.png" />
-                <link rel="icon" type="image/svg" href={svgDataURL} />
+                <meta property="og:image" content={`${window.location.origin}/Connections.png`} />
+                <link rel="icon" type="image/svg" href={`${window.location.origin}/Connections.svg`} />
             </Helmet>
             {children}
         </ConnectionsContext.Provider>
