@@ -70,6 +70,7 @@ export const ConnectionsNYTArchive = () => {
                             navigate("/connections/today");
                         }}
                         icon={<CaretRightOutlined />}
+                        style={{ height: "72px" }}
                     >
                         Play today's puzzle
                     </Button>

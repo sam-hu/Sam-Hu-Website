@@ -57,12 +57,21 @@ div.ant-upload {
     color: black !important;
 }
 
-.word-box:active {
-    background-color: darkgray !important;
+.word-box.mobile:hover {
+    background-color: #efefe6 !important;
+}
+
+.word-box.desktop:active {
+    background-color: #c8c8bd !important;
     color: black !important;
 }
 
 .word-box.ant-btn-primary {
+    background-color: gray !important;
+    color: white !important;
+}
+
+.word-box.mobile.ant-btn-primary {
     background-color: gray !important;
     color: white !important;
 }

@@ -20,10 +20,10 @@ export const ConnectionsLanding = () => {
                         <img src="/Connections.svg" height="36px" width="36px" />
                         <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: "12px" }}>Connections</Title>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "70vh", maxHeight: isMobile() ? "500px" : "1000px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "70vh", maxHeight: isMobile() ? "512px" : "1024px" }}>
                         <Button
                             className="button with-margin"
-                            style={{ height: "96px" }}
+                            style={{ height: "72px" }}
                             type="primary"
                             onClick={() => {
                                 navigate("/connections/today", { state: { backTo: "landing" } });
@@ -34,7 +34,7 @@ export const ConnectionsLanding = () => {
                         </Button>
                         <Button
                             className="button"
-                            style={{ height: "96px" }}
+                            style={{ height: "72px" }}
                             onClick={() => {
                                 navigate("/connections/archive");
                             }}
@@ -47,7 +47,7 @@ export const ConnectionsLanding = () => {
 
                         <Button
                             className="button with-margin"
-                            style={{ height: "96px" }}
+                            style={{ height: "72px" }}
                             onClick={() => {
                                 navigate("/connections/create");
                             }}
@@ -58,7 +58,7 @@ export const ConnectionsLanding = () => {
                         </Button>
                         <Button
                             className="button with-margin"
-                            style={{ height: "96px" }}
+                            style={{ height: "72px" }}
                             onClick={() => {
                                 setShowHowTo(true);
                             }}
