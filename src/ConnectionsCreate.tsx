@@ -45,10 +45,10 @@ const formItemLayout = {
 
 const difficulties = ["Easy", "Medium", "Hard", "Very hard"];
 
-const generateLink = (categories: ConnectionCategories): string => {
+export const generateLink = (categories: ConnectionCategories): string => {
     const jsonString = JSON.stringify(normalizeCategories(categories));
     const encodedBase64String = encodeURIComponent(btoa(jsonString));
-    return `/connections-play?categories=${encodedBase64String}`;
+    return `/connections/play?categories=${encodedBase64String}`;
 }
 
 const reorder = (list: ConnectionCategories, startIndex: number, endIndex: number) => {
@@ -58,7 +58,7 @@ const reorder = (list: ConnectionCategories, startIndex: number, endIndex: numbe
     return result;
 };
 
-export const ConnectionsForm = () => {
+export const ConnectionsCreate = () => {
     const location = useLocation();
     const [categories, setCategories] = useState<ConnectionCategories>(location.state?.categories || defaultCategories);
     const [clearInputs, setClearInputs] = useState(false);
@@ -144,16 +144,16 @@ export const ConnectionsForm = () => {
                                                             borderRadius: "8px",
                                                             padding: "16px 12px",
                                                             backgroundColor: colorsByDifficulty[index],
+                                                            WebkitUserSelect: "none",
                                                         }}>
                                                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                                                                 <Title level={4} style={{ color: "white", margin: 0, paddingBottom: "4px" }}>{difficulties[index]}</Title>
-                                                                <HolderOutlined style={{ fontSize: '18px', color: "white" }} />
+                                                                <HolderOutlined style={{ fontSize: '18px', color: "white", marginTop: "4px" }} />
                                                             </div>
 
                                                             <DescriptionInput
-                                                                label={<span style={{ color: "white" }}>Title</span>}
                                                                 value={category.description}
-                                                                placeholder={`Category ${category.id + 1}`}
+                                                                placeholder="Name this category"
                                                                 onChange={(s) => {
                                                                     const newCategories = [...categories];
                                                                     newCategories[index].description = s;
@@ -164,7 +164,6 @@ export const ConnectionsForm = () => {
                                                             />
 
                                                             <WordsInput
-                                                                label={<span style={{ color: "white" }}>Words</span>}
                                                                 value={listToString(category.words)}
                                                                 placeholder="Four comma-separated words"
                                                                 onChange={(s) => {
@@ -245,7 +244,7 @@ const listToString = (list: string[]): string => {
 }
 
 type TextInputProps = {
-    label: ReactNode,
+    label?: ReactNode,
     value: string,
     placeholder?: string,
     onChange: (s: string) => void,

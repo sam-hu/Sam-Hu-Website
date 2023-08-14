@@ -57,7 +57,7 @@ const calcOffBy = (words: string[][], guess: string[]): number => {
     return Math.min(...offs);
 }
 
-const isMobile = () => window.innerWidth < 768;
+export const isMobile = () => window.innerWidth < 768;
 
 const Box = ({ word, selected, solved, onClick }: { word: string, selected: boolean, solved: boolean, onClick: () => void }) => {
     return <Button
@@ -87,7 +87,7 @@ export const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
 const iconsByDifficulty = ["🟨", "🟩", "🟦", "🟪"];
 const bodiedTexts = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
 
-export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionCategories, debug?: boolean }) => {
+export const ConnectionsGame = ({ categories, backTo, debug }: { categories: ConnectionCategories, backTo?: "archive", debug?: boolean }) => {
     const normalizedCategories = normalizeCategories(categories);
     const allWords: { [key: string]: WordState } = {};
     const wordArr: string[] = [];
@@ -105,6 +105,8 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
         categoryMap[category.id] = category;
     }
 
+    const location = useLocation();
+    const navigate = useNavigate()
     const [wordOrder, setWordOrder] = useState<string[]>(debug ? wordArr : shuffleArray(wordArr));
     const [wordState, setWordState] = useState<{ [key: string]: WordState }>(allWords);
     const [categoriesState, setCategoriesState] = useState(categoryMap);
@@ -114,7 +116,6 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
     const [victory, setVictory] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [bodiedText, setBodiedText] = useState("");
-    const navigate = useNavigate();
 
     const checkIfSolved = () => {
         if (selectedWords.length !== normalizedCategories.length) {
@@ -181,6 +182,19 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
         }
 
         setSelectedWords([...selectedWords, word]);
+    }
+
+    const backButton = () => {
+        switch (backTo || location.state?.backTo) {
+            case "archive":
+                return <Button className="button" onClick={() => navigate("/connections/archive")} icon={<CaretLeftOutlined />}>
+                    Back to archive
+                </Button>
+            default:
+                return <Button className="button" onClick={() => navigate("/connections/create", { state: { categories: normalizedCategories } })} icon={<CaretLeftOutlined />}>
+                    Edit puzzle
+                </Button>
+        }
     }
 
     return (
@@ -258,7 +272,7 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
                     </div>
                 }
 
-                <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: `${isMobile() ? "12px" : "24px"}` }} />
+                <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: "24px" }} />
 
                 {/* Guesses */}
                 {guesses.length > 0 && <Title level={4} style={{ display: "flex", justifyContent: "center" }}>
@@ -316,9 +330,7 @@ export const ConnectionsGame = ({ categories, debug }: { categories: ConnectionC
                         {copied ? "Copied to clipboard!" : "Share puzzle"}
                     </Button>
                     <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                        <Button className="button" onClick={() => navigate("/connections", { state: { categories: normalizedCategories } })} icon={<CaretLeftOutlined />}>
-                            Edit puzzle
-                        </Button>
+                        {backButton()}
 
                         <Button className="button" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
                             Export as CSV
@@ -388,7 +400,7 @@ export const ConnectionsContainer = () => {
         categories = urlCategories;
     } else if (location.state?.categories && validateCategories(location.state.categories)) {
         categories = location.state.categories;
-    } else if (searchParams.get('debug') === 'true') {
+    } else if (searchParams.has('debug')) {
         debug = true
         categories = [
             {
