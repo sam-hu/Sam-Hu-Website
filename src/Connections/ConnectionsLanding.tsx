@@ -20,7 +20,7 @@ export const ConnectionsLanding = () => {
                         <img src="/Connections.svg" height="36px" width="36px" />
                         <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: "12px" }}>Connections</Title>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "70vh", maxHeight: "576px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "70vh", maxHeight: "516px" }}>
                         <Button
                             className="button with-margin"
                             style={{ height: "96px" }}
