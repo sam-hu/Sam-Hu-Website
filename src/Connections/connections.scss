@@ -52,8 +52,12 @@ div.ant-upload {
     background-color: #efefe6;
 }
 
-.word-box:hover {
+.word-box.desktop:hover {
     background-color: #c8c8bd !important;
+    color: black !important;
+}
+
+.word-box.mobile:hover {
     color: black !important;
 }
 

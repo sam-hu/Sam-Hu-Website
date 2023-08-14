@@ -60,8 +60,9 @@ const calcOffBy = (words: string[][], guess: string[]): number => {
 export const isMobile = () => window.innerWidth < 768;
 
 const Box = ({ word, selected, solved, onClick }: { word: string, selected: boolean, solved: boolean, onClick: () => void }) => {
+    const className = isMobile() ? "word-box mobile" : "word-box desktop";
     return <Button
-        className="word-box"
+        className={className}
         onClick={onClick}
         type={selected ? "primary" : "default"}
         disabled={solved}
