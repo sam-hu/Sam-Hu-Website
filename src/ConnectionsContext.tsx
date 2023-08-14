@@ -36,6 +36,7 @@ export const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
         <ConnectionsContext.Provider value={{ NYTConnections: connections }}>
             <Helmet>
                 <title>Connections</title>
+                <meta property="title" content="Connections" />
                 <meta property="og:title" content="Connections" />
                 {/* <meta property="og:image" content={image} /> */}
             </Helmet>
