@@ -10,6 +10,7 @@ export const ConnectionsMenu = () => {
     const [showHowTo, setShowHowTo] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+    const backTo = window.location.pathname === "/connections/archive" ? "archive" : "landing";
 
     return <Menu
         right
@@ -29,7 +30,7 @@ export const ConnectionsMenu = () => {
 
         <div>
             <CalendarOutlined />
-            <a className="menu-item" onClick={() => { setIsOpen(false); navigate("/connections/today") }}>
+            <a className="menu-item" onClick={() => { setIsOpen(false); navigate("/connections/today", { state: { backTo } }) }}>
                 Today's puzzle
             </a>
         </div>
