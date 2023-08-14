@@ -4,7 +4,6 @@ import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
 import Title from "antd/es/typography/Title";
-import { ConnectionsNYTToday } from "./ConnectionsNYT";
 
 type ConnectionCategory = {
     description: string;
@@ -58,7 +57,7 @@ const calcOffBy = (words: string[][], guess: string[]): number => {
     return Math.min(...offs);
 }
 
-const isMobile = () => window.innerWidth < 768;
+export const isMobile = () => window.innerWidth < 768;
 
 const Box = ({ word, selected, solved, onClick }: { word: string, selected: boolean, solved: boolean, onClick: () => void }) => {
     return <Button
@@ -280,7 +279,7 @@ export const ConnectionsGame = ({ categories, backTo, debug }: { categories: Con
                     </div>
                 }
 
-                <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: `${isMobile() ? "12px" : "24px"}` }} />
+                <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: "24px" }} />
 
                 {/* Guesses */}
                 {guesses.length > 0 && <Title level={4} style={{ display: "flex", justifyContent: "center" }}>

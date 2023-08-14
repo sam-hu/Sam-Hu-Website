@@ -3,7 +3,7 @@ import Home from './Home.tsx'
 import './index.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ConnectionsContainer } from './ConnectionsPlay.tsx';
-import { ConnectionsForm } from './ConnectionsForm.tsx';
+import { ConnectionsCreate } from './ConnectionsCreate.tsx';
 import { ConnectionsNYTArchive, ConnectionsNYTToday } from './ConnectionsNYT.tsx';
 import { ConnectionsProvider } from './ConnectionsContext.tsx';
 
@@ -39,7 +39,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         path="/connections/create"
         element={
           <ConnectionsProvider>
-            <ConnectionsForm />
+            <ConnectionsCreate />
           </ConnectionsProvider>
         }
       />
@@ -47,7 +47,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         path="/connections"
         element={
           <ConnectionsProvider>
-            <ConnectionsForm />
+            <ConnectionsCreate />
           </ConnectionsProvider>
         }
       />

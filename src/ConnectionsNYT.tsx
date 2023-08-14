@@ -1,10 +1,11 @@
 import { useContext } from "react";
 import { Button, Spin } from "antd";
-import { generateLink } from "./ConnectionsForm";
+import { generateLink } from "./ConnectionsCreate";
 import { useNavigate } from "react-router-dom";
 import Title from "antd/es/typography/Title";
 import { ConnectionsContext, ConnectionsProvider } from "./ConnectionsContext";
 import { ConnectionsGame } from "./ConnectionsPlay";
+import { CaretRightOutlined } from '@ant-design/icons';
 
 export const FIRST_DAY = new Date(2023, 5, 12);
 
@@ -56,6 +57,19 @@ export const ConnectionsNYTArchive = () => {
             <div style={{ display: "flex", justifyContent: "center" }}>
                 <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%", display: "flex", flexDirection: "column" }}>
                     <Title level={1} style={{ marginTop: 0, marginBottom: "24px", marginLeft: "8px" }}>NYT Archive</Title>
+                    <Button
+                        style={{ margin: "6px 0" }}
+                        type="primary"
+                        onClick={() => {
+                            navigate("/connections/today");
+                        }}
+                        icon={<CaretRightOutlined />}
+                    >
+                        Play today's puzzle
+                    </Button>
+
+                    <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: "24px" }} />
+
                     {contents}
                 </div>
             </div>
