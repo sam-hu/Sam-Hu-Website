@@ -44,7 +44,7 @@ export const ConnectionsNYTArchive = () => {
                     key={index}
                     onClick={() => {
                         const link = generateLink(connection);
-                        navigate(link + '&from=archive');
+                        navigate(link, { state: { backTo: "archive" } });
                     }}
                 >
                     {index === todayOffset ? <strong>{buttonText}</strong> : buttonText}

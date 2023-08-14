@@ -1,5 +1,5 @@
 import { Button, Modal } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
@@ -105,6 +105,8 @@ export const ConnectionsGame = ({ categories, backTo, debug }: { categories: Con
         categoryMap[category.id] = category;
     }
 
+    const location = useLocation();
+    const navigate = useNavigate()
     const [wordOrder, setWordOrder] = useState<string[]>(debug ? wordArr : shuffleArray(wordArr));
     const [wordState, setWordState] = useState<{ [key: string]: WordState }>(allWords);
     const [categoriesState, setCategoriesState] = useState(categoryMap);
@@ -114,15 +116,6 @@ export const ConnectionsGame = ({ categories, backTo, debug }: { categories: Con
     const [victory, setVictory] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [bodiedText, setBodiedText] = useState("");
-    const [back, setBack] = useState(backTo);
-    const navigate = useNavigate();
-    const searchParams = new URLSearchParams(location.search);
-
-    useEffect(() => {
-        if (searchParams.get("from") === "archive") {
-            setBack("archive");
-        }
-    }, [searchParams])
 
     const checkIfSolved = () => {
         if (selectedWords.length !== normalizedCategories.length) {
@@ -192,7 +185,7 @@ export const ConnectionsGame = ({ categories, backTo, debug }: { categories: Con
     }
 
     const backButton = () => {
-        switch (back) {
+        switch (backTo || location.state?.backTo) {
             case "archive":
                 return <Button className="button" onClick={() => navigate("/connections/archive")} icon={<CaretLeftOutlined />}>
                     Back to archive
