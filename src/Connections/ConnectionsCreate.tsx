@@ -8,6 +8,7 @@ import Title from "antd/es/typography/Title";
 import { UploadOutlined, CaretRightOutlined, HolderOutlined, EditOutlined } from '@ant-design/icons';
 import { RcFile } from "antd/es/upload";
 import { DragDropContext, DropResult, Draggable, Droppable } from 'react-beautiful-dnd';
+import { ConnectionsMenu } from "./ConnectionsMenu";
 
 const defaultCategories: ConnectionCategories = [
     {
@@ -112,125 +113,128 @@ export const ConnectionsCreate = () => {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%" }}>
-                <Form
-                    style={{ color: "black" }}
-                    {...formItemLayout}
-                    labelCol={{ flex: '64px' }}
-                    labelAlign="left"
-                    labelWrap
-                    wrapperCol={{ flex: 1 }}
-                    colon={false}>
+        <>
+            <ConnectionsMenu />
+            <div style={{ display: "flex", justifyContent: "center" }}>
+                <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%" }}>
+                    <Form
+                        style={{ color: "black" }}
+                        {...formItemLayout}
+                        labelCol={{ flex: '64px' }}
+                        labelAlign="left"
+                        labelWrap
+                        wrapperCol={{ flex: 1 }}
+                        colon={false}>
 
-                    <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
-                        <EditOutlined height="36px" width="36px" style={{ fontSize: "36px" }} />
-                        <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: "12px" }}>Create a puzzle</Title>
-                    </div>
+                        <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
+                            <EditOutlined height="36px" width="36px" style={{ fontSize: "36px" }} />
+                            <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: "12px" }}>Create</Title>
+                        </div>
 
-                    <DragDropContext onDragEnd={onDragEnd}>
-                        <Droppable droppableId="list">
-                            {(provided) => (
-                                <div ref={provided.innerRef} {...provided.droppableProps}>
-                                    {
-                                        categories.map((category, index) => (
-                                            <Draggable draggableId={category.id.toString()} index={index} key={category.id.toString()}>
-                                                {provided => (
-                                                    <div
-                                                        className="difficulty-draggable"
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                    >
-                                                        <div style={{
-                                                            border: `1px solid ${colorsByDifficulty[index]}`,
-                                                            borderRadius: "8px",
-                                                            padding: "16px 12px",
-                                                            backgroundColor: colorsByDifficulty[index],
-                                                            WebkitUserSelect: "none",
-                                                        }}>
-                                                            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                                                <Title level={4} style={{ color: "white", margin: 0, paddingBottom: "4px" }}>{difficulties[index]}</Title>
-                                                                <HolderOutlined style={{ fontSize: '18px', color: "white", marginTop: "4px" }} />
+                        <DragDropContext onDragEnd={onDragEnd}>
+                            <Droppable droppableId="list">
+                                {(provided) => (
+                                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                                        {
+                                            categories.map((category, index) => (
+                                                <Draggable draggableId={category.id.toString()} index={index} key={category.id.toString()}>
+                                                    {provided => (
+                                                        <div
+                                                            className="difficulty-draggable"
+                                                            ref={provided.innerRef}
+                                                            {...provided.draggableProps}
+                                                            {...provided.dragHandleProps}
+                                                        >
+                                                            <div style={{
+                                                                border: `1px solid ${colorsByDifficulty[index]}`,
+                                                                borderRadius: "8px",
+                                                                padding: "16px 12px",
+                                                                backgroundColor: colorsByDifficulty[index],
+                                                                WebkitUserSelect: "none",
+                                                            }}>
+                                                                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                                                    <Title level={4} style={{ color: "white", margin: 0, paddingBottom: "4px" }}>{difficulties[index]}</Title>
+                                                                    <HolderOutlined style={{ fontSize: '18px', color: "white", marginTop: "4px" }} />
+                                                                </div>
+
+                                                                <DescriptionInput
+                                                                    value={category.description}
+                                                                    placeholder="Name this category"
+                                                                    onChange={(s) => {
+                                                                        const newCategories = [...categories];
+                                                                        newCategories[index].description = s;
+                                                                        setCategories(newCategories);
+                                                                    }}
+                                                                    clear={clearInputs}
+                                                                    onClear={onClear}
+                                                                />
+
+                                                                <WordsInput
+                                                                    value={listToString(category.words)}
+                                                                    placeholder="Four comma-separated words"
+                                                                    onChange={(s) => {
+                                                                        const newCategories = [...categories];
+                                                                        newCategories[index].words = stringToList(s);
+                                                                        setCategories(newCategories);
+                                                                    }}
+                                                                    clear={clearInputs}
+                                                                    onClear={onClear}
+                                                                />
                                                             </div>
-
-                                                            <DescriptionInput
-                                                                value={category.description}
-                                                                placeholder="Name this category"
-                                                                onChange={(s) => {
-                                                                    const newCategories = [...categories];
-                                                                    newCategories[index].description = s;
-                                                                    setCategories(newCategories);
-                                                                }}
-                                                                clear={clearInputs}
-                                                                onClear={onClear}
-                                                            />
-
-                                                            <WordsInput
-                                                                value={listToString(category.words)}
-                                                                placeholder="Four comma-separated words"
-                                                                onChange={(s) => {
-                                                                    const newCategories = [...categories];
-                                                                    newCategories[index].words = stringToList(s);
-                                                                    setCategories(newCategories);
-                                                                }}
-                                                                clear={clearInputs}
-                                                                onClear={onClear}
-                                                            />
                                                         </div>
-                                                    </div>
-                                                )}
-                                            </Draggable>
-                                        ))
-                                    }
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    </DragDropContext>
+                                                    )}
+                                                </Draggable>
+                                            ))
+                                        }
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        </DragDropContext>
 
-                    <Button
-                        style={{ marginTop: "24px" }}
-                        className="button with-margin"
-                        icon={<CaretRightOutlined />}
-                        disabled={!validateCategories(categories)}
-                        onClick={() => {
-                            const valid = validateCategories(categories);
-                            if (valid) {
-                                const link = generateLink(categories);
-                                navigate(link);
-                            }
-                        }}
-                        type="primary"
-                    >
-                        Create puzzle
-                    </Button>
+                        <Button
+                            style={{ marginTop: "24px" }}
+                            className="button with-margin"
+                            icon={<CaretRightOutlined />}
+                            disabled={!validateCategories(categories)}
+                            onClick={() => {
+                                const valid = validateCategories(categories);
+                                if (valid) {
+                                    const link = generateLink(categories);
+                                    navigate(link);
+                                }
+                            }}
+                            type="primary"
+                        >
+                            Create puzzle
+                        </Button>
 
-                    <Upload
-                        accept=".csv"
-                        maxCount={1}
-                        beforeUpload={handleUpload}
-                        showUploadList={false}
-                    >
+                        <Upload
+                            accept=".csv"
+                            maxCount={1}
+                            beforeUpload={handleUpload}
+                            showUploadList={false}
+                        >
+                            <Button
+                                className="button with-margin"
+                                icon={<UploadOutlined />}
+                            >
+                                Upload CSV
+                            </Button>
+                        </Upload>
+
                         <Button
                             className="button with-margin"
-                            icon={<UploadOutlined />}
+                            onClick={() => {
+                                setClearInputs(true);
+                            }}
                         >
-                            Upload CSV
+                            Clear all
                         </Button>
-                    </Upload>
-
-                    <Button
-                        className="button with-margin"
-                        onClick={() => {
-                            setClearInputs(true);
-                        }}
-                    >
-                        Clear all
-                    </Button>
-                </Form>
+                    </Form>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 
