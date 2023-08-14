@@ -1,19 +1,19 @@
 import React from 'react';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
-import { ReactComponent as BirthIcon } from './assets/birth.svg'
-import { ReactComponent as PlaneIcon } from './assets/plane.svg';
-import { ReactComponent as HouseIcon } from './assets/house.svg';
-import { ReactComponent as PianoIcon } from './assets/piano.svg';
-import { ReactComponent as GradIcon } from './assets/graduation.svg';
-import { ReactComponent as NoPianoIcon } from './assets/nopiano.svg';
-import { ReactComponent as WhistleIcon } from './assets/whistle.svg';
-import { ReactComponent as VballIcon } from './assets/vball.svg';
-import { ReactComponent as CodeIcon } from './assets/code.svg';
-import { ReactComponent as SFIcon } from './assets/sf.svg';
-import { ReactComponent as CornellIcon } from './assets/cornell.svg';
-import { ReactComponent as DevIcon } from './assets/react-white.svg';
-import { ReactComponent as MITIcon } from './assets/mit.svg';
-import Emoji from './emoji'
+import { ReactComponent as BirthIcon } from '../assets/birth.svg'
+import { ReactComponent as PlaneIcon } from '../assets/plane.svg';
+import { ReactComponent as HouseIcon } from '../assets/house.svg';
+import { ReactComponent as PianoIcon } from '../assets/piano.svg';
+import { ReactComponent as GradIcon } from '../assets/graduation.svg';
+import { ReactComponent as NoPianoIcon } from '../assets/nopiano.svg';
+import { ReactComponent as WhistleIcon } from '../assets/whistle.svg';
+import { ReactComponent as VballIcon } from '../assets/vball.svg';
+import { ReactComponent as CodeIcon } from '../assets/code.svg';
+import { ReactComponent as SFIcon } from '../assets/sf.svg';
+import { ReactComponent as CornellIcon } from '../assets/cornell.svg';
+import { ReactComponent as DevIcon } from '../assets/react-white.svg';
+import { ReactComponent as MITIcon } from '../assets/mit.svg';
+import Emoji from '../emoji'
 import './timeline.scss';
 
 class MyTimeline extends React.Component {

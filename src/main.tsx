@@ -2,10 +2,10 @@ import ReactDOM from 'react-dom/client'
 import Home from './Home.tsx'
 import './index.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { ConnectionsContainer } from './ConnectionsPlay.tsx';
-import { ConnectionsCreate } from './ConnectionsCreate.tsx';
-import { ConnectionsNYTArchive, ConnectionsNYTToday } from './ConnectionsNYT.tsx';
-import { ConnectionsProvider } from './ConnectionsContext.tsx';
+import { ConnectionsContainer } from './Connections/ConnectionsPlay.tsx';
+import { ConnectionsCreate } from './Connections/ConnectionsCreate.tsx';
+import { ConnectionsNYTArchive, ConnectionsNYTToday } from './Connections/ConnectionsNYT.tsx';
+import { ConnectionsProvider } from './Connections/ConnectionsContext.tsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
