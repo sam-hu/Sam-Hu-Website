@@ -17,7 +17,7 @@ export const ConnectionsLanding = () => {
                 <HowToPlay open={showHowTo} onClose={() => setShowHowTo(false)} />
                 <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%", display: "flex", flexDirection: "column" }}>
                     <div style={{ display: "flex", alignItems: "center", marginBottom: "36px" }}>
-                        <img src="/Connections.svg" height="36px" />
+                        <img src="/Connections.svg" height="36px" width="36px" />
                         <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: "12px" }}>Connections</Title>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "75vh" }}>

@@ -85,7 +85,7 @@ header {
         padding: 8px 0;
         height: 50px;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-around;
 
         li {
             transition: all 0.2s cubic-bezier(0.6, 0.15, 0.43, 1.53);
@@ -98,6 +98,10 @@ header {
                 text-align: center;
                 color: $navy;
                 letter-spacing: 0.2px;
+            }
+
+            a:hover {
+                cursor: pointer;
             }
         }
 
