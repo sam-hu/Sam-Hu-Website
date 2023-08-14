@@ -144,6 +144,7 @@ export const ConnectionsCreate = () => {
                                                             borderRadius: "8px",
                                                             padding: "16px 12px",
                                                             backgroundColor: colorsByDifficulty[index],
+                                                            WebkitUserSelect: "none",
                                                         }}>
                                                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                                                                 <Title level={4} style={{ color: "white", margin: 0, paddingBottom: "4px" }}>{difficulties[index]}</Title>
