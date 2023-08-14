@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet';
 import { spotifyData } from './spotify';
 import MyTimeline from './timeline';
 import './Home.scss';
@@ -10,11 +9,6 @@ const spotify = <a style={{ color: "#1DB954" }} className="spotifyText link" tar
 
 const Home = function Home() {
     return <div id="home">
-        <Helmet>
-            <title>Test1</title>
-            <meta property="title" content="Test2" />
-            <meta property="og:title" content="Test3" />
-        </Helmet>
         <div id="topCurve"></div>
         <header>
             <div id="info">
