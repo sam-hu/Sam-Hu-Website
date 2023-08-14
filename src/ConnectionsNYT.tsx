@@ -43,8 +43,10 @@ export const ConnectionsNYTArchive = () => {
                     style={{ margin: "6px 0" }}
                     key={index}
                     onClick={() => {
-                        const link = generateLink(connection);
-                        navigate(link + '&from=archive');
+                        setTimeout(() => {
+                            const link = generateLink(connection);
+                            navigate(link + '&from=archive');
+                        }, 50);
                     }}
                 >
                     {index === todayOffset ? <strong>{buttonText}</strong> : buttonText}
