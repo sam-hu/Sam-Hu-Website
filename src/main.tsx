@@ -6,6 +6,7 @@ import { ConnectionsContainer } from './Connections/ConnectionsPlay.tsx';
 import { ConnectionsCreate } from './Connections/ConnectionsCreate.tsx';
 import { ConnectionsNYTArchive, ConnectionsNYTToday } from './Connections/ConnectionsNYT.tsx';
 import { ConnectionsProvider } from './Connections/ConnectionsContext.tsx';
+import { ConnectionsLanding } from './Connections/ConnectionsLanding.tsx';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -47,7 +48,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         path="/connections"
         element={
           <ConnectionsProvider>
-            <ConnectionsCreate />
+            <ConnectionsLanding />
           </ConnectionsProvider>
         }
       />
