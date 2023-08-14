@@ -185,7 +185,11 @@ export const ConnectionsGame = ({ categories, backTo, debug }: { categories: Con
     }
 
     const backButton = () => {
-        switch (backTo || location.state?.backTo) {
+        switch (location.state?.backTo || backTo) {
+            case "landing":
+                return <Button className="button" onClick={() => navigate("/connections")} icon={<CaretLeftOutlined />}>
+                    Back to menu
+                </Button>
             case "archive":
                 return <Button className="button" onClick={() => navigate("/connections/archive")} icon={<CaretLeftOutlined />}>
                     Back to archive

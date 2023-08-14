@@ -1,7 +1,7 @@
-import { spotifyData } from './spotify';
-import MyTimeline from './timeline';
+import { spotifyData } from './Spotify/spotify';
+import MyTimeline from './Timeline/timeline';
 import './Home.scss';
-import './spotify.scss';
+import './Spotify/spotify.scss';
 
 const found = <a style={{ color: "#1662DD", fontSize: "18px", fontWeight: "bold" }} className="link" target="_blank" rel="noopener noreferrer" href="https://found.com">Found</a>;
 const okta = <a style={{ color: "#1662DD", fontSize: "18px", fontWeight: "bold" }} className="link" target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;

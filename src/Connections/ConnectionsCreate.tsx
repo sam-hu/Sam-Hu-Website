@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import './connections.scss';
 import Title from "antd/es/typography/Title";
-import { UploadOutlined, CaretRightOutlined, HolderOutlined } from '@ant-design/icons';
+import { UploadOutlined, CaretRightOutlined, HolderOutlined, EditOutlined } from '@ant-design/icons';
 import { RcFile } from "antd/es/upload";
 import { DragDropContext, DropResult, Draggable, Droppable } from 'react-beautiful-dnd';
 
@@ -123,7 +123,10 @@ export const ConnectionsCreate = () => {
                     wrapperCol={{ flex: 1 }}
                     colon={false}>
 
-                    <Title level={1} style={{ marginTop: 0, marginBottom: "24px", marginLeft: "8px" }}>Connections</Title>
+                    <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
+                        <EditOutlined height="36px" width="36px" style={{ fontSize: "36px" }} />
+                        <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: "12px" }}>Create a puzzle</Title>
+                    </div>
 
                     <DragDropContext onDragEnd={onDragEnd}>
                         <Droppable droppableId="list">
