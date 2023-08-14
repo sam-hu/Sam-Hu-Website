@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { ConnectionCategories } from './ConnectionsPlay';
 import axios from "axios";
+import { Helmet } from 'react-helmet';
 
 type ConnectionsContextType = {
     NYTConnections: ConnectionCategories[];
@@ -33,6 +34,13 @@ export const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
 
     return (
         <ConnectionsContext.Provider value={{ NYTConnections: connections }}>
+            <Helmet>
+                <title>Connections</title>
+                <meta property="title" content="Connections" />
+                <meta property="og:title" content="Connections" />
+                <meta property="og:image" content={`${window.location.origin}/Connections.png`} />
+                <link rel="icon" type="image/svg" href={`${window.location.origin}/Connections.svg`} />
+            </Helmet>
             {children}
         </ConnectionsContext.Provider>
     );
