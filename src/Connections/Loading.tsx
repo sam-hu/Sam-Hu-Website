@@ -9,7 +9,7 @@ const LoadingSpinner = () => {
             transform: "translate(-50%, -50%)"
         }}>
         <Spin size="large" />
-    </div >
+    </div>
 }
 
 export default LoadingSpinner;

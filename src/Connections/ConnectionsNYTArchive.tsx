@@ -21,7 +21,7 @@ const ConnectionsNYTArchive = () => {
             const buttonText = `${getDateString(index)} - #${id}`
             return (
                 <Button
-                    style={{ margin: "6px 0", display: "grid", gridTemplateColumns: "1fr 14fr 1fr", alignItems: "center" }}
+                    style={{ margin: "6px 0", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", justifyContent: "center", padding: "0 24px" }}
                     key={index}
                     onClick={() => {
                         const link = `/connections/play?id=${id}`;
@@ -34,7 +34,7 @@ const ConnectionsNYTArchive = () => {
                     <div>
                         {index === today ? <strong>{buttonText}</strong> : buttonText}
                     </div>
-                    <div style={{ display: "flex", alignItems: "center" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                         {completedPuzzles[id] && <CheckCircleFilled style={{ fontSize: "24px", color: "green" }} />}
                     </div>
                 </Button>
@@ -56,12 +56,12 @@ const ConnectionsNYTArchive = () => {
                         onClick={() => {
                             navigate("/connections/today");
                         }}
-                        style={{ height: "72px", display: "grid", gridTemplateColumns: "1fr 14fr 1fr", alignItems: "center", justifyContent: "center" }}
+                        style={{ height: "72px", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", justifyContent: "center", padding: "0 24px" }}
                     >
-                        <div>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+                            <CaretRightOutlined style={{ fontSize: "24px", marginRight: "8px" }} />
                         </div>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }}>
-                            <CaretRightOutlined style={{ fontSize: "24px" }} />
                             <div>
                                 <div>
                                     Play today's puzzle
@@ -71,7 +71,7 @@ const ConnectionsNYTArchive = () => {
                                 </div>
                             </div>
                         </div>
-                        <div style={{ display: "flex", alignItems: "center" }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                             {completedPuzzles[today + 1] && <CheckCircleFilled style={{ fontSize: "24px" }} />}
                         </div>
                     </Button>

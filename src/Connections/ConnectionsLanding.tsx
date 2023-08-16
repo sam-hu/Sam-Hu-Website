@@ -70,7 +70,7 @@ const ConnectionsLanding = () => {
                         </Button>
                     </div>
                 </div>
-            </div >
+            </div>
         </>
     );
 }

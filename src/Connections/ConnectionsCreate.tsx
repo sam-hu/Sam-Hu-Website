@@ -76,7 +76,7 @@ const DescriptionInput = ({ label, value, placeholder, onChange, clear, onClear 
         }
     }, [clear, onClear])
 
-    return < Form.Item label={label} >
+    return <Form.Item label={label}>
         <Input
             type="text"
             value={valueInBox}
@@ -85,7 +85,7 @@ const DescriptionInput = ({ label, value, placeholder, onChange, clear, onClear 
             }}
             placeholder={placeholder}
         />
-    </Form.Item >
+    </Form.Item>
 }
 
 const WordsInput = ({ label, value, placeholder, onChange, clear, onClear }: TextInputProps) => {
