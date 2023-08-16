@@ -2,10 +2,11 @@ import React from "react";
 import { Button } from "antd";
 import Title from "antd/es/typography/Title";
 import { useNavigate } from "react-router-dom";
-import { CaretRightOutlined, EditOutlined, BookOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { EditOutlined, BookOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { ConnectionsMenu } from "./ConnectionsMenu";
 import { isMobile } from "./utils";
 import HowToPlay from "./HowToPlay";
+import PlayTodayButton from "./PlayTodayButton";
 
 const ConnectionsLanding = () => {
     const navigate = useNavigate();
@@ -22,20 +23,11 @@ const ConnectionsLanding = () => {
                         <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: "12px" }}>Connections</Title>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "70vh", maxHeight: isMobile() ? "512px" : "1024px" }}>
-                        <Button
-                            className="button with-margin"
-                            style={{ height: "72px" }}
-                            type="primary"
-                            onClick={() => {
-                                navigate("/connections/today", { state: { backTo: "landing" } });
-                            }}
-                            icon={<CaretRightOutlined />}
-                        >
-                            Play today's puzzle
-                        </Button>
+                        <PlayTodayButton backTo="landing" />
+
                         <Button
                             className="button"
-                            style={{ height: "72px" }}
+                            style={{ height: "72px", fontSize: "16px" }}
                             onClick={() => {
                                 navigate("/connections/archive");
                             }}
@@ -48,7 +40,7 @@ const ConnectionsLanding = () => {
 
                         <Button
                             className="button with-margin"
-                            style={{ height: "72px" }}
+                            style={{ height: "72px", fontSize: "16px" }}
                             onClick={() => {
                                 navigate("/connections/create");
                             }}
@@ -59,7 +51,7 @@ const ConnectionsLanding = () => {
                         </Button>
                         <Button
                             className="button with-margin"
-                            style={{ height: "72px" }}
+                            style={{ height: "72px", fontSize: "16px" }}
                             onClick={() => {
                                 setShowHowTo(true);
                             }}

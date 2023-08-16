@@ -3,10 +3,11 @@ import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import Title from "antd/es/typography/Title";
 import { ConnectionsContext } from "./ConnectionsContext";
-import { CaretRightOutlined, BookOutlined, CheckCircleFilled } from '@ant-design/icons';
+import { BookOutlined, CheckCircleFilled } from '@ant-design/icons';
 import { ConnectionsMenu } from "./ConnectionsMenu";
 import { getCompletedPuzzles, getDateString, getTodayOffset } from "./utils";
 import LoadingSpinner from "./Loading";
+import PlayTodayButton from "./PlayTodayButton";
 
 const ConnectionsNYTArchive = () => {
     const { NYTConnections: allConnections, LoadedConnections } = useContext(ConnectionsContext)
@@ -50,31 +51,8 @@ const ConnectionsNYTArchive = () => {
                         <BookOutlined height="36px" width="36px" style={{ fontSize: "36px" }} />
                         <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: "12px" }}>NYT Archive</Title>
                     </div>
-                    <Button
-                        className="button with-margin"
-                        type="primary"
-                        onClick={() => {
-                            navigate("/connections/today");
-                        }}
-                        style={{ height: "72px", display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", justifyContent: "center", padding: "0 24px" }}
-                    >
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                            <CaretRightOutlined style={{ fontSize: "24px", marginRight: "8px" }} />
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }}>
-                            <div>
-                                <div>
-                                    Play today's puzzle
-                                </div>
-                                <div>
-                                    {getDateString(today)} - #{today + 1}
-                                </div>
-                            </div>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                            {completedPuzzles[today + 1] && <CheckCircleFilled style={{ fontSize: "24px" }} />}
-                        </div>
-                    </Button>
+
+                    <PlayTodayButton backTo="archive" />
 
                     <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: "24px" }} />
 
