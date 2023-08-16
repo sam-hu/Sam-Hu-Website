@@ -47,7 +47,7 @@ const ConnectionsLanding = () => {
                             icon={<EditOutlined />}
                             type="primary"
                         >
-                            Create your own
+                            Create a puzzle
                         </Button>
                         <Button
                             className="button with-margin"
