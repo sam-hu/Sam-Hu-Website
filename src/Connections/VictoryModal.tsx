@@ -1,12 +1,12 @@
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import { ShareAltOutlined } from '@ant-design/icons';
-import { iconsByDifficulty } from "./utils";
+import { ICONS_BY_DIFFICULTY } from "./utils";
 import { RecordedGuess, WordState } from "./ConnectionsPlay";
 
 export const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: RecordedGuess[]; allWords: { [key: string]: WordState; }; visible: boolean; onClose: () => void; }) => {
     const [copied, setCopied] = useState(false);
-    const guessList = guesses.map((guess) => guess.words.map((word) => iconsByDifficulty[allWords[word].difficulty]).join(""));
+    const guessList = guesses.map((guess) => guess.words.map((word) => ICONS_BY_DIFFICULTY[allWords[word].difficulty]).join(""));
 
     const onShare = () => {
         let text = guessList.join("\n");

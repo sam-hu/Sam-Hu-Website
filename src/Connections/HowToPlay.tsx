@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import { colorsByDifficulty } from "./utils";
+import { COLORS_BY_DIFFICULTY } from "./utils";
 
 const HowToPlay = ({ open, onClose }: { open: boolean; onClose: () => void; }) => {
     return <Modal open={open} onCancel={onClose} onOk={onClose} cancelButtonProps={{ style: { display: 'none' } }} style={{ zIndex: 1200 }}>
@@ -20,19 +20,19 @@ const HowToPlay = ({ open, onClose }: { open: boolean; onClose: () => void; }) =
             <div>
                 <ul>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <span className="help-emoji" style={{ backgroundColor: colorsByDifficulty[0] }}></span>
+                        <span className="help-emoji" style={{ backgroundColor: COLORS_BY_DIFFICULTY[0] }}></span>
                         Easy
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <span className="help-emoji" style={{ backgroundColor: colorsByDifficulty[1] }}></span>
+                        <span className="help-emoji" style={{ backgroundColor: COLORS_BY_DIFFICULTY[1] }}></span>
                         Medium
                     </div>
                     <div style={{ display: "flex", alignItems: "center" }}>
-                        <span className="help-emoji" style={{ backgroundColor: colorsByDifficulty[2] }}></span>
+                        <span className="help-emoji" style={{ backgroundColor: COLORS_BY_DIFFICULTY[2] }}></span>
                         Hard
                     </div>
                     <div style={{ display: "flex", alignItems: "center", marginBottom: "24px" }}>
-                        <span className="help-emoji" style={{ backgroundColor: colorsByDifficulty[3] }}></span>
+                        <span className="help-emoji" style={{ backgroundColor: COLORS_BY_DIFFICULTY[3] }}></span>
                         Very hard
                     </div>
                 </ul>
