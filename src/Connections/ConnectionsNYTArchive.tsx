@@ -5,30 +5,25 @@ import Title from "antd/es/typography/Title";
 import { ConnectionsContext } from "./ConnectionsContext";
 import { CaretRightOutlined, BookOutlined } from '@ant-design/icons';
 import { ConnectionsMenu } from "./ConnectionsMenu";
-import { FIRST_DAY, daysBetween, generateLink } from "./utils";
+import { FIRST_DAY, daysBetween, formatDate, generateLink } from "./utils";
 import LoadingSpinner from "./Loading";
 
 const ConnectionsNYTArchive = () => {
     const { NYTConnections: allConnections } = useContext(ConnectionsContext)
     const navigate = useNavigate();
 
-    const getDate = (offset: number): string => {
+    const getDateString = (offset: number): string => {
         const newDate = new Date(FIRST_DAY);
         newDate.setDate(FIRST_DAY.getDate() + offset);
-
-        return newDate.toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric'
-        });
+        return formatDate(newDate);
     }
 
     const todayOffset = daysBetween(new Date(), FIRST_DAY);
 
     const contents = allConnections.length === 0
         ? <LoadingSpinner />
-        : allConnections.map((connection, index) => {
-            const buttonText = `${getDate(index)} - #${index + 1}`
+        : allConnections.slice(0, todayOffset).map((connection, index) => {
+            const buttonText = `${getDateString(index)} - #${index + 1}`
             return (
                 <Button
                     style={{ margin: "6px 0" }}
@@ -60,9 +55,16 @@ const ConnectionsNYTArchive = () => {
                             navigate("/connections/today");
                         }}
                         icon={<CaretRightOutlined />}
-                        style={{ height: "72px" }}
+                        style={{ height: "72px", display: "flex", alignItems: "center", justifyContent: "center" }}
                     >
-                        Play today's puzzle
+                        <div>
+                            <div>
+                                Play today's puzzle
+                            </div>
+                            <div>
+                                {getDateString(todayOffset)} - #{todayOffset + 1}
+                            </div>
+                        </div>
                     </Button>
 
                     <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: "24px" }} />

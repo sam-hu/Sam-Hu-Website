@@ -81,3 +81,11 @@ export const daysBetween = (now: Date, then: Date): number => {
     const numberOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     return numberOfDays;
 }
+
+export const formatDate = (date: Date): string => {
+    return date.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+    });
+}
