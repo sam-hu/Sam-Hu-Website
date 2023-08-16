@@ -1,26 +1,11 @@
-import { Button, Modal } from "antd";
+import { Button } from "antd";
 import { useState } from "react";
-import { useLocation, useNavigate, Navigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
 import Title from "antd/es/typography/Title";
-
-type ConnectionCategory = {
-    description: string;
-    id: number;
-    words: string[];
-    solved?: boolean;
-}
-
-export type ConnectionCategories = ConnectionCategory[];
-
-const correctFontSize = (str: string, elementWidth: number, originalSize = 16) => {
-    const length = str.length;
-    const mult = elementWidth / (originalSize * length);
-    let fontSize = originalSize * mult * 2.5;
-    if (fontSize > originalSize) fontSize = originalSize;
-    return Math.round(fontSize);
-};
+import { ConnectionCategories, ConnectionCategory, bodiedTexts, colorsByDifficulty, correctFontSize, isMobile, normalizeCategories, shuffleArray } from "./utils";
+import { VictoryModal } from "./VictoryModal";
 
 const correctFontSizeForAnswers = (guess: string[]) => {
     return correctFontSize(guess.join(", "), isMobile() ? 200 : 300, 14)
@@ -57,8 +42,6 @@ const calcOffBy = (words: string[][], guess: string[]): number => {
     return Math.min(...offs);
 }
 
-export const isMobile = () => window.innerWidth < 768;
-
 const Box = ({ word, selected, solved, onClick }: { word: string, selected: boolean, solved: boolean, onClick: () => void }) => {
     const className = isMobile() ? "word-box mobile" : "word-box";
     return <Button
@@ -73,22 +56,18 @@ const Box = ({ word, selected, solved, onClick }: { word: string, selected: bool
     </Button>
 }
 
-type WordState = {
+export type WordState = {
     solved: boolean;
     difficulty: number; // 0, 1, 2, 3
 }
 
-type RecordedGuess = {
+export type RecordedGuess = {
     words: string[];
     correct: boolean;
     off: number
 }
 
-export const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
-const iconsByDifficulty = ["🟨", "🟩", "🟦", "🟪"];
-const bodiedTexts = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
-
-export const ConnectionsGame = ({ categories, backTo, debug }: { categories: ConnectionCategories, backTo?: "archive", debug?: boolean }) => {
+const ConnectionsGame = ({ categories, backTo, debug }: { categories: ConnectionCategories, backTo?: "archive", debug?: boolean }) => {
     const normalizedCategories = normalizeCategories(categories);
     const allWords: { [key: string]: WordState } = {};
     const wordArr: string[] = [];
@@ -347,141 +326,4 @@ export const ConnectionsGame = ({ categories, backTo, debug }: { categories: Con
     )
 }
 
-function shuffleArray(array: string[]): string[] {
-    const shuffledArray = [...array]; // Create a copy of the original array
-
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1)); // Generate a random index
-
-        // Swap elements at i and j
-        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-    }
-
-    return shuffledArray;
-}
-
-const decodeCategories = (encodedValue: string | null): ConnectionCategories | null => {
-    if (!encodedValue) {
-        return null;
-    }
-
-    let parsedCategories;
-    try {
-        const decodedCategories = atob(decodeURIComponent(encodedValue));
-        parsedCategories = JSON.parse(decodedCategories);
-    } catch {
-        return null;
-    }
-
-    if (!validateCategories(parsedCategories)) {
-        return null;
-    }
-
-    return parsedCategories;
-}
-
-export const validateCategories = (categories: ConnectionCategories): boolean => {
-    return categories?.every((cat) => cat.words?.length === 4 && cat.words.every((word) => word.trim().length > 0))
-}
-
-export const normalizeCategories = (categories: ConnectionCategories): ConnectionCategories => {
-    for (let i = 0; i < categories.length; i++) {
-        const c = categories[i];
-        c.id = i;
-        c.description = c.description.trim();
-        c.words = c.words.map((word) => word.trim().toUpperCase());
-    }
-    return categories;
-}
-
-export const ConnectionsContainer = () => {
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-
-    let categories: ConnectionCategories = [];
-    const urlCategories = decodeCategories(searchParams.get('categories'));
-    let debug;
-    if (urlCategories) {
-        categories = urlCategories;
-    } else if (location.state?.categories && validateCategories(location.state.categories)) {
-        categories = location.state.categories;
-    } else if (searchParams.has('debug')) {
-        debug = true
-        categories = [
-            {
-                description: "Test Description 1",
-                id: 1,
-                words: ["a", "ew", "yaw", "goop"]
-            },
-            {
-                description: "Test Description 2",
-                id: 2,
-                words: ["Lodge", "Tithed", "awesome", "Hardware"]
-            },
-            {
-                description: "Test Description 3",
-                id: 3,
-                words: ["beautiful", "beneficial", "adjudicator", "jeopardizing"]
-            },
-            {
-                description: "Test Description 4",
-                id: 4,
-                words: ["jabberwockies", "abdominoplasty", "objectification", "hieroglyphically"]
-            }
-        ]
-    } else {
-        return <Navigate to="/connections" />
-    }
-
-    return <ConnectionsGame categories={categories} debug={debug} />
-}
-
-const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: RecordedGuess[], allWords: { [key: string]: WordState }, visible: boolean, onClose: () => void }) => {
-    const [copied, setCopied] = useState(false);
-    const guessList = guesses.map((guess) => guess.words.map((word) => iconsByDifficulty[allWords[word].difficulty]).join(""));
-
-    const onShare = () => {
-        let text = guessList.join("\n");
-        if (guessList.length >= 8) {
-            text = text + "\n💀Bodied💀";
-        }
-        if (navigator.share) {
-            const shareData = {
-                text: text,
-            };
-            navigator.share(shareData)
-        } else {
-            if (!copied) {
-                setCopied(true);
-                setTimeout(() => {
-                    setCopied(false);
-                }, 2000);
-            }
-            navigator.clipboard.writeText(text)
-        }
-    }
-
-    const footer = <div style={{ display: "flex", flexDirection: "column", marginTop: "24px" }}>
-        <Button className="button with-margin" onClick={onShare} type="primary" icon={<ShareAltOutlined />}>
-            {copied ? "Copied to clipboard!" : "Share results"}
-        </Button>
-        <Button className="button with-margin" onClick={onClose}>
-            Close
-        </Button>
-    </div>
-
-    return <Modal
-        open={visible}
-        title={<div style={{ fontSize: "24px" }}>Nice!</div>}
-        style={{ textAlign: "center" }}
-        centered
-        onCancel={onClose}
-        cancelButtonProps={{ hidden: true }}
-        footer={footer}>
-        <div style={{ paddingTop: "16px" }}>
-            {
-                guessList.map((guess, index) => <div key={index} style={{ fontSize: "24px", height: "24px" }}>{guess}</div>)
-            }
-        </div>
-    </Modal>
-}
+export default ConnectionsGame;

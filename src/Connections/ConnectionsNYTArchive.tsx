@@ -1,22 +1,14 @@
 import { useContext } from "react";
 import { Button, Spin } from "antd";
-import { generateLink } from "./ConnectionsCreate";
 import { useNavigate } from "react-router-dom";
 import Title from "antd/es/typography/Title";
 import { ConnectionsContext } from "./ConnectionsContext";
-import { ConnectionsGame } from "./ConnectionsPlay";
 import { CaretRightOutlined, BookOutlined } from '@ant-design/icons';
 import { ConnectionsMenu } from "./ConnectionsMenu";
+import { FIRST_DAY, daysBetween, generateLink } from "./utils";
+import LoadingSpinner from "./Loading";
 
-export const FIRST_DAY = new Date(2023, 5, 12);
-
-export const daysBetween = (now: Date, then: Date): number => {
-    const timeDifference = now.getTime() - then.getTime();
-    const numberOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    return numberOfDays;
-}
-
-export const ConnectionsNYTArchive = () => {
+const ConnectionsNYTArchive = () => {
     const { NYTConnections: allConnections } = useContext(ConnectionsContext)
     const navigate = useNavigate();
 
@@ -34,9 +26,7 @@ export const ConnectionsNYTArchive = () => {
     const todayOffset = daysBetween(new Date(), FIRST_DAY);
 
     const contents = allConnections.length === 0
-        ? <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
-            <Spin size="large" />
-        </div>
+        ? <LoadingSpinner />
         : allConnections.map((connection, index) => {
             const buttonText = `${getDate(index)} - #${index + 1}`
             return (
@@ -84,17 +74,4 @@ export const ConnectionsNYTArchive = () => {
     )
 }
 
-export const ConnectionsNYTToday = () => {
-    const { NYTConnections } = useContext(ConnectionsContext)
-
-    const todayOffset = daysBetween(new Date(), FIRST_DAY);
-    const categories = NYTConnections[todayOffset]
-
-    if (NYTConnections.length === 0) {
-        return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100vh" }}>
-            <Spin size="large" />
-        </div>
-    }
-
-    return <ConnectionsGame categories={categories} backTo="archive" />
-}
+export default ConnectionsNYTArchive;

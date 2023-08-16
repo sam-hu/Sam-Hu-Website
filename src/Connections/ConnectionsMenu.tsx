@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { stack as Menu } from 'react-burger-menu'
-import { HowToPlay } from './ConnectionsLanding';
 import { useNavigate } from 'react-router-dom';
 import { CloseOutlined, BookOutlined, QuestionCircleOutlined, EditOutlined, CalendarOutlined } from '@ant-design/icons';
-import { isMobile } from './ConnectionsPlay';
-
+import { isMobile } from './utils';
+import HowToPlay from './HowToPlay';
 
 export const ConnectionsMenu = () => {
     const [showHowTo, setShowHowTo] = useState(false);
