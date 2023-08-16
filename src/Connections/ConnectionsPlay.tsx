@@ -97,10 +97,10 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
     const [showModal, setShowModal] = useState(false);
     const [bodiedText, setBodiedText] = useState("");
     const searchParams = new URLSearchParams(location.search);
+    const id: string | null = window.location.pathname === "/connections/today" ? (getTodayOffset() + 1).toString() : searchParams.get("id");
 
     useEffect(() => {
         if (victory) {
-            const id: string | null = window.location.pathname === "/connections/today" ? (getTodayOffset() + 1).toString() : searchParams.get("id");
             if (id) {
                 setCompletedPuzzle(id, guesses);
             }
@@ -194,7 +194,7 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%" }}>
-                {guesses.length > 0 && <VictoryModal guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
+                {guesses.length > 0 && <VictoryModal id={id} guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
 
                 {
                     guesses.map((guess, index) => {

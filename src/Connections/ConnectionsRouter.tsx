@@ -19,7 +19,7 @@ const ConnectionsRouter = () => {
         if (!LoadedConnections) {
             return <LoadingSpinner />;
         }
-        const id = parseInt(searchParams.get("id")!, 10);
+        const id = parseInt(searchParams.get("id")!);
         categories = NYTConnections[id - 1];
     } else if (location.state?.categories && validateCategories(location.state.categories)) {
         categories = location.state.categories;
