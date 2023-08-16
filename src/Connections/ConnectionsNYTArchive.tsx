@@ -56,16 +56,23 @@ const ConnectionsNYTArchive = () => {
                         onClick={() => {
                             navigate("/connections/today");
                         }}
-                        icon={<CaretRightOutlined />}
-                        style={{ height: "72px", display: "flex", alignItems: "center", justifyContent: "center" }}
+                        style={{ height: "72px", display: "grid", gridTemplateColumns: "1fr 14fr 1fr", alignItems: "center", justifyContent: "center" }}
                     >
                         <div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }}>
+                            <CaretRightOutlined style={{ fontSize: "24px" }} />
                             <div>
-                                Play today's puzzle
+                                <div>
+                                    Play today's puzzle
+                                </div>
+                                <div>
+                                    {getDateString(today)} - #{today + 1}
+                                </div>
                             </div>
-                            <div>
-                                {getDateString(today)} - #{today + 1}
-                            </div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            {completedPuzzles[today + 1] && <CheckCircleFilled style={{ fontSize: "24px" }} />}
                         </div>
                     </Button>
 

@@ -12,7 +12,9 @@ export const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses:
         let text = guessList.join("\n");
         if (guessList.length === 4) {
             text = text + "\n😎Perfect😎";
-        } else if (guessList.length > 4 && guessList.length < 8) {
+        } else if (guessList.length === 5) {
+            text = text + "\n🤔Not bad🤔";
+        } else if (guessList.length > 5 && guessList.length < 8) {
             text = text + "\n😒Mid😒";
         } else if (guessList.length >= 8) {
             text = text + "\n💀Bodied💀";

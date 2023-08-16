@@ -205,25 +205,23 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
                         const category = categoryMap[allWords[guess.words[0]].difficulty];
                         const words = category.words;
                         return (
-                            <>
-                                <div
-                                    style={{
-                                        color: 'white',
-                                        backgroundColor: COLORS_BY_DIFFICULTY[category.id],
-                                        borderRadius: "8px",
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        flexDirection: "column",
-                                        gap: "4px",
-                                        alignItems: "center",
-                                        height: "72px",
-                                        margin: "0 0 8px",
-                                    }}
-                                    key={index}>
-                                    <strong>{category.description}</strong>
-                                    <div style={{ fontSize: correctFontSizeForAnswers(words) }}>{words.join(", ")}</div>
-                                </div>
-                            </>
+                            <div
+                                style={{
+                                    color: 'white',
+                                    backgroundColor: COLORS_BY_DIFFICULTY[category.id],
+                                    borderRadius: "8px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    flexDirection: "column",
+                                    gap: "4px",
+                                    alignItems: "center",
+                                    height: "72px",
+                                    margin: "0 0 8px",
+                                }}
+                                key={index}>
+                                <strong>{category.description}</strong>
+                                <div style={{ fontSize: correctFontSizeForAnswers(words) }}>{words.join(", ")}</div>
+                            </div>
                         )
                     })
                 }
