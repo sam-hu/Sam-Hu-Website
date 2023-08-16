@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { stack as Menu } from 'react-burger-menu'
+import { slide as Menu } from 'react-burger-menu'
 import { useNavigate } from 'react-router-dom';
-import { CloseOutlined, BookOutlined, QuestionCircleOutlined, EditOutlined, CalendarOutlined } from '@ant-design/icons';
+import { CloseOutlined, BookOutlined, QuestionCircleOutlined, EditOutlined, CaretRightFilled } from '@ant-design/icons';
 import { isMobile } from './utils';
 import HowToPlay from './HowToPlay';
 
@@ -28,7 +28,7 @@ export const ConnectionsMenu = () => {
         </div>
 
         <div>
-            <CalendarOutlined />
+            <CaretRightFilled />
             <a className="menu-item" onClick={() => { setIsOpen(false); navigate("/connections/today", { state: { backTo } }) }}>
                 Today's puzzle
             </a>
