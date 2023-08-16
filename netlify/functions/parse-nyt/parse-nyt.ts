@@ -1,6 +1,6 @@
 import { Handler } from '@netlify/functions';
 import axios from 'axios';
-import { ConnectionCategories } from '../../../src/ConnectionsPlay';
+import { ConnectionCategories, ConnectionCategory } from '../../../src/Connections/utils';
 
 export const handler: Handler = async (event, context) => {
   try {
@@ -17,45 +17,48 @@ export const handler: Handler = async (event, context) => {
   }
 }
 
+type NYTGroup = {
+  level: 0 | 1 | 2 | 3;
+  members: string[];
+};
+
+type NYTPuzzle = {
+  groups: { [groupName: string]: NYTGroup; };
+  startingGroups: string[][];
+};
+
+type NYTPuzzlesData = NYTPuzzle[];
 
 export const GetAndParseNYTConnections = async (): Promise<ConnectionCategories[]> => {
-  try {
-    const response = await axios.get('https://www.nytimes.com/games/prototype/connections/dist/index.78dfee00.js');
-    const text = await response.data;
-    return ParseNYTConnections(text);
-  } catch (e) {
-    console.error(e);
-    return [];
-  }
+  const response = await axios.get('https://www.nytimes.com/games/prototype/connections/dist/index.78dfee00.js');
+  const text = await response.data;
+  return ParseNYTConnections(text);
 }
 
 const ParseNYTConnections = (text: string): ConnectionCategories[] => {
   const regex = /var x=(\[.*?\]);/s;
   const match = text.match(regex);
 
-  if (match && match[1]) {
-    const jsonData = eval(match[1]);
-    const parsedData: ConnectionCategories[] = [];
-
-    for (const item of jsonData) {
-      const connections: ConnectionCategories = [];
-
-      for (const groupName in item.groups) {
-        const group = item.groups[groupName];
-        const connection = {
-          description: groupName,
-          id: group.level,
-          words: group.members,
-        };
-
-        connections.push(connection);
-      }
-
-      parsedData.push(connections);
-    }
-
-    return parsedData
+  if (!(match && match[1])) {
+    throw new Error('NYT Connections did not match regex')
   }
 
-  return [];
+  const nytData: NYTPuzzlesData = eval(match[1]);
+  const parsedConnections: ConnectionCategories[] = [];
+
+  for (const item of nytData) {
+    const connectionGame: ConnectionCategories = [];
+    for (const groupName in item.groups) {
+      const group = item.groups[groupName];
+      const category: ConnectionCategory = {
+        description: groupName,
+        id: group.level,
+        words: group.members,
+      };
+      connectionGame.push(category);
+    }
+    parsedConnections.push(connectionGame);
+  }
+
+  return parsedConnections
 }
