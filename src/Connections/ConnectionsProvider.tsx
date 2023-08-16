@@ -1,21 +1,11 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { ConnectionCategories } from './ConnectionsPlay';
+import { useEffect, useState } from 'react';
 import axios from "axios";
 import { Helmet } from 'react-helmet';
+import { ConnectionsProviderProps, ConnectionsContext } from './ConnectionsContext';
+import { ConnectionCategories } from './utils';
+import './connections.scss';
 
-type ConnectionsContextType = {
-    NYTConnections: ConnectionCategories[];
-};
-
-export const ConnectionsContext = createContext<ConnectionsContextType>({
-    NYTConnections: [],
-});
-
-type ConnectionsProviderProps = {
-    children: React.ReactNode;
-};
-
-export const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
+const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
     const [connections, setConnections] = useState<ConnectionCategories[]>([]);
     const [loaded, setLoaded] = useState(false);
 
@@ -29,7 +19,7 @@ export const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
                 const connections = response.data as ConnectionCategories[];
                 setConnections(connections);
             })
-            .finally(() => { setLoaded(true) });
+            .finally(() => { setLoaded(true); });
     }, [loaded]);
 
     return (
@@ -45,3 +35,5 @@ export const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
         </ConnectionsContext.Provider>
     );
 };
+
+export default ConnectionsProvider;

@@ -1,14 +1,13 @@
 import { Button, Form, Input, Upload } from "antd";
 import { ReactNode, useEffect, useState } from "react";
-import { ConnectionCategories, colorsByDifficulty, normalizeCategories, validateCategories } from "./ConnectionsPlay";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
-import './connections.scss';
 import Title from "antd/es/typography/Title";
 import { UploadOutlined, CaretRightOutlined, HolderOutlined, EditOutlined } from '@ant-design/icons';
 import { RcFile } from "antd/es/upload";
 import { DragDropContext, DropResult, Draggable, Droppable } from 'react-beautiful-dnd';
 import { ConnectionsMenu } from "./ConnectionsMenu";
+import { ConnectionCategories, colorsByDifficulty, generateLink, validateCategories } from "./utils";
 
 const defaultCategories: ConnectionCategories = [
     {
@@ -33,6 +32,117 @@ const defaultCategories: ConnectionCategories = [
     }
 ]
 
+const difficulties = ["Easy", "Medium", "Hard", "Very hard"];
+
+const reorder = (list: ConnectionCategories, startIndex: number, endIndex: number) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+};
+
+const stringToList = (s: string): string[] => {
+    if (s.length === 0) {
+        return [];
+    }
+    const split = s.split(",");
+    return split
+}
+
+const listToString = (list: string[]): string => {
+    return list.join(",");
+}
+
+type TextInputProps = {
+    label?: ReactNode,
+    value: string,
+    placeholder?: string,
+    onChange: (s: string) => void,
+    clear: boolean,
+    onClear: () => void,
+}
+
+const DescriptionInput = ({ label, value, placeholder, onChange, clear, onClear }: TextInputProps) => {
+    const [valueInBox, setValueInBox] = useState(value);
+
+    useEffect(() => {
+        setValueInBox(value);
+    }, [value])
+
+    useEffect(() => {
+        if (clear) {
+            setValueInBox("");
+            onClear();
+        }
+    }, [clear, onClear])
+
+    return < Form.Item label={label} >
+        <Input
+            type="text"
+            value={valueInBox}
+            onChange={(e) => {
+                onChange(e.target.value);
+            }}
+            placeholder={placeholder}
+        />
+    </Form.Item >
+}
+
+const WordsInput = ({ label, value, placeholder, onChange, clear, onClear }: TextInputProps) => {
+    const [valueList, setValueList] = useState(stringToList(value));
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (value.length === 0) {
+            setValueList([]);
+        }
+        const wordlist = stringToList(value);
+        if (wordlist.every(w => w.length > 0)) {
+            setValueList(wordlist);
+        }
+        if (!shouldShowError()) {
+            setError(null);
+        }
+    }, [value])
+
+    useEffect(() => {
+        if (clear) {
+            setValueList([]);
+            setError(null);
+            onClear();
+        }
+    }, [clear, onClear])
+
+    const isValid = (): boolean => {
+        const list = valueList.map((word) => word.trim());
+        return list.length === 4 && list.every((word) => word.length >= 0)
+    }
+
+    const shouldShowError = (): boolean => !isValid() && valueList.length > 0;
+
+    const validate = () => {
+        if (!shouldShowError()) {
+            setError(null);
+        } else {
+            setError("Input not valid");
+        }
+    }
+
+    return <Form.Item label={label} validateStatus={error ? "error" : ""} help={error}>
+        <Input
+            type="text"
+            value={listToString(valueList)}
+            onChange={e => {
+                setValueList(stringToList(e.target.value));
+                onChange(e.target.value);
+            }}
+            onBlur={validate}
+            placeholder={placeholder}
+        />
+    </Form.Item>
+}
+
+
 const formItemLayout = {
     labelCol: {
         xs: { span: 24 },
@@ -44,22 +154,7 @@ const formItemLayout = {
     },
 };
 
-const difficulties = ["Easy", "Medium", "Hard", "Very hard"];
-
-export const generateLink = (categories: ConnectionCategories): string => {
-    const jsonString = JSON.stringify(normalizeCategories(categories));
-    const encodedBase64String = encodeURIComponent(btoa(jsonString));
-    return `/connections/play?categories=${encodedBase64String}`;
-}
-
-const reorder = (list: ConnectionCategories, startIndex: number, endIndex: number) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
-};
-
-export const ConnectionsCreate = () => {
+const ConnectionsCreate = () => {
     const location = useLocation();
     const [categories, setCategories] = useState<ConnectionCategories>(location.state?.categories || defaultCategories);
     const [clearInputs, setClearInputs] = useState(false);
@@ -238,103 +333,4 @@ export const ConnectionsCreate = () => {
     );
 }
 
-const stringToList = (s: string): string[] => {
-    if (s.length === 0) {
-        return [];
-    }
-    const split = s.split(",");
-    return split
-}
-
-const listToString = (list: string[]): string => {
-    return list.join(",");
-}
-
-type TextInputProps = {
-    label?: ReactNode,
-    value: string,
-    placeholder?: string,
-    onChange: (s: string) => void,
-    clear: boolean,
-    onClear: () => void,
-}
-
-const DescriptionInput = ({ label, value, placeholder, onChange, clear, onClear }: TextInputProps) => {
-    const [valueInBox, setValueInBox] = useState(value);
-
-    useEffect(() => {
-        setValueInBox(value);
-    }, [value])
-
-    useEffect(() => {
-        if (clear) {
-            setValueInBox("");
-            onClear();
-        }
-    }, [clear, onClear])
-
-    return < Form.Item label={label} >
-        <Input
-            type="text"
-            value={valueInBox}
-            onChange={(e) => {
-                onChange(e.target.value);
-            }}
-            placeholder={placeholder}
-        />
-    </Form.Item >
-}
-
-const WordsInput = ({ label, value, placeholder, onChange, clear, onClear }: TextInputProps) => {
-    const [valueList, setValueList] = useState(stringToList(value));
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        if (value.length === 0) {
-            setValueList([]);
-        }
-        const wordlist = stringToList(value);
-        if (wordlist.every(w => w.length > 0)) {
-            setValueList(wordlist);
-        }
-        if (!shouldShowError()) {
-            setError(null);
-        }
-    }, [value])
-
-    useEffect(() => {
-        if (clear) {
-            setValueList([]);
-            setError(null);
-            onClear();
-        }
-    }, [clear, onClear])
-
-    const isValid = (): boolean => {
-        const list = valueList.map((word) => word.trim());
-        return list.length === 4 && list.every((word) => word.length >= 0)
-    }
-
-    const shouldShowError = (): boolean => !isValid() && valueList.length > 0;
-
-    const validate = () => {
-        if (!shouldShowError()) {
-            setError(null);
-        } else {
-            setError("Input not valid");
-        }
-    }
-
-    return <Form.Item label={label} validateStatus={error ? "error" : ""} help={error}>
-        <Input
-            type="text"
-            value={listToString(valueList)}
-            onChange={e => {
-                setValueList(stringToList(e.target.value));
-                onChange(e.target.value);
-            }}
-            onBlur={validate}
-            placeholder={placeholder}
-        />
-    </Form.Item>
-}
+export default ConnectionsCreate;
