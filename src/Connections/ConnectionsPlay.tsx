@@ -132,7 +132,9 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
                 const allSolved = Object.values(newCategoryState).every(category => category.solved);
                 if (allSolved) {
                     setVictory(true);
-                    setShowModal(true);
+                    setTimeout(() => {
+                        setShowModal(true);
+                    }, 750);
                 }
             }
             setBodiedText("");
