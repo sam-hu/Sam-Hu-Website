@@ -7,7 +7,7 @@ import { UploadOutlined, CaretRightOutlined, HolderOutlined, EditOutlined } from
 import { RcFile } from "antd/es/upload";
 import { DragDropContext, DropResult, Draggable, Droppable } from 'react-beautiful-dnd';
 import { ConnectionsMenu } from "./ConnectionsMenu";
-import { ConnectionCategories, colorsByDifficulty, generateLink, validateCategories } from "./utils";
+import { ConnectionCategories, COLORS_BY_DIFFICULTY, generateLink, validateCategories } from "./utils";
 
 const defaultCategories: ConnectionCategories = [
     {
@@ -241,10 +241,10 @@ const ConnectionsCreate = () => {
                                                             {...provided.dragHandleProps}
                                                         >
                                                             <div style={{
-                                                                border: `1px solid ${colorsByDifficulty[index]}`,
+                                                                border: `1px solid ${COLORS_BY_DIFFICULTY[index]}`,
                                                                 borderRadius: "8px",
                                                                 padding: "16px 12px",
-                                                                backgroundColor: colorsByDifficulty[index],
+                                                                backgroundColor: COLORS_BY_DIFFICULTY[index],
                                                                 WebkitUserSelect: "none",
                                                             }}>
                                                                 <div style={{ display: "flex", justifyContent: "space-between" }}>

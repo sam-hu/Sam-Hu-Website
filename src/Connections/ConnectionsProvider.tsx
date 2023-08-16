@@ -23,7 +23,7 @@ const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
     }, [loaded]);
 
     return (
-        <ConnectionsContext.Provider value={{ NYTConnections: connections }}>
+        <ConnectionsContext.Provider value={{ NYTConnections: connections, LoadedConnections: loaded }}>
             <Helmet>
                 <title>Connections</title>
                 <meta property="title" content="Connections" />

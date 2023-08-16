@@ -1,16 +1,15 @@
 import { useContext } from "react";
 import { ConnectionsContext } from "./ConnectionsContext";
-import { FIRST_DAY, daysBetween } from "./utils";
+import { getTodayOffset } from "./utils";
 import ConnectionsPlay from "./ConnectionsPlay";
 import LoadingSpinner from "./Loading";
 
 const ConnectionsNYTToday = () => {
-    const { NYTConnections } = useContext(ConnectionsContext);
+    const { NYTConnections, LoadedConnections } = useContext(ConnectionsContext);
 
-    const todayOffset = daysBetween(new Date(), FIRST_DAY);
-    const categories = NYTConnections[todayOffset];
+    const categories = NYTConnections[getTodayOffset()];
 
-    if (NYTConnections.length === 0) {
+    if (!LoadedConnections) {
         return <LoadingSpinner />
     }
 

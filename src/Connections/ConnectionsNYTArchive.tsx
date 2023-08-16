@@ -3,43 +3,40 @@ import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import Title from "antd/es/typography/Title";
 import { ConnectionsContext } from "./ConnectionsContext";
-import { CaretRightOutlined, BookOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, BookOutlined, CheckCircleFilled } from '@ant-design/icons';
 import { ConnectionsMenu } from "./ConnectionsMenu";
-import { FIRST_DAY, daysBetween, generateLink } from "./utils";
+import { getCompletedPuzzles, getDateString, getTodayOffset } from "./utils";
 import LoadingSpinner from "./Loading";
 
 const ConnectionsNYTArchive = () => {
-    const { NYTConnections: allConnections } = useContext(ConnectionsContext)
+    const { NYTConnections: allConnections, LoadedConnections } = useContext(ConnectionsContext)
     const navigate = useNavigate();
+    const today = getTodayOffset();
+    const completedPuzzles = getCompletedPuzzles();
 
-    const getDate = (offset: number): string => {
-        const newDate = new Date(FIRST_DAY);
-        newDate.setDate(FIRST_DAY.getDate() + offset);
-
-        return newDate.toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric'
-        });
-    }
-
-    const todayOffset = daysBetween(new Date(), FIRST_DAY);
-
-    const contents = allConnections.length === 0
+    const contents = !LoadedConnections
         ? <LoadingSpinner />
-        : allConnections.map((connection, index) => {
-            const buttonText = `${getDate(index)} - #${index + 1}`
+        : allConnections.slice(0, today).map((_, index) => {
+            const id = index + 1;
+            const buttonText = `${getDateString(index)} - #${id}`
             return (
                 <Button
-                    style={{ margin: "6px 0" }}
+                    style={{ margin: "6px 0", display: "grid", gridTemplateColumns: "1fr 14fr 1fr", alignItems: "center" }}
                     key={index}
                     onClick={() => {
-                        const link = generateLink(connection);
+                        const link = `/connections/play?id=${id}`;
                         navigate(link, { state: { backTo: "archive" } });
                     }}
-                    type={index > todayOffset ? "dashed" : "default"}
+                    type={index > today ? "dashed" : "default"}
                 >
-                    {index === todayOffset ? <strong>{buttonText}</strong> : buttonText}
+                    <div>
+                    </div>
+                    <div>
+                        {index === today ? <strong>{buttonText}</strong> : buttonText}
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        {completedPuzzles[id] && <CheckCircleFilled style={{ fontSize: "24px", color: "green" }} />}
+                    </div>
                 </Button>
             )
         }).reverse()
@@ -59,10 +56,24 @@ const ConnectionsNYTArchive = () => {
                         onClick={() => {
                             navigate("/connections/today");
                         }}
-                        icon={<CaretRightOutlined />}
-                        style={{ height: "72px" }}
+                        style={{ height: "72px", display: "grid", gridTemplateColumns: "1fr 14fr 1fr", alignItems: "center", justifyContent: "center" }}
                     >
-                        Play today's puzzle
+                        <div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }}>
+                            <CaretRightOutlined style={{ fontSize: "24px" }} />
+                            <div>
+                                <div>
+                                    Play today's puzzle
+                                </div>
+                                <div>
+                                    {getDateString(today)} - #{today + 1}
+                                </div>
+                            </div>
+                        </div>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                            {completedPuzzles[today + 1] && <CheckCircleFilled style={{ fontSize: "24px" }} />}
+                        </div>
                     </Button>
 
                     <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: "24px" }} />

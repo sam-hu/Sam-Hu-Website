@@ -1,10 +1,10 @@
 import { Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
 import Title from "antd/es/typography/Title";
-import { ConnectionCategories, ConnectionCategory, bodiedTexts, colorsByDifficulty, correctFontSize, isMobile, normalizeCategories, shuffleArray } from "./utils";
+import { ConnectionCategories, ConnectionCategory, BODIED_TEXTS, COLORS_BY_DIFFICULTY, correctFontSize, isMobile, normalizeCategories, shuffleArray, getTodayOffset, setCompletedPuzzle } from "./utils";
 import { VictoryModal } from "./VictoryModal";
 
 const correctFontSizeForAnswers = (guess: string[]) => {
@@ -96,6 +96,16 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
     const [victory, setVictory] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [bodiedText, setBodiedText] = useState("");
+    const searchParams = new URLSearchParams(location.search);
+    const id: string | null = window.location.pathname === "/connections/today" ? (getTodayOffset() + 1).toString() : searchParams.get("id");
+
+    useEffect(() => {
+        if (victory) {
+            if (id) {
+                setCompletedPuzzle(id, guesses);
+            }
+        }
+    }, [victory])
 
     const checkIfSolved = () => {
         if (selectedWords.length !== normalizedCategories.length) {
@@ -130,7 +140,7 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
             const last3 = newGuesses.slice(-3);
             const bodiedText = newGuesses.length >= 3 && last3.every(g => !g.correct);
             if (bodiedText) {
-                setBodiedText(bodiedTexts[Math.floor(Math.random() * bodiedTexts.length)]);
+                setBodiedText(BODIED_TEXTS[Math.floor(Math.random() * BODIED_TEXTS.length)]);
             }
         }
 
@@ -184,7 +194,7 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%" }}>
-                {guesses.length > 0 && <VictoryModal guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
+                {guesses.length > 0 && <VictoryModal id={id} guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
 
                 {
                     guesses.map((guess, index) => {
@@ -193,26 +203,25 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
                         }
 
                         const category = categoryMap[allWords[guess.words[0]].difficulty];
+                        const words = category.words;
                         return (
-                            <>
-                                <div
-                                    style={{
-                                        color: 'white',
-                                        backgroundColor: colorsByDifficulty[category.id],
-                                        borderRadius: "8px",
-                                        display: "flex",
-                                        justifyContent: "center",
-                                        flexDirection: "column",
-                                        gap: "4px",
-                                        alignItems: "center",
-                                        height: "72px",
-                                        margin: "0 0 8px",
-                                    }}
-                                    key={index}>
-                                    <strong>{category.description}</strong>
-                                    <div style={{ fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(", ")}</div>
-                                </div>
-                            </>
+                            <div
+                                style={{
+                                    color: 'white',
+                                    backgroundColor: COLORS_BY_DIFFICULTY[category.id],
+                                    borderRadius: "8px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    flexDirection: "column",
+                                    gap: "4px",
+                                    alignItems: "center",
+                                    height: "72px",
+                                    margin: "0 0 8px",
+                                }}
+                                key={index}>
+                                <strong>{category.description}</strong>
+                                <div style={{ fontSize: correctFontSizeForAnswers(words) }}>{words.join(", ")}</div>
+                            </div>
                         )
                     })
                 }
@@ -269,7 +278,7 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            backgroundColor: guess.correct ? colorsByDifficulty[allWords[guess.words[0]].difficulty] : 'darkgray',
+                            backgroundColor: guess.correct ? COLORS_BY_DIFFICULTY[allWords[guess.words[0]].difficulty] : 'darkgray',
                             border: '1px solid',
                             borderRadius: "8px",
                             height: '42px',

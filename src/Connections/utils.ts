@@ -1,3 +1,5 @@
+import { RecordedGuess } from "./ConnectionsPlay";
+
 export type ConnectionCategory = {
     description: string;
     id: number;
@@ -70,14 +72,47 @@ export const correctFontSize = (str: string, elementWidth: number, originalSize 
 
 export const isMobile = () => window.innerWidth < 768;
 
-export const colorsByDifficulty = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
-export const iconsByDifficulty = ["🟨", "🟩", "🟦", "🟪"];
-export const bodiedTexts = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
+export const COLORS_BY_DIFFICULTY = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"];
+export const ICONS_BY_DIFFICULTY = ["🟨", "🟩", "🟦", "🟪"];
+export const BODIED_TEXTS = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
 
-export const FIRST_DAY = new Date(2023, 5, 12);
+const COMPLETED_PUZZLES_KEY = "completed_puzzles";
+
+export const getCompletedPuzzles = (): { [id: string]: RecordedGuess[] } => {
+    const completedPuzzles = localStorage.getItem(COMPLETED_PUZZLES_KEY);
+    if (completedPuzzles) {
+        return JSON.parse(completedPuzzles);
+    }
+    return {};
+}
+
+export const setCompletedPuzzle = (id: string, guesses: RecordedGuess[]): void => {
+    const completedPuzzles = getCompletedPuzzles();
+    completedPuzzles[id] = guesses;
+    window.localStorage.setItem(COMPLETED_PUZZLES_KEY, JSON.stringify(completedPuzzles));
+}
+
+const FIRST_DAY = new Date(2023, 5, 12);
 
 export const daysBetween = (now: Date, then: Date): number => {
     const timeDifference = now.getTime() - then.getTime();
     const numberOfDays = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
     return numberOfDays;
+}
+export const getTodayOffset = (): number => {
+    return daysBetween(new Date(), FIRST_DAY);
+}
+
+export const formatDate = (date: Date): string => {
+    return date.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+    });
+}
+
+export const getDateString = (offset: number): string => {
+    const newDate = new Date(FIRST_DAY);
+    newDate.setDate(FIRST_DAY.getDate() + offset);
+    return formatDate(newDate);
 }

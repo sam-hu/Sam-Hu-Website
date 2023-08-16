@@ -1,24 +1,31 @@
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import { ShareAltOutlined } from '@ant-design/icons';
-import { iconsByDifficulty } from "./utils";
+import { ICONS_BY_DIFFICULTY, getDateString } from "./utils";
 import { RecordedGuess, WordState } from "./ConnectionsPlay";
 
-export const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses: RecordedGuess[]; allWords: { [key: string]: WordState; }; visible: boolean; onClose: () => void; }) => {
+export const VictoryModal = ({ id, guesses, allWords, visible, onClose }: { id: string | null, guesses: RecordedGuess[]; allWords: { [key: string]: WordState; }; visible: boolean; onClose: () => void; }) => {
     const [copied, setCopied] = useState(false);
-    const guessList = guesses.map((guess) => guess.words.map((word) => iconsByDifficulty[allWords[word].difficulty]).join(""));
+    const guessList = guesses.map((guess) => guess.words.map((word) => ICONS_BY_DIFFICULTY[allWords[word].difficulty]).join(""));
 
     const onShare = () => {
-        let text = guessList.join("\n");
+        let text = "";
+        if (id) {
+            text += getDateString(parseInt(id) - 1) + "\n"
+            text += `Connections #${id}\n`
+        }
+        text += guessList.join("\n");
         if (guessList.length === 4) {
             text = text + "\n😎Perfect😎";
-        } else if (guessList.length > 4 && guessList.length < 8) {
+        } else if (guessList.length === 5) {
+            text = text + "\n🤔Not bad🤔";
+        } else if (guessList.length > 5 && guessList.length < 8) {
             text = text + "\n😒Mid😒";
         } else if (guessList.length >= 8) {
             text = text + "\n💀Bodied💀";
         }
         if (navigator.share) {
-            const shareData = {
+            const shareData: ShareData = {
                 text: text,
             };
             navigator.share(shareData);
