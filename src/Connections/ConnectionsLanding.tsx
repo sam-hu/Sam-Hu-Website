@@ -33,7 +33,7 @@ const ConnectionsLanding = () => {
                             }}
                             icon={<BookOutlined />}
                         >
-                            NYT Archive
+                            New York Times Archive
                         </Button>
 
                         <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "36px", marginBottom: "36px", width: "100%" }} />

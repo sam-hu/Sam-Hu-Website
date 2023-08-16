@@ -134,7 +134,7 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
                     setVictory(true);
                     setTimeout(() => {
                         setShowModal(true);
-                    }, 750);
+                    }, 500);
                 }
             }
             setBodiedText("");

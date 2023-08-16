@@ -37,7 +37,7 @@ export const ConnectionsMenu = () => {
         <div>
             <BookOutlined />
             <a className="menu-item" onClick={() => { setIsOpen(false); navigate("/connections/archive") }}>
-                Archive
+                NYT Archive
             </a>
         </div>
 
@@ -51,7 +51,7 @@ export const ConnectionsMenu = () => {
         <div>
             <QuestionCircleOutlined />
             <a className="menu-item" onClick={() => { setIsOpen(false); setShowHowTo(true) }}>
-                How to Play
+                How to play
             </a>
         </div>
 
