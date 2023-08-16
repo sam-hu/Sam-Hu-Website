@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ConnectionsContext } from "./ConnectionsContext";
 import { FIRST_DAY, daysBetween } from "./utils";
-import ConnectionsGame from "./ConnectionsPlay";
+import ConnectionsPlay from "./ConnectionsPlay";
 import LoadingSpinner from "./Loading";
 
 const ConnectionsNYTToday = () => {
@@ -14,7 +14,7 @@ const ConnectionsNYTToday = () => {
         return <LoadingSpinner />
     }
 
-    return <ConnectionsGame categories={categories} backTo="archive" />;
+    return <ConnectionsPlay categories={categories} backTo="archive" />;
 };
 
 export default ConnectionsNYTToday;

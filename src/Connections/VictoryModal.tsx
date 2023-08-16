@@ -10,7 +10,11 @@ export const VictoryModal = ({ guesses, allWords, visible, onClose }: { guesses:
 
     const onShare = () => {
         let text = guessList.join("\n");
-        if (guessList.length >= 8) {
+        if (guessList.length === 4) {
+            text = text + "\n😎Perfect😎";
+        } else if (guessList.length > 4 && guessList.length < 8) {
+            text = text + "\n😒Mid😒";
+        } else if (guessList.length >= 8) {
             text = text + "\n💀Bodied💀";
         }
         if (navigator.share) {

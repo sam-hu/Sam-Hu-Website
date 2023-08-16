@@ -1,17 +1,17 @@
-import { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import Home from './Home.tsx'
-import LoadingSpinner from './Connections/Loading.tsx';
-const ConnectionsProvider = lazy(() => import('./Connections/ConnectionsProvider.tsx'));
-const ConnectionsContainer = lazy(() => import('./Connections/ConnectionsContainer.tsx'));
-const ConnectionsCreate = lazy(() => import('./Connections/ConnectionsCreate.tsx'));
-const ConnectionsNYTArchive = lazy(() => import('./Connections/ConnectionsNYTArchive.tsx'));
-const ConnectionsNYTToday = lazy(() => import('./Connections/ConnectionsNYTToday.tsx'));
-const ConnectionsLanding = lazy(() => import('./Connections/ConnectionsLanding.tsx'));
+import { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import ReactDOM from "react-dom/client"
+import "./index.css"
+import Home from "./Home.tsx"
+import LoadingSpinner from "./Connections/Loading.tsx";
+const ConnectionsProvider = lazy(() => import("./Connections/ConnectionsProvider.tsx"));
+const ConnectionsRouter = lazy(() => import("./Connections/ConnectionsRouter.tsx"));
+const ConnectionsCreate = lazy(() => import("./Connections/ConnectionsCreate.tsx"));
+const ConnectionsNYTArchive = lazy(() => import("./Connections/ConnectionsNYTArchive.tsx"));
+const ConnectionsNYTToday = lazy(() => import("./Connections/ConnectionsNYTToday.tsx"));
+const ConnectionsLanding = lazy(() => import("./Connections/ConnectionsLanding.tsx"));
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <Router>
     <Suspense fallback={<LoadingSpinner />}>
       <Routes>
@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           path="/connections/play"
           element={
             <ConnectionsProvider>
-              <ConnectionsContainer />
+              <ConnectionsRouter />
             </ConnectionsProvider>
           }
         />

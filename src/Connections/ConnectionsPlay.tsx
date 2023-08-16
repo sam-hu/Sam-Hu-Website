@@ -67,7 +67,7 @@ export type RecordedGuess = {
     off: number
 }
 
-const ConnectionsGame = ({ categories, backTo, debug }: { categories: ConnectionCategories, backTo?: "archive", debug?: boolean }) => {
+const ConnectionsPlay = ({ categories, backTo, debug }: { categories: ConnectionCategories, backTo?: "archive", debug?: boolean }) => {
     const normalizedCategories = normalizeCategories(categories);
     const allWords: { [key: string]: WordState } = {};
     const wordArr: string[] = [];
@@ -326,4 +326,4 @@ const ConnectionsGame = ({ categories, backTo, debug }: { categories: Connection
     )
 }
 
-export default ConnectionsGame;
+export default ConnectionsPlay;

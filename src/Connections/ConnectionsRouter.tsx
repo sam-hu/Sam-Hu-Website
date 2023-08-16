@@ -1,19 +1,19 @@
-import { useLocation, Navigate } from 'react-router-dom';
+import { useLocation, Navigate } from "react-router-dom";
 import { ConnectionCategories, decodeCategories, validateCategories } from "./utils";
-import ConnectionsGame from './ConnectionsPlay';
+import ConnectionsPlay from "./ConnectionsPlay";
 
-const ConnectionsContainer = () => {
+const ConnectionsRouter = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
 
     let categories: ConnectionCategories = [];
-    const urlCategories = decodeCategories(searchParams.get('categories'));
+    const urlCategories = decodeCategories(searchParams.get("categories"));
     let debug;
     if (urlCategories) {
         categories = urlCategories;
     } else if (location.state?.categories && validateCategories(location.state.categories)) {
         categories = location.state.categories;
-    } else if (searchParams.has('debug')) {
+    } else if (searchParams.has("debug")) {
         debug = true;
         categories = [
             {
@@ -41,7 +41,7 @@ const ConnectionsContainer = () => {
         return <Navigate to="/connections" />;
     }
 
-    return <ConnectionsGame categories={categories} debug={debug} />;
+    return <ConnectionsPlay categories={categories} debug={debug} />;
 };
 
-export default ConnectionsContainer;
+export default ConnectionsRouter;
