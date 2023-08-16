@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import Home from './Home.tsx'
 import LoadingSpinner from './Connections/Loading.tsx';
+const ConnectionsProvider = lazy(() => import('./Connections/ConnectionsProvider.tsx'));
 const ConnectionsContainer = lazy(() => import('./Connections/ConnectionsContainer.tsx'));
 const ConnectionsCreate = lazy(() => import('./Connections/ConnectionsCreate.tsx'));
 const ConnectionsNYTArchive = lazy(() => import('./Connections/ConnectionsNYTArchive.tsx'));
 const ConnectionsNYTToday = lazy(() => import('./Connections/ConnectionsNYTToday.tsx'));
-const ConnectionsProvider = lazy(() => import('./Connections/ConnectionsProvider.tsx'));
 const ConnectionsLanding = lazy(() => import('./Connections/ConnectionsLanding.tsx'));
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

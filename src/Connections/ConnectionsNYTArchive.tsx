@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Button, Spin } from "antd";
+import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import Title from "antd/es/typography/Title";
 import { ConnectionsContext } from "./ConnectionsContext";

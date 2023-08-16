@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { Spin } from "antd";
 import { ConnectionsContext } from "./ConnectionsContext";
 import { FIRST_DAY, daysBetween } from "./utils";
 import ConnectionsGame from "./ConnectionsPlay";
