@@ -36,7 +36,7 @@ export const GetAndParseNYTConnections = async (): Promise<ConnectionCategories[
 }
 
 const ParseNYTConnections = (text: string): ConnectionCategories[] => {
-  const regex = /var x=(\[.*?\]);/s;
+  const regex = /var J=(\[.*?\]);/s;
   const match = text.match(regex);
 
   if (!(match && match[1])) {
