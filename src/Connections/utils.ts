@@ -19,6 +19,7 @@ export const normalizeCategories = (categories: ConnectionCategories): Connectio
         c.id = i;
         c.description = c.description.trim();
         c.words = c.words.map((word) => word.trim().toUpperCase());
+        c.solved = undefined;
     }
     return categories;
 }
