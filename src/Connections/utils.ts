@@ -13,19 +13,22 @@ export const validateCategories = (categories: ConnectionCategories): boolean =>
     return categories?.every((cat) => cat.words?.length === 4 && cat.words.every((word) => word.trim().length > 0))
 }
 
-export const normalizeCategories = (categories: ConnectionCategories): ConnectionCategories => {
+export const normalizeCategories = (categories: ConnectionCategories, reset = false): ConnectionCategories => {
     for (let i = 0; i < categories.length; i++) {
         const c = categories[i];
         c.id = i;
         c.description = c.description.trim();
         c.words = c.words.map((word) => word.trim().toUpperCase());
-        c.solved = undefined;
+        if (reset) {
+            delete c.solved;
+        }
     }
     return categories;
 }
 
 export const generateLink = (categories: ConnectionCategories): string => {
-    const jsonString = JSON.stringify(normalizeCategories(categories));
+    const startingCategories = normalizeCategories(categories, true);
+    const jsonString = JSON.stringify(startingCategories);
     const encodedBase64String = encodeURIComponent(btoa(jsonString));
     return `/connections/play?categories=${encodedBase64String}`;
 }

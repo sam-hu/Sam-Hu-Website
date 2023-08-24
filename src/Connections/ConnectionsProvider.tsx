@@ -6,24 +6,24 @@ import { ConnectionCategories } from './utils';
 import './connections.scss';
 
 const ConnectionsProvider = ({ children }: ConnectionsProviderProps) => {
-    const [connections, setConnections] = useState<ConnectionCategories[]>([]);
-    const [loaded, setLoaded] = useState(false);
+    const [nytConnections, setNytConnections] = useState<ConnectionCategories[]>([]);
+    const [loadedConnections, setLoadedConnections] = useState(false);
 
     useEffect(() => {
-        if (loaded) {
+        if (loadedConnections) {
             return;
         }
 
         axios.get("/.netlify/functions/parse-nyt")
             .then((response) => {
                 const connections = response.data as ConnectionCategories[];
-                setConnections(connections);
+                setNytConnections(connections);
             })
-            .finally(() => { setLoaded(true); });
-    }, [loaded]);
+            .finally(() => { setLoadedConnections(true); });
+    }, [loadedConnections]);
 
     return (
-        <ConnectionsContext.Provider value={{ NYTConnections: connections, LoadedConnections: loaded }}>
+        <ConnectionsContext.Provider value={{ nytConnections, loadedConnections }}>
             <Helmet>
                 <title>Connections</title>
                 <meta property="title" content="Connections" />

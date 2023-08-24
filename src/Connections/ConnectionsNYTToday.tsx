@@ -1,19 +1,20 @@
 import { useContext } from "react";
 import { ConnectionsContext } from "./ConnectionsContext";
-import { getTodayOffset } from "./utils";
+import { getTodayOffset, normalizeCategories } from "./utils";
 import ConnectionsPlay from "./ConnectionsPlay";
 import LoadingSpinner from "./Loading";
 
 const ConnectionsNYTToday = () => {
-    const { NYTConnections, LoadedConnections } = useContext(ConnectionsContext);
+    const { nytConnections, loadedConnections } = useContext(ConnectionsContext);
 
-    const categories = NYTConnections[getTodayOffset()];
+    const categories = nytConnections[getTodayOffset()];
 
-    if (!LoadedConnections) {
+    if (!loadedConnections) {
         return <LoadingSpinner />
     }
 
-    return <ConnectionsPlay categories={categories} backTo="archive" />;
+    const startingCategories = normalizeCategories(categories, true);
+    return <ConnectionsPlay categories={startingCategories} backTo="archive" />;
 };
 
 export default ConnectionsNYTToday;

@@ -10,14 +10,14 @@ import LoadingSpinner from "./Loading";
 import PlayTodayButton from "./PlayTodayButton";
 
 const ConnectionsNYTArchive = () => {
-    const { NYTConnections: allConnections, LoadedConnections } = useContext(ConnectionsContext)
+    const { nytConnections, loadedConnections } = useContext(ConnectionsContext)
     const navigate = useNavigate();
     const today = getTodayOffset();
     const completedPuzzles = getCompletedPuzzles();
 
-    const contents = !LoadedConnections
+    const contents = !loadedConnections
         ? <LoadingSpinner />
-        : allConnections.slice(0, today).map((_, index) => {
+        : nytConnections.slice(0, today).map((_, index) => {
             const id = index + 1;
             const buttonText = `${getDateString(index)} - #${id}`
             return (

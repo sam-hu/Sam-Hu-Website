@@ -2,13 +2,13 @@ import React, { createContext } from 'react';
 import { ConnectionCategories } from './utils';
 
 type ConnectionsContextType = {
-    NYTConnections: ConnectionCategories[];
-    LoadedConnections: boolean;
+    nytConnections: ConnectionCategories[];
+    loadedConnections: boolean;
 };
 
 export const ConnectionsContext = createContext<ConnectionsContextType>({
-    NYTConnections: [],
-    LoadedConnections: false,
+    nytConnections: [],
+    loadedConnections: false,
 });
 
 export type ConnectionsProviderProps = {

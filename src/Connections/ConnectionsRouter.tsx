@@ -1,5 +1,5 @@
 import { useLocation, Navigate } from "react-router-dom";
-import { ConnectionCategories, decodeCategories, validateCategories } from "./utils";
+import { ConnectionCategories, decodeCategories, normalizeCategories, validateCategories } from "./utils";
 import ConnectionsPlay from "./ConnectionsPlay";
 import { useContext } from "react";
 import { ConnectionsContext } from "./ConnectionsContext";
@@ -7,7 +7,7 @@ import LoadingSpinner from "./Loading";
 
 const ConnectionsRouter = () => {
     const location = useLocation();
-    const { NYTConnections, LoadedConnections } = useContext(ConnectionsContext);
+    const { nytConnections, loadedConnections } = useContext(ConnectionsContext);
     const searchParams = new URLSearchParams(location.search);
 
     let categories: ConnectionCategories = [];
@@ -16,11 +16,11 @@ const ConnectionsRouter = () => {
     if (urlCategories) {
         categories = urlCategories;
     } else if (searchParams.has("id")) {
-        if (!LoadedConnections) {
+        if (!loadedConnections) {
             return <LoadingSpinner />;
         }
         const id = parseInt(searchParams.get("id")!);
-        categories = NYTConnections[id - 1];
+        categories = nytConnections[id - 1];
     } else if (location.state?.categories && validateCategories(location.state.categories)) {
         categories = location.state.categories;
     } else if (searchParams.has("debug")) {
@@ -51,7 +51,8 @@ const ConnectionsRouter = () => {
         return <Navigate to="/connections" />;
     }
 
-    return <ConnectionsPlay categories={categories} debug={debug} />;
+    const startingCategories = normalizeCategories(categories, true);
+    return <ConnectionsPlay categories={startingCategories} debug={debug} />;
 };
 
 export default ConnectionsRouter;
