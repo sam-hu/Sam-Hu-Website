@@ -12,7 +12,7 @@ export const handler: Handler = async (event, context) => {
   } catch (e) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: e }),
+      body: e.message,
     }
   }
 }
@@ -36,14 +36,15 @@ export const GetAndParseNYTConnections = async (): Promise<ConnectionCategories[
 }
 
 const ParseNYTConnections = (text: string): ConnectionCategories[] => {
-  const regex = /var J=(\[.*?\]);/s;
+  const regex = /\[{groups:(.*?\]);/s;
   const match = text.match(regex);
 
-  if (!(match && match[1])) {
+  if (!match || match.length === 0) {
     throw new Error('NYT Connections did not match regex')
   }
 
-  const nytData: NYTPuzzlesData = eval(match[1]);
+  const js = match[0]
+  const nytData: NYTPuzzlesData = eval(js);
   const parsedConnections: ConnectionCategories[] = [];
 
   for (const item of nytData) {
