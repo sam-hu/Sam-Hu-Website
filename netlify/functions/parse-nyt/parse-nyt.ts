@@ -2,7 +2,7 @@ import { Handler } from '@netlify/functions';
 import axios from 'axios';
 import { ConnectionCategories, ConnectionCategory } from '../../../src/Connections/utils';
 
-export const handler: Handler = async (event, context) => {
+export const handler: Handler = async () => {
   try {
     const connections = await GetAndParseNYTConnections();
     return {
@@ -17,6 +17,12 @@ export const handler: Handler = async (event, context) => {
   }
 }
 
+const GetAndParseNYTConnections = async (): Promise<ConnectionCategories[]> => {
+  const response = await axios.get('https://www.nytimes.com/games/prototype/connections/dist/index.78dfee00.js');
+  const text = await response.data;
+  return ParseNYTConnections(text);
+}
+
 type NYTGroup = {
   level: 0 | 1 | 2 | 3;
   members: string[];
@@ -29,11 +35,7 @@ type NYTPuzzle = {
 
 type NYTPuzzlesData = NYTPuzzle[];
 
-export const GetAndParseNYTConnections = async (): Promise<ConnectionCategories[]> => {
-  const response = await axios.get('https://www.nytimes.com/games/prototype/connections/dist/index.78dfee00.js');
-  const text = await response.data;
-  return ParseNYTConnections(text);
-}
+const load = eval;
 
 const ParseNYTConnections = (text: string): ConnectionCategories[] => {
   const regex = /\[{groups:(.*?\]);/s;
@@ -44,7 +46,7 @@ const ParseNYTConnections = (text: string): ConnectionCategories[] => {
   }
 
   const js = match[0]
-  const nytData: NYTPuzzlesData = eval(js);
+  const nytData: NYTPuzzlesData = load(js);
   const parsedConnections: ConnectionCategories[] = [];
 
   for (const item of nytData) {
