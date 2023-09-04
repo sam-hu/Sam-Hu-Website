@@ -18,9 +18,8 @@ export const handler: Handler = async () => {
 }
 
 const GetAndParseNYTConnections = async (): Promise<ConnectionCategories[]> => {
-  const response = await axios.get('https://www.nytimes.com/games/prototype/connections/dist/index.78dfee00.js');
-  const text = await response.data;
-  return ParseNYTConnections(text);
+  const response = await axios.get('https://www.nytimes.com/games-assets/connections/game-data-by-day.json');
+  return ParseNYTConnections(response.data);
 }
 
 type NYTGroup = {
@@ -35,18 +34,7 @@ type NYTPuzzle = {
 
 type NYTPuzzlesData = NYTPuzzle[];
 
-const load = eval;
-
-const ParseNYTConnections = (text: string): ConnectionCategories[] => {
-  const regex = /\[{groups:(.*?\]);/s;
-  const match = text.match(regex);
-
-  if (!match || match.length === 0) {
-    throw new Error('NYT Connections did not match regex')
-  }
-
-  const js = match[0]
-  const nytData: NYTPuzzlesData = load(js);
+const ParseNYTConnections = (nytData: NYTPuzzlesData): ConnectionCategories[] => {
   const parsedConnections: ConnectionCategories[] = [];
 
   for (const item of nytData) {
