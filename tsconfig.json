@@ -26,6 +26,7 @@
     "src",
     "netlify",
     "vite.config.ts",
+    ".eslintrc.cjs",
   ],
   "references": [
     {
