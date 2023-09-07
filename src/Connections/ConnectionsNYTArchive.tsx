@@ -18,7 +18,7 @@ const ConnectionsNYTArchive = () => {
     const progressIcon = (id: number) => {
         const puzzleState = puzzleStates[id];
         if (puzzleState && puzzleState.guesses && puzzleState.guesses.length > 0) {
-            if (isSolved(puzzleState)) {
+            if (isSolved(puzzleState.categoriesState)) {
                 return <CheckCircleFilled style={{ fontSize: "24px", color: "green" }} />
             }
             return <HourglassOutlined style={{ fontSize: "24px", color: "dimgray" }} />

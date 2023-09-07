@@ -114,12 +114,12 @@ export const getPuzzleState = (id: string): PuzzleState => {
     return {};
 }
 
-export const isSolved = (puzzleState: PuzzleState): boolean => {
-    if (!puzzleState.categoriesState) {
+export const isSolved = (categoriesState?: CategoriesState): boolean => {
+    if (!categoriesState) {
         return false;
     }
 
-    return puzzleState.categoriesState && Object.values(puzzleState.categoriesState).every((category) => category.solved);
+    return Object.values(categoriesState).every((category) => category.solved);
 }
 
 export const setPuzzleState = (id: string, guesses?: RecordedGuess[], categoriesState?: CategoriesState): void => {

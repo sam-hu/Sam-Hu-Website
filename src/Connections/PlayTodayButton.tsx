@@ -11,8 +11,8 @@ const PlayTodayButton = ({ style, backTo }: { style?: React.CSSProperties, backT
     const progressIcon = () => {
         const puzzleState = puzzleStates[today + 1];
         if (puzzleState && puzzleState.guesses && puzzleState.guesses.length > 0) {
-            if (isSolved(puzzleState)) {
-                return <CheckCircleFilled style={{ fontSize: "24px", color: "green" }} />
+            if (isSolved(puzzleState.categoriesState)) {
+                return <CheckCircleFilled style={{ fontSize: "24px" }} />
             }
             return <HourglassOutlined style={{ fontSize: "24px" }} />
         }
