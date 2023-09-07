@@ -82,15 +82,6 @@ export const BODIED_TEXTS = ["Damn bruh 💀", "Down bad 😔", "Try harder", "S
 
 const PUZZLE_STATES_KEY = "puzzle_states";
 
-export const getCompletedPuzzles = (): { [id: string]: PuzzleState } => {
-    const puzzleStates = getPuzzleStates();
-    const completedPuzzles: { [id: string]: PuzzleState } = Object.fromEntries(
-        Object.entries(puzzleStates).filter(([_, puzzleState]) =>
-            puzzleState.categoriesState && Object.values(puzzleState.categoriesState).every((category) => category.solved)
-        ));
-    return completedPuzzles;
-}
-
 type PuzzleState = {
     categoriesState?: CategoriesState,
     guesses?: RecordedGuess[],
