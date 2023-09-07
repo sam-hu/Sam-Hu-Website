@@ -224,6 +224,14 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
         }
     }
 
+    const resetPuzzle = () => {
+        setVictory(false);
+        setGuesses([]);
+        setCategoriesState(categoryMap);
+        setWordState(allWords);
+        setBodiedText("");
+    }
+
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ padding: "36px 12px", maxWidth: "768px", width: "100%" }}>
@@ -277,26 +285,33 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
                     }
                 </div>
 
-                {victory
-                    ? <Button style={{ height: "54px" }} className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
-                        View results
-                    </Button>
-                    : <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }} >
-                        <Button className="button with-margin" type="primary" onClick={() => onSubmit()} disabled={selectedWords.length !== 4}>
-                            Submit
-                        </Button>
-
-                        <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                            <Button className="button with-margin" onClick={() => setWordOrder(shuffleArray(wordOrder))}>
-                                Shuffle
+                <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }} >
+                    {victory
+                        ? <>
+                            <Button style={{ height: "54px" }} className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
+                                View results
+                            </Button>
+                            <Button style={{ height: "54px" }} className="button with-margin" onClick={resetPuzzle}>
+                                Reset puzzle
+                            </Button>
+                        </>
+                        : <>
+                            <Button className="button with-margin" type="primary" onClick={() => onSubmit()} disabled={selectedWords.length !== 4}>
+                                Submit
                             </Button>
 
-                            <Button className="button with-margin" onClick={() => setSelectedWords([])}>
-                                Deselect all
-                            </Button>
-                        </div>
-                    </div>
-                }
+                            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+                                <Button className="button with-margin" onClick={() => setWordOrder(shuffleArray(wordOrder))}>
+                                    Shuffle
+                                </Button>
+
+                                <Button className="button with-margin" onClick={() => setSelectedWords([])}>
+                                    Deselect all
+                                </Button>
+                            </div>
+                        </>
+                    }
+                </div>
 
                 <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: "24px" }} />
 
