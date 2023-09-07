@@ -3,9 +3,9 @@ import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import Title from "antd/es/typography/Title";
 import { ConnectionsContext } from "./ConnectionsContext";
-import { BookOutlined, CheckCircleFilled } from '@ant-design/icons';
+import { BookOutlined, CheckCircleFilled, HourglassOutlined } from '@ant-design/icons';
 import { ConnectionsMenu } from "./ConnectionsMenu";
-import { getCompletedPuzzles, getDateString, getTodayOffset } from "./utils";
+import { getDateString, getPuzzleStates, getTodayOffset, isSolved } from "./utils";
 import LoadingSpinner from "./Loading";
 import PlayTodayButton from "./PlayTodayButton";
 
@@ -13,7 +13,18 @@ const ConnectionsNYTArchive = () => {
     const { nytConnections, loadedConnections } = useContext(ConnectionsContext)
     const navigate = useNavigate();
     const today = getTodayOffset();
-    const completedPuzzles = getCompletedPuzzles();
+    const puzzleStates = getPuzzleStates();
+
+    const progressIcon = (id: number) => {
+        const puzzleState = puzzleStates[id];
+        if (puzzleState && puzzleState.guesses && puzzleState.guesses.length > 0) {
+            if (isSolved(puzzleState)) {
+                return <CheckCircleFilled style={{ fontSize: "24px", color: "green" }} />
+            }
+            return <HourglassOutlined style={{ fontSize: "24px", color: "dimgray" }} />
+        }
+        return null;
+    }
 
     const contents = !loadedConnections
         ? <LoadingSpinner />
@@ -36,7 +47,7 @@ const ConnectionsNYTArchive = () => {
                         {index === today ? <strong>{buttonText}</strong> : buttonText}
                     </div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                        {completedPuzzles[id] && <CheckCircleFilled style={{ fontSize: "24px", color: "green" }} />}
+                        {progressIcon(id)}
                     </div>
                 </Button>
             )

@@ -80,7 +80,6 @@ export const COLORS_BY_DIFFICULTY = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"]
 export const ICONS_BY_DIFFICULTY = ["🟨", "🟩", "🟦", "🟪"];
 export const BODIED_TEXTS = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
 
-// const COMPLETED_PUZZLES_KEY = "completed_puzzles";
 const PUZZLE_STATES_KEY = "puzzle_states";
 
 export const getCompletedPuzzles = (): { [id: string]: PuzzleState } => {
@@ -91,12 +90,6 @@ export const getCompletedPuzzles = (): { [id: string]: PuzzleState } => {
         ));
     return completedPuzzles;
 }
-
-// export const setCompletedPuzzle = (id: string, guesses: RecordedGuess[]): void => {
-//     const completedPuzzles = getCompletedPuzzles();
-//     completedPuzzles[id] = guesses;
-//     window.localStorage.setItem(COMPLETED_PUZZLES_KEY, JSON.stringify(completedPuzzles));
-// }
 
 type PuzzleState = {
     categoriesState?: CategoriesState,
@@ -119,6 +112,14 @@ export const getPuzzleState = (id: string): PuzzleState => {
         return puzzleStates[id];
     }
     return {};
+}
+
+export const isSolved = (puzzleState: PuzzleState): boolean => {
+    if (!puzzleState.categoriesState) {
+        return false;
+    }
+
+    return puzzleState.categoriesState && Object.values(puzzleState.categoriesState).every((category) => category.solved);
 }
 
 export const setPuzzleState = (id: string, guesses?: RecordedGuess[], categoriesState?: CategoriesState): void => {

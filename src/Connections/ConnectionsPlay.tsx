@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
 import Title from "antd/es/typography/Title";
-import { ConnectionCategories, ConnectionCategory, BODIED_TEXTS, COLORS_BY_DIFFICULTY, correctFontSize, isMobile, normalizeCategories, shuffleArray, getTodayOffset, setPuzzleState, getPuzzleState } from "./utils";
+import { ConnectionCategories, ConnectionCategory, BODIED_TEXTS, COLORS_BY_DIFFICULTY, correctFontSize, isMobile, normalizeCategories, shuffleArray, getTodayOffset, setPuzzleState, getPuzzleState, isSolved } from "./utils";
 import { VictoryModal } from "./VictoryModal";
 
 const correctFontSizeForAnswers = (guess: string[]) => {
@@ -128,7 +128,7 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
 
     // Check for victory
     useEffect(() => {
-        const allSolved = Object.values(categoriesState).every(category => category.solved);
+        const allSolved = isSolved(categoriesState);
         if (allSolved) {
             setVictory(true);
             setTimeout(() => {
