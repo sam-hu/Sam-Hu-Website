@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { Handler } from '@netlify/functions';
 import axios from 'axios';
 import { ConnectionCategories, ConnectionCategory } from '../../../src/Connections/utils';
@@ -8,19 +9,20 @@ export const handler: Handler = async () => {
     return {
       statusCode: 200,
       body: JSON.stringify(connections),
-    }
-  } catch (e) {
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
     return {
       statusCode: 500,
       body: e.message,
-    }
+    };
   }
-}
+};
 
 const GetAndParseNYTConnections = async (): Promise<ConnectionCategories[]> => {
   const response = await axios.get('https://www.nytimes.com/games-assets/connections/game-data-by-day.json');
   return ParseNYTConnections(response.data);
-}
+};
 
 type NYTGroup = {
   level: 0 | 1 | 2 | 3;
@@ -51,5 +53,5 @@ const ParseNYTConnections = (nytData: NYTPuzzlesData): ConnectionCategories[] =>
     parsedConnections.push(connectionGame);
   }
 
-  return parsedConnections
-}
+  return parsedConnections;
+};

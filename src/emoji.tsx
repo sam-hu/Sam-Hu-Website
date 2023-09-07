@@ -1,13 +1,15 @@
 import React from 'react';
 
-const Emoji = (props: { label?: string; symbol: React.ReactNode; }) => (
+function Emoji({ label, symbol }: { label?: string; symbol: React.ReactNode; }) {
+  return (
     <span
-        className="emoji"
-        role="img"
-        aria-label={props.label ? props.label : ""}
-        aria-hidden={props.label ? "false" : "true"}
+      className="emoji"
+      role="img"
+      aria-label={label || ''}
+      aria-hidden={label ? 'false' : 'true'}
     >
-        {props.symbol}
+      {symbol}
     </span>
-);
+  );
+}
 export default Emoji;

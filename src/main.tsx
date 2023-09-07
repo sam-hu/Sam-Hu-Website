@@ -1,63 +1,64 @@
-import { Suspense, lazy } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import ReactDOM from "react-dom/client"
-import "./index.css"
-import Home from "./Home.tsx"
-import LoadingSpinner from "./Connections/Loading.tsx";
-const ConnectionsProvider = lazy(() => import("./Connections/ConnectionsProvider.tsx"));
-const ConnectionsRouter = lazy(() => import("./Connections/ConnectionsRouter.tsx"));
-const ConnectionsCreate = lazy(() => import("./Connections/ConnectionsCreate.tsx"));
-const ConnectionsNYTArchive = lazy(() => import("./Connections/ConnectionsNYTArchive.tsx"));
-const ConnectionsNYTToday = lazy(() => import("./Connections/ConnectionsNYTToday.tsx"));
-const ConnectionsLanding = lazy(() => import("./Connections/ConnectionsLanding.tsx"));
+import { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import Home from './Home';
+import LoadingSpinner from './Connections/Loading';
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+const ConnectionsProvider = lazy(() => import('./Connections/ConnectionsProvider'));
+const ConnectionsRouter = lazy(() => import('./Connections/ConnectionsRouter'));
+const ConnectionsCreate = lazy(() => import('./Connections/ConnectionsCreate'));
+const ConnectionsNYTArchive = lazy(() => import('./Connections/ConnectionsNYTArchive'));
+const ConnectionsNYTToday = lazy(() => import('./Connections/ConnectionsNYTToday'));
+const ConnectionsLanding = lazy(() => import('./Connections/ConnectionsLanding'));
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <Router>
     <Suspense fallback={<LoadingSpinner />}>
       <Routes>
         <Route
           path="/connections/play"
-          element={
+          element={(
             <ConnectionsProvider>
               <ConnectionsRouter />
             </ConnectionsProvider>
-          }
+          )}
         />
         <Route
           path="/connections/today"
-          element={
+          element={(
             <ConnectionsProvider>
               <ConnectionsNYTToday />
             </ConnectionsProvider>
-          }
+          )}
         />
         <Route
           path="/connections/archive"
-          element={
+          element={(
             <ConnectionsProvider>
               <ConnectionsNYTArchive />
             </ConnectionsProvider>
-          }
+          )}
         />
         <Route
           path="/connections/create"
-          element={
+          element={(
             <ConnectionsProvider>
               <ConnectionsCreate />
             </ConnectionsProvider>
-          }
+          )}
         />
         <Route
           path="/connections"
-          element={
+          element={(
             <ConnectionsProvider>
               <ConnectionsLanding />
             </ConnectionsProvider>
-          }
+          )}
         />
 
         <Route path="*" Component={Home} />
       </Routes>
     </Suspense>
-  </Router>
-)
+  </Router>,
+);
