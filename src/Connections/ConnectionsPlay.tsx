@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Papa from 'papaparse';
 import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
 import Title from "antd/es/typography/Title";
-import { ConnectionCategories, ConnectionCategory, BODIED_TEXTS, COLORS_BY_DIFFICULTY, correctFontSize, isMobile, normalizeCategories, shuffleArray, getTodayOffset, setCompletedPuzzle } from "./utils";
+import { ConnectionCategories, ConnectionCategory, BODIED_TEXTS, COLORS_BY_DIFFICULTY, correctFontSize, isMobile, normalizeCategories, shuffleArray, getTodayOffset, setPuzzleState, getPuzzleState, isSolved } from "./utils";
 import { VictoryModal } from "./VictoryModal";
 
 const correctFontSizeForAnswers = (guess: string[]) => {
@@ -67,7 +67,9 @@ export type RecordedGuess = {
     off: number
 }
 
-const ConnectionsPlay = ({ categories, backTo, debug }: { categories: ConnectionCategories, backTo?: "archive", debug?: boolean }) => {
+export type CategoriesState = { [id: number]: ConnectionCategory }
+
+const ConnectionsPlay = ({ categories, backTo, debug }: { categories: ConnectionCategories, backTo?: string, debug?: boolean }) => {
     const normalizedCategories = normalizeCategories(categories);
     const allWords: { [key: string]: WordState } = {};
     const wordArr: string[] = [];
@@ -80,7 +82,7 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
         }
     }
 
-    const categoryMap: { [id: number]: ConnectionCategory } = {};
+    const categoryMap: CategoriesState = {};
     for (const category of normalizedCategories) {
         categoryMap[category.id] = category;
     }
@@ -97,17 +99,55 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
     const [showModal, setShowModal] = useState(false);
     const [bodiedText, setBodiedText] = useState("");
     const searchParams = new URLSearchParams(location.search);
-    const id: string | null = window.location.pathname === "/connections/today" ? (getTodayOffset() + 1).toString() : searchParams.get("id");
+    const id: string | null = window.location.pathname === "/connections/today"
+        ? (getTodayOffset() + 1).toString()
+        : (searchParams.get("id") || searchParams.get("categories") || null);
 
+    // Load puzzleState from localStorage
     useEffect(() => {
-        if (victory) {
-            if (id) {
-                setCompletedPuzzle(id, guesses);
+        if (!id) {
+            return;
+        }
+
+        const puzzleState = getPuzzleState(id);
+        if (puzzleState.categoriesState) {
+            setCategoriesState(puzzleState.categoriesState);
+            setWordState(wordStateForCategories(puzzleState.categoriesState));
+        }
+        if (puzzleState.guesses) {
+            setGuesses(puzzleState.guesses);
+        }
+    }, [id])
+
+    // Save puzzleState to localStorage when categoriesState or guesses change
+    useEffect(() => {
+        if (id) {
+            setPuzzleState(id, guesses, categoriesState);
+        }
+    }, [categoriesState, guesses])
+
+    // Check for victory
+    useEffect(() => {
+        const allSolved = isSolved(categoriesState);
+        if (allSolved) {
+            setVictory(true);
+            setTimeout(() => {
+                setShowModal(true);
+            }, 500);
+        }
+    }, [categoriesState])
+
+    const wordStateForCategories = (categories: CategoriesState) => {
+        const newWordState = { ...wordState };
+        for (const category of Object.values(categories)) {
+            for (const word of category.words) {
+                newWordState[word].solved = category.solved || false;
             }
         }
-    }, [victory])
+        return newWordState;
+    }
 
-    const checkIfSolved = () => {
+    const onSubmit = () => {
         if (selectedWords.length !== normalizedCategories.length) {
             return;
         }
@@ -115,28 +155,15 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
         const firstWord = selectedWords[0];
         const index = wordState[firstWord].difficulty;
         const solved = selectedWords.every(word => wordState[word].difficulty === index);
-        const newMap = { ...wordState };
         const newGuesses = [...guesses, {
             words: selectedWords, correct: solved, off: calcOffBy(groupedWords, selectedWords)
         }]
 
         if (solved) {
-            for (const word of selectedWords) {
-                newMap[word].solved = true;
-                setWordState(newMap);
-            }
             const newCategoryState = { ...categoriesState };
             newCategoryState[index].solved = true;
             setCategoriesState(newCategoryState);
-            if (newCategoryState[index].solved) {
-                const allSolved = Object.values(newCategoryState).every(category => category.solved);
-                if (allSolved) {
-                    setVictory(true);
-                    setTimeout(() => {
-                        setShowModal(true);
-                    }, 500);
-                }
-            }
+            setWordState(wordStateForCategories(newCategoryState));
             setBodiedText("");
         } else {
             const last3 = newGuesses.slice(-3);
@@ -186,11 +213,23 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
                 return <Button className="button" onClick={() => navigate("/connections/archive")} icon={<CaretLeftOutlined />}>
                     Back to archive
                 </Button>
-            default:
+            case "edit":
                 return <Button className="button" onClick={() => navigate("/connections/create", { state: { categories: normalizedCategories } })} icon={<CaretLeftOutlined />}>
                     Edit puzzle
                 </Button>
+            default:
+                return <Button className="button" onClick={() => navigate("/connections")} icon={<CaretLeftOutlined />}>
+                    Back to menu
+                </Button>
         }
+    }
+
+    const resetPuzzle = () => {
+        setVictory(false);
+        setGuesses([]);
+        setCategoriesState(categoryMap);
+        setWordState(allWords);
+        setBodiedText("");
     }
 
     return (
@@ -246,26 +285,33 @@ const ConnectionsPlay = ({ categories, backTo, debug }: { categories: Connection
                     }
                 </div>
 
-                {victory
-                    ? <Button style={{ height: "54px" }} className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
-                        View results
-                    </Button>
-                    : <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }} >
-                        <Button className="button with-margin" type="primary" onClick={() => checkIfSolved()} disabled={selectedWords.length !== 4}>
-                            Submit
-                        </Button>
-
-                        <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
-                            <Button className="button with-margin" onClick={() => setWordOrder(shuffleArray(wordOrder))}>
-                                Shuffle
+                <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }} >
+                    {victory
+                        ? <>
+                            <Button style={{ height: "54px" }} className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
+                                View results
+                            </Button>
+                            <Button style={{ height: "54px" }} className="button with-margin" onClick={resetPuzzle}>
+                                Reset puzzle
+                            </Button>
+                        </>
+                        : <>
+                            <Button className="button with-margin" type="primary" onClick={() => onSubmit()} disabled={selectedWords.length !== 4}>
+                                Submit
                             </Button>
 
-                            <Button className="button with-margin" onClick={() => setSelectedWords([])}>
-                                Deselect all
-                            </Button>
-                        </div>
-                    </div>
-                }
+                            <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
+                                <Button className="button with-margin" onClick={() => setWordOrder(shuffleArray(wordOrder))}>
+                                    Shuffle
+                                </Button>
+
+                                <Button className="button with-margin" onClick={() => setSelectedWords([])}>
+                                    Deselect all
+                                </Button>
+                            </div>
+                        </>
+                    }
+                </div>
 
                 <div style={{ borderBottom: "1px solid #d9d9d9", marginTop: "24px", marginBottom: "24px" }} />
 

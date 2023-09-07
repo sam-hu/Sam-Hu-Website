@@ -1,4 +1,4 @@
-import { RecordedGuess } from "./ConnectionsPlay";
+import { CategoriesState, RecordedGuess } from "./ConnectionsPlay";
 
 export type ConnectionCategory = {
     description: string;
@@ -80,20 +80,47 @@ export const COLORS_BY_DIFFICULTY = ["#e3bf02", "#84a63a", "#719eeb", "#bd70c4"]
 export const ICONS_BY_DIFFICULTY = ["🟨", "🟩", "🟦", "🟪"];
 export const BODIED_TEXTS = ["Damn bruh 💀", "Down bad 😔", "Try harder", "Shameful", "So close!", "😬😬😬", "Come on now", "Is that you Prath?"]
 
-const COMPLETED_PUZZLES_KEY = "completed_puzzles";
+const PUZZLE_STATES_KEY = "puzzle_states";
 
-export const getCompletedPuzzles = (): { [id: string]: RecordedGuess[] } => {
-    const completedPuzzles = localStorage.getItem(COMPLETED_PUZZLES_KEY);
-    if (completedPuzzles) {
-        return JSON.parse(completedPuzzles);
+type PuzzleState = {
+    categoriesState?: CategoriesState,
+    guesses?: RecordedGuess[],
+}
+
+type PuzzleStates = { [id: string]: PuzzleState };
+
+export const getPuzzleStates = (): PuzzleStates => {
+    const puzzleStates = window.localStorage.getItem(PUZZLE_STATES_KEY);
+    if (puzzleStates) {
+        return JSON.parse(puzzleStates) as PuzzleStates;
     }
     return {};
 }
 
-export const setCompletedPuzzle = (id: string, guesses: RecordedGuess[]): void => {
-    const completedPuzzles = getCompletedPuzzles();
-    completedPuzzles[id] = guesses;
-    window.localStorage.setItem(COMPLETED_PUZZLES_KEY, JSON.stringify(completedPuzzles));
+export const getPuzzleState = (id: string): PuzzleState => {
+    const puzzleStates = getPuzzleStates();
+    if (puzzleStates[id]) {
+        return puzzleStates[id];
+    }
+    return {};
+}
+
+export const isSolved = (categoriesState?: CategoriesState): boolean => {
+    if (!categoriesState) {
+        return false;
+    }
+
+    return Object.values(categoriesState).every((category) => category.solved);
+}
+
+export const setPuzzleState = (id: string, guesses?: RecordedGuess[], categoriesState?: CategoriesState): void => {
+    const puzzleStates = getPuzzleStates();
+    const puzzleState = puzzleStates[id];
+    puzzleStates[id] = {
+        guesses: guesses || puzzleState.guesses,
+        categoriesState: categoriesState || puzzleState.categoriesState,
+    }
+    window.localStorage.setItem(PUZZLE_STATES_KEY, JSON.stringify(puzzleStates));
 }
 
 const FIRST_DAY = new Date(2023, 5, 12);

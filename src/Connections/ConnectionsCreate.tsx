@@ -296,7 +296,7 @@ const ConnectionsCreate = () => {
                                 const valid = validateCategories(categories);
                                 if (valid) {
                                     const link = generateLink(categories);
-                                    navigate(link);
+                                    navigate(link, { state: { backTo: "edit" } });
                                 }
                             }}
                             type="primary"
