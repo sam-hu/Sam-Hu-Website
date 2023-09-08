@@ -28,9 +28,10 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
     <ConnectionsContext.Provider value={connectionsValue}>
       <Helmet>
         <title>Connections</title>
-        <meta property="og:title" content="Connections" />
-        <meta property="og:image" content="/Connections.png" />
         <link rel="icon" type="image/svg+xml" href="/Connections.svg" />
+        <meta property="og:title" content="Connections" />
+        <meta property="og:url" content="https://sam-hu.com/connections" />
+        <meta property="og:image" content="/Connections.png" />
       </Helmet>
       {children}
     </ConnectionsContext.Provider>

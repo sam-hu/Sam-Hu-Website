@@ -13,8 +13,9 @@ function Home() {
     <>
       <Helmet>
         <title>Sam Hu</title>
-        <meta property="og:title" content="Sam Hu" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <meta property="og:title" content="Sam Hu" />
+        <meta property="og:url" content="https://sam-hu.com" />
       </Helmet>
       <div id="home">
         <div id="topCurve" />
