@@ -10,7 +10,6 @@ export const handler: Handler = async () => {
       statusCode: 200,
       body: JSON.stringify(connections),
     };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
     return {
       statusCode: 500,
