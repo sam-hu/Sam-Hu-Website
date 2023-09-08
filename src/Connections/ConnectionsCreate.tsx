@@ -14,7 +14,7 @@ import {
 } from 'react-beautiful-dnd';
 import ConnectionsMenu from './ConnectionsMenu';
 import {
-  ConnectionCategories, COLORS_BY_DIFFICULTY, generateLink, validateCategories,
+  ConnectionCategories, COLORS_BY_DIFFICULTY, generateLink, validateCategories, checkWordsUnique,
 } from './utils';
 
 const defaultCategories: ConnectionCategories = [
@@ -136,7 +136,7 @@ function WordsInput({
     if (!shouldShowError()) {
       setError(null);
     } else {
-      setError('Input not valid');
+      setError('⚠️ Input must be four words separated by commas');
     }
   };
 
@@ -299,6 +299,8 @@ function ConnectionsCreate() {
                 )}
               </Droppable>
             </DragDropContext>
+
+            {!checkWordsUnique(categories) && <div style={{ color: 'red' }}>⚠️ All words must be unique</div>}
 
             <Button
               style={{ marginTop: '24px' }}

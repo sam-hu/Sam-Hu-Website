@@ -20,7 +20,19 @@ export type WordState = {
   difficulty: number; // 0, 1, 2, 3
 };
 
-export const validateCategories = (categories: ConnectionCategories): boolean => categories?.every((cat) => cat.words?.length === 4 && cat.words.every((word) => word.trim().length > 0));
+export const checkWordsUnique = (categories: ConnectionCategories): boolean => {
+  const allWords = categories.flatMap(cat => cat.words).map(word => word.toLowerCase());
+  const uniqueWords = new Set(allWords);
+  return uniqueWords.size === allWords.length;
+};
+
+export const validateCategories = (categories: ConnectionCategories): boolean => {
+  if (categories?.length !== 4 || !categories.every((cat) => cat.words?.length === 4)) {
+    return false;
+  }
+
+  return checkWordsUnique(categories);
+}
 
 export const normalizeCategories = (categories: ConnectionCategories, reset = false): ConnectionCategories => {
   for (let i = 0; i < categories.length; i++) {

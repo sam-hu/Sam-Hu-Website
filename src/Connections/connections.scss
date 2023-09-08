@@ -1,148 +1,153 @@
 body {
-    background-color: white;
+  background-color: white;
 }
 
 div.ant-upload {
-    width: 100%;
+  width: 100%;
 }
 
 .button {
-    width: 100%;
-    height: 48px;
+  width: 100%;
+  height: 48px;
 }
 
 .with-margin {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
 .ant-form-item {
-    margin: 0px !important;
-    padding-top: 8px !important;
+  margin: 0px !important;
+  padding-top: 8px !important;
 }
 
 .ant-form-item-no-colon {
-    font-size: 16px !important;
+  font-size: 16px !important;
 }
 
 .ant-input {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .ant-btn {
-    height: 42px;
+  height: 42px;
 }
 
 .ant-modal-footer {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    .ant-btn {
-        margin: 6px 0 !important;
-        width: 100%;
-    }
+  .ant-btn {
+    margin: 6px 0 !important;
+    width: 100%;
+  }
 }
 
 .word-box {
-    min-width: 50px;
-    padding: 2px;
-    height: 72px;
-    margin: 0 4px 8px 4px;
-    overflow: hidden;
-    border: none;
-    background-color: #efefe6;
+  min-width: 50px;
+  padding: 2px;
+  height: 72px;
+  margin: 0 4px 8px 4px;
+  overflow: hidden;
+  border: none;
+  background-color: #efefe6;
 }
 
 .word-box:hover {
-    background-color: #c8c8bd !important;
-    color: black !important;
+  background-color: #c8c8bd !important;
+  color: black !important;
 }
 
 .word-box.mobile:hover {
-    background-color: #efefe6 !important;
+  background-color: #efefe6 !important;
 }
 
 .word-box.desktop:active {
-    background-color: #c8c8bd !important;
-    color: black !important;
+  background-color: #c8c8bd !important;
+  color: black !important;
 }
 
 .word-box.ant-btn-primary {
-    background-color: gray !important;
-    color: white !important;
+  background-color: gray !important;
+  color: white !important;
 }
 
 .word-box.mobile.ant-btn-primary {
-    background-color: gray !important;
-    color: white !important;
+  background-color: gray !important;
+  color: white !important;
 }
 
 .difficulty-draggable {
-    margin-bottom: 12px;
+  margin-bottom: 12px;
+}
+
+.ant-form-item .ant-form-item-explain-error {
+  color: white;
+  padding-top: 4px;
 }
 
 .help-emoji {
-    width: 16px;
-    height: 16px;
-    border-radius: 2px;
-    margin-right: 5px;
-    display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  margin-right: 5px;
+  display: block;
 }
 
 /* Position and sizing of burger button */
 .bm-burger-button-mobile {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    right: 18px;
-    top: 48px;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 18px;
+  top: 48px;
 }
 
 .bm-burger-button-desktop {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    right: 48px;
-    top: 48px;
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  right: 48px;
+  top: 48px;
 }
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-    background: black;
+  background: black;
 }
 
 /* Color/shape of burger icon bars on hover*/
 .bm-burger-bars-hover {
-    background: black;
+  background: black;
 }
 
 /* Position and sizing of clickable cross button */
 .bm-cross-button-mobile {
+  height: 36px !important;
+  width: 36px !important;
+  right: 12px !important;
+  top: 42px !important;
+
+  svg {
     height: 36px !important;
     width: 36px !important;
-    right: 12px !important;
-    top: 42px !important;
-
-    svg {
-        height: 36px !important;
-        width: 36px !important;
-    }
+  }
 }
 
 .bm-cross-button-desktop {
+  height: 36px !important;
+  width: 36px !important;
+  right: 42px !important;
+  top: 42px !important;
+
+  svg {
     height: 36px !important;
     width: 36px !important;
-    right: 42px !important;
-    top: 42px !important;
-
-    svg {
-        height: 36px !important;
-        width: 36px !important;
-    }
+  }
 }
 
 /* Color/shape of close button cross */
 .bm-cross {
-    background: none;
+  background: none;
 }
 
 /*
@@ -150,45 +155,45 @@ div.ant-upload {
   Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
   */
 .bm-menu-wrap {
-    position: fixed;
-    height: 100%;
+  position: fixed;
+  height: 100%;
 }
 
 /* General sidebar styles */
 .bm-menu {
-    background: white;
-    padding: 2.5em 1.5em 0;
-    font-size: 1.15em;
+  background: white;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
 }
 
 /* Morph shape necessary with bubble or elastic */
 .bm-morph-shape {
-    fill: #373a47;
+  fill: #373a47;
 }
 
 /* Wrapper for item list */
 .bm-item-list {
-    color: #b8b7ad;
-    padding: 0.8em;
+  color: #b8b7ad;
+  padding: 0.8em;
 }
 
 /* Individual item */
 .bm-item {
-    display: flex !important;
-    align-items: center;
-    gap: 12px;
-    color: black;
-    margin-top: 36px;
-    font-size: 24px;
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  color: black;
+  margin-top: 36px;
+  font-size: 24px;
 }
 
 .bm-item:hover {
-    color: gray;
-    cursor: pointer;
-    text-decoration: underline;
+  color: gray;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* Styling of overlay */
 .bm-overlay {
-    background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.3);
 }
