@@ -5,11 +5,12 @@ import { ConnectionsProviderProps, ConnectionsContext } from './ConnectionsConte
 import { ConnectionCategories } from './utils';
 import './connections.scss';
 
+const title = 'Connections';
+const favicon = '/Connections.svg';
+
 function ConnectionsProvider({ children }: ConnectionsProviderProps) {
   const [nytConnections, setNytConnections] = useState<ConnectionCategories[]>([]);
   const [loadedConnections, setLoadedConnections] = useState(false);
-  const title = 'Connections';
-  const favicon = '/Connections.svg';
 
   useEffect(() => {
     document.title = title;

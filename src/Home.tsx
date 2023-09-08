@@ -5,24 +5,26 @@ import MyTimeline from './Timeline/timeline';
 import './Home.scss';
 import './Spotify/spotify.scss';
 
+const title = 'Sam Hu';
+const favicon = '/favicon.ico';
 const found = <a style={{ color: '#1662DD', fontSize: '18px', fontWeight: 'bold' }} className="link" target="_blank" rel="noopener noreferrer" href="https://found.com">Found</a>;
 const okta = <a style={{ color: '#1662DD', fontSize: '18px', fontWeight: 'bold' }} className="link" target="_blank" rel="noopener noreferrer" href="https://okta.com">Okta</a>;
 const spotify = <a style={{ color: '#1DB954' }} className="spotifyText link" target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/user/1247031860">Spotify</a>;
 
 function Home() {
   useEffect(() => {
-    document.title = 'Sam Hu';
+    document.title = title;
     const faviconLink = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
-    faviconLink.href = '/favicon.ico';
+    faviconLink.href = favicon;
   }, []);
 
   return (
     <>
       <Helmet>
         <title>Sam Hu</title>
-        <meta property="title" content="Sam Hu" />
-        <meta property="og:title" content="Sam Hu" />
-        <link rel="icon" type="image/svg" href="/favicon.ico" />
+        <meta property="title" content={title} />
+        <meta property="og:title" content={title} />
+        <link rel="icon" type="image/svg" href={favicon} />
       </Helmet>
       <div id="home">
         <div id="topCurve" />
