@@ -5,19 +5,9 @@ import { ConnectionsProviderProps, ConnectionsContext } from './ConnectionsConte
 import { ConnectionCategories } from './utils';
 import './connections.scss';
 
-const title = 'Connections';
-const favicon = '/Connections.svg';
-
 function ConnectionsProvider({ children }: ConnectionsProviderProps) {
   const [nytConnections, setNytConnections] = useState<ConnectionCategories[]>([]);
   const [loadedConnections, setLoadedConnections] = useState(false);
-
-  useEffect(() => {
-    document.title = title;
-    const faviconLink = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
-    faviconLink.type = 'image/svg+xml';
-    faviconLink.href = favicon;
-  }, []);
 
   useEffect(() => {
     if (loadedConnections) {
@@ -38,9 +28,9 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
     <ConnectionsContext.Provider value={connectionsValue}>
       <Helmet>
         <title>Connections</title>
-        <meta property="og:title" content={title} />
+        <meta property="og:title" content="Connections" />
         <meta property="og:image" content="/Connections.png" />
-        <link rel="icon" type="image/svg+xml" href={favicon} />
+        <link rel="icon" type="image/svg+xml" href="/Connections.svg" />
       </Helmet>
       {children}
     </ConnectionsContext.Provider>
