@@ -52,7 +52,7 @@ export const generateLink = (categories: ConnectionCategories): string => {
   console.log('stringifying', startingCategories);
   const jsonString = JSON.stringify(startingCategories);
   console.log('encoding', jsonString);
-  const encodedBase64String = encodeURIComponent(btoa(jsonString));
+  const encodedBase64String = btoa(encodeURIComponent(jsonString));
   console.log(encodedBase64String);
   return `/connections/play?categories=${encodedBase64String}`;
 };
@@ -77,7 +77,7 @@ export const decodeCategories = (encodedValue: string | null): ConnectionCategor
 
   let parsedCategories;
   try {
-    const decodedCategories = atob(decodeURIComponent(encodedValue));
+    const decodedCategories = decodeURIComponent(atob(encodedValue));
     parsedCategories = JSON.parse(decodedCategories);
   } catch {
     return null;
