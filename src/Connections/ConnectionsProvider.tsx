@@ -10,6 +10,13 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
   const [loadedConnections, setLoadedConnections] = useState(false);
 
   useEffect(() => {
+    document.title = 'Connections';
+    const faviconLink = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+    faviconLink.type = 'image/svg+xml';
+    faviconLink.href = '/Connections.svg';
+  }, []);
+
+  useEffect(() => {
     if (loadedConnections) {
       return;
     }
@@ -28,10 +35,10 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
     <ConnectionsContext.Provider value={connectionsValue}>
       <Helmet>
         <title>Connections</title>
-        <meta property="title" content="Connections" />
+        <link rel="icon" type="image/svg+xml" href="/Connections.svg" />
         <meta property="og:title" content="Connections" />
-        <meta property="og:image" content={`${window.location.origin}/Connections.png`} />
-        <link rel="icon" type="image/svg" href={`${window.location.origin}/Connections.svg`} />
+        <meta property="og:url" content="https://sam-hu.com/connections" />
+        <meta property="og:image" content="/Connections.png" />
       </Helmet>
       {children}
     </ConnectionsContext.Provider>
