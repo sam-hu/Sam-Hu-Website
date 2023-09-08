@@ -21,18 +21,18 @@ export type WordState = {
 };
 
 export const checkWordsUnique = (categories: ConnectionCategories): boolean => {
-  const allWords = categories.flatMap(cat => cat.words).filter(word => !!word).map(word => word.toLowerCase());
+  const allWords = categories.flatMap((cat) => cat.words).filter((word) => !!word).map((word) => word.toLowerCase());
   const uniqueWords = new Set(allWords);
   return uniqueWords.size === allWords.length;
 };
 
 export const validateCategories = (categories: ConnectionCategories): boolean => {
-  if (categories?.length !== 4 || !categories.every(cat => cat.words?.length === 4 && cat.words.every(word => !!word))) {
+  if (categories?.length !== 4 || !categories.every((cat) => cat.words?.length === 4 && cat.words.every((word) => !!word))) {
     return false;
   }
 
   return checkWordsUnique(categories);
-}
+};
 
 export const normalizeCategories = (categories: ConnectionCategories, reset = false): ConnectionCategories => {
   for (let i = 0; i < categories.length; i++) {
