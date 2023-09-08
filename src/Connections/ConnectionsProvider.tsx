@@ -36,6 +36,7 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
       <Helmet>
         <title>Connections</title>
         <link rel="icon" type="image/svg+xml" href="/Connections.svg" />
+        <meta property="title" content="Connections" />
         <meta property="og:title" content="Connections" />
         <meta property="og:url" content="https://sam-hu.com/connections" />
         <meta property="og:image" content="/Connections.png" />
