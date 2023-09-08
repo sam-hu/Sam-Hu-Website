@@ -8,6 +8,14 @@ import './connections.scss';
 function ConnectionsProvider({ children }: ConnectionsProviderProps) {
   const [nytConnections, setNytConnections] = useState<ConnectionCategories[]>([]);
   const [loadedConnections, setLoadedConnections] = useState(false);
+  const title = 'Connections';
+  const favicon = '/Connections.svg';
+
+  useEffect(() => {
+    document.title = title;
+    const faviconLink = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+    faviconLink.href = favicon;
+  }, []);
 
   useEffect(() => {
     if (loadedConnections) {
@@ -28,10 +36,10 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
     <ConnectionsContext.Provider value={connectionsValue}>
       <Helmet>
         <title>Connections</title>
-        <meta property="title" content="Connections" />
-        <meta property="og:title" content="Connections" />
-        <meta property="og:image" content={`${window.location.origin}/Connections.png`} />
-        <link rel="icon" type="image/svg" href={`${window.location.origin}/Connections.svg`} />
+        <meta property="title" content={title} />
+        <meta property="og:title" content={title} />
+        <meta property="og:image" content="/Connections.png" />
+        <link rel="icon" type="image/svg" href={favicon} />
       </Helmet>
       {children}
     </ConnectionsContext.Provider>
