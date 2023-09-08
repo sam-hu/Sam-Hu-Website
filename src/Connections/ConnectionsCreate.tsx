@@ -172,6 +172,7 @@ function ConnectionsCreate() {
   const [categories, setCategories] = useState<ConnectionCategories>(location.state?.categories || defaultCategories);
   const [clearInputs, setClearInputs] = useState(false);
   const navigate = useNavigate();
+  const validCategories = validateCategories(categories);
 
   useEffect(() => {
     if (location.state?.categories) {
@@ -306,10 +307,9 @@ function ConnectionsCreate() {
               style={{ marginTop: '24px' }}
               className="button with-margin"
               icon={<CaretRightOutlined />}
-              disabled={!validateCategories(categories)}
+              disabled={!validCategories}
               onClick={() => {
-                const valid = validateCategories(categories);
-                if (valid) {
+                if (validCategories) {
                   const link = generateLink(categories);
                   navigate(link, { state: { backTo: 'edit' } });
                 }
