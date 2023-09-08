@@ -10,6 +10,13 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
   const [loadedConnections, setLoadedConnections] = useState(false);
 
   useEffect(() => {
+    document.title = 'Connections';
+    const faviconLink = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+    faviconLink.type = 'image/svg+xml';
+    faviconLink.href = '/Connections.svg';
+  }, []);
+
+  useEffect(() => {
     if (loadedConnections) {
       return;
     }
