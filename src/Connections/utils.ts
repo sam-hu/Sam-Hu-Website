@@ -1,3 +1,5 @@
+import { encodeURI, decode } from 'js-base64';
+
 export type ConnectionCategory = {
   description: string;
   id: number;
@@ -27,7 +29,7 @@ export const checkWordsUnique = (categories: ConnectionCategories): boolean => {
 };
 
 export const validateCategories = (categories: ConnectionCategories): boolean => {
-  if (categories?.length !== 4 || !categories.every((cat) => cat.words?.length === 4 && cat.words.every((word) => !!word))) {
+  if (categories?.length !== 4 || !categories.every((cat) => cat.words?.length === 4 && cat.words.every((word) => word.trim().length > 0))) {
     return false;
   }
 
@@ -50,7 +52,7 @@ export const normalizeCategories = (categories: ConnectionCategories, reset = fa
 export const generateLink = (categories: ConnectionCategories): string => {
   const startingCategories = normalizeCategories(categories, true);
   const jsonString = JSON.stringify(startingCategories);
-  const encodedBase64String = encodeURIComponent(btoa(jsonString));
+  const encodedBase64String = encodeURI(jsonString);
   return `/connections/play?categories=${encodedBase64String}`;
 };
 
@@ -74,7 +76,7 @@ export const decodeCategories = (encodedValue: string | null): ConnectionCategor
 
   let parsedCategories;
   try {
-    const decodedCategories = atob(decodeURIComponent(encodedValue));
+    const decodedCategories = decode(encodedValue);
     parsedCategories = JSON.parse(decodedCategories);
   } catch {
     return null;
