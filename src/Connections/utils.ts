@@ -1,3 +1,5 @@
+import { encodeURI, decode } from 'js-base64';
+
 export type ConnectionCategory = {
   description: string;
   id: number;
@@ -49,11 +51,8 @@ export const normalizeCategories = (categories: ConnectionCategories, reset = fa
 
 export const generateLink = (categories: ConnectionCategories): string => {
   const startingCategories = normalizeCategories(categories, true);
-  console.log('stringifying', startingCategories);
   const jsonString = JSON.stringify(startingCategories);
-  console.log('encoding', jsonString);
-  const encodedBase64String = encodeURIComponent(btoa(encodeURIComponent(jsonString)));
-  console.log(encodedBase64String);
+  const encodedBase64String = encodeURI(jsonString);
   return `/connections/play?categories=${encodedBase64String}`;
 };
 
@@ -77,7 +76,7 @@ export const decodeCategories = (encodedValue: string | null): ConnectionCategor
 
   let parsedCategories;
   try {
-    const decodedCategories = decodeURIComponent(atob(decodeURIComponent(encodedValue)));
+    const decodedCategories = decode(encodedValue);
     parsedCategories = JSON.parse(decodedCategories);
   } catch {
     return null;
