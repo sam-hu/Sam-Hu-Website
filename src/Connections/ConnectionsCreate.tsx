@@ -90,6 +90,7 @@ function DescriptionInput({
         type="text"
         value={valueInBox}
         onChange={(e) => {
+          setValueInBox(e.target.value);
           onChange(e.target.value);
         }}
         placeholder={placeholder}

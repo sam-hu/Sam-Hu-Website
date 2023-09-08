@@ -27,7 +27,7 @@ export const checkWordsUnique = (categories: ConnectionCategories): boolean => {
 };
 
 export const validateCategories = (categories: ConnectionCategories): boolean => {
-  if (categories?.length !== 4 || !categories.every((cat) => cat.words?.length === 4 && cat.words.every((word) => !!word))) {
+  if (categories?.length !== 4 || !categories.every((cat) => cat.words?.length === 4 && cat.words.every((word) => word.trim().length > 0))) {
     return false;
   }
 
@@ -49,8 +49,11 @@ export const normalizeCategories = (categories: ConnectionCategories, reset = fa
 
 export const generateLink = (categories: ConnectionCategories): string => {
   const startingCategories = normalizeCategories(categories, true);
+  console.log('stringifying', startingCategories);
   const jsonString = JSON.stringify(startingCategories);
+  console.log('encoding', jsonString);
   const encodedBase64String = encodeURIComponent(btoa(jsonString));
+  console.log(encodedBase64String);
   return `/connections/play?categories=${encodedBase64String}`;
 };
 
