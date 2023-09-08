@@ -15,6 +15,7 @@ function Home() {
   useEffect(() => {
     document.title = title;
     const faviconLink = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+    faviconLink.type = 'image/x-icon';
     faviconLink.href = favicon;
   }, []);
 
@@ -22,9 +23,8 @@ function Home() {
     <>
       <Helmet>
         <title>Sam Hu</title>
-        <meta property="title" content={title} />
         <meta property="og:title" content={title} />
-        <link rel="icon" type="image/svg" href={favicon} />
+        <link rel="icon" type="image/x-icon" href={favicon} />
       </Helmet>
       <div id="home">
         <div id="topCurve" />

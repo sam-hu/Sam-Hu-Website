@@ -15,6 +15,7 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
   useEffect(() => {
     document.title = title;
     const faviconLink = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
+    faviconLink.type = 'image/svg+xml';
     faviconLink.href = favicon;
   }, []);
 
@@ -37,10 +38,9 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
     <ConnectionsContext.Provider value={connectionsValue}>
       <Helmet>
         <title>Connections</title>
-        <meta property="title" content={title} />
         <meta property="og:title" content={title} />
         <meta property="og:image" content="/Connections.png" />
-        <link rel="icon" type="image/svg" href={favicon} />
+        <link rel="icon" type="image/svg+xml" href={favicon} />
       </Helmet>
       {children}
     </ConnectionsContext.Provider>
