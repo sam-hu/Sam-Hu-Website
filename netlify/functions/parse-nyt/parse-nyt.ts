@@ -50,7 +50,7 @@ const ParseNYTConnections = (nytData: NYTPuzzlesData): ConnectionCategories[] =>
       };
       connectionGame.push(category);
     }
-    parsedConnections.push(connectionGame);
+    parsedConnections.push(connectionGame.sort((a, b) => a.id - b.id));
   }
 
   return parsedConnections;
