@@ -10,9 +10,8 @@ import { ReactComponent as VballIcon } from '../assets/vball.svg';
 import { ReactComponent as CodeIcon } from '../assets/code.svg';
 import { ReactComponent as SFIcon } from '../assets/sf.svg';
 import { ReactComponent as CornellIcon } from '../assets/cornell.svg';
-import { ReactComponent as DevIcon } from '../assets/react-white.svg';
-import { ReactComponent as MITIcon } from '../assets/mit.svg';
-import Emoji from '../emoji';
+import { ReactComponent as CoronaIcon } from '../assets/corona.svg';
+import { ReactComponent as NYIcon } from '../assets/ny.svg';
 import './timeline.scss';
 
 function MyTimeline() {
@@ -67,7 +66,7 @@ function MyTimeline() {
       <VerticalTimelineElement
         className="vertical-timeline-element"
         contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
-        date="Circa 2010"
+        date="~2010"
         iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
         icon={<NoPianoIcon />}
       >
@@ -89,7 +88,7 @@ function MyTimeline() {
         iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
         icon={<VballIcon />}
       >
-        <h3 className="vertical-timeline-element-title">Joined a varsity volleyball team</h3>
+        <h3 className="vertical-timeline-element-title">Played varsity volleyball</h3>
       </VerticalTimelineElement>
       <VerticalTimelineElement
         className="vertical-timeline-element"
@@ -99,10 +98,7 @@ function MyTimeline() {
         icon={<CodeIcon />}
       >
         <h3 className="vertical-timeline-element-title">Took my first coding class</h3>
-        <p>
-          Shoutout to AP Comp Sci
-          <Emoji symbol="🤙" />
-        </p>
+        <p>Shoutout to AP Comp Sci 🤙</p>
       </VerticalTimelineElement>
       <VerticalTimelineElement
         className="vertical-timeline-element"
@@ -120,7 +116,7 @@ function MyTimeline() {
         iconStyle={{ background: 'rgb(250, 250, 250)', color: '$navy' }}
         icon={<SFIcon />}
       >
-        <h3 className="vertical-timeline-element-title">Discovered San Francisco</h3>
+        <h3 className="vertical-timeline-element-title">Intern season in SF</h3>
       </VerticalTimelineElement>
       <VerticalTimelineElement
         className="vertical-timeline-element"
@@ -132,6 +128,24 @@ function MyTimeline() {
         <h3 className="vertical-timeline-element-title">Graduated from Cornell University</h3>
       </VerticalTimelineElement>
       <VerticalTimelineElement
+        className="vertical-timeline-element"
+        contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
+        date="2020-2021"
+        iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
+        icon={<CoronaIcon />}
+      >
+        <h3 className="vertical-timeline-element-title">Let's not talk about it</h3>
+      </VerticalTimelineElement>
+      <VerticalTimelineElement
+        className="vertical-timeline-element"
+        contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
+        date="Oct 2021"
+        iconStyle={{ background: 'rgb(250, 250, 250)', color: '#fff' }}
+        icon={<NYIcon />}
+      >
+        <h3 className="vertical-timeline-element-title">Moved to the Big 🍎</h3>
+      </VerticalTimelineElement>
+      {/* <VerticalTimelineElement
         className="vertical-timeline-element"
         contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
         date="Mar 2020"
@@ -150,7 +164,7 @@ function MyTimeline() {
       >
         <h3 className="vertical-timeline-element-title">Admitted to MIT Sloan!</h3>
         <p>Via deferred MBA</p>
-      </VerticalTimelineElement>
+      </VerticalTimelineElement> */}
     </VerticalTimeline>
   );
 }

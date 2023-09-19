@@ -77,7 +77,10 @@ function Home() {
           <h2>My timeline</h2>
           <MyTimeline />
         </div>
-        <footer>Sam Hu © 2023</footer>
+        <footer>
+          Sam Hu ©&nbsp;
+          {new Date().getFullYear()}
+        </footer>
       </div>
     </>
   );
