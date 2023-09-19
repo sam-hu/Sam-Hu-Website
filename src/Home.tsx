@@ -23,11 +23,13 @@ function Home() {
           <div id="info">
             <h1>Hey, I'm Sam.</h1>
             <p>
-              I'm currently at&nbsp;
+              I'm currently at
+              {' '}
               {found}
-              &nbsp;
+              {' '}
               building banking for the self-employed.
-              Previously, I was a software engineer at&nbsp;
+              Previously, I was a software engineer at
+              {' '}
               {okta}
               .
               Before that, I studied computer science and economics at Cornell University.
@@ -46,7 +48,8 @@ function Home() {
         <div id="spotify">
           <div className="spotifyHeader">
             <h2>
-              Here's what I listen to on&nbsp;
+              Here's what I listen to on
+              {' '}
               {spotify}
             </h2>
           </div>
@@ -78,7 +81,8 @@ function Home() {
           <MyTimeline />
         </div>
         <footer>
-          Sam Hu ©&nbsp;
+          Sam Hu ©
+          {' '}
           {new Date().getFullYear()}
         </footer>
       </div>

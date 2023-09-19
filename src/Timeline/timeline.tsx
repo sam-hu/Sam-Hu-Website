@@ -145,26 +145,6 @@ function MyTimeline() {
       >
         <h3 className="vertical-timeline-element-title">Moved to the Big 🍎</h3>
       </VerticalTimelineElement>
-      {/* <VerticalTimelineElement
-        className="vertical-timeline-element"
-        contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
-        date="Mar 2020"
-        iconStyle={{ background: 'rgb(98, 218, 251)', color: '#fff' }}
-        icon={<DevIcon />}
-      >
-        <h3 className="vertical-timeline-element-title">Made my first website in React</h3>
-        <p>(This one)</p>
-      </VerticalTimelineElement>
-      <VerticalTimelineElement
-        className="vertical-timeline-element"
-        contentArrowStyle={{ borderRight: '10px solid  rgb(255, 255, 255)' }}
-        date="Jul 2020"
-        iconStyle={{ background: 'rgb(165, 27, 48)', color: '#fff' }}
-        icon={<MITIcon />}
-      >
-        <h3 className="vertical-timeline-element-title">Admitted to MIT Sloan!</h3>
-        <p>Via deferred MBA</p>
-      </VerticalTimelineElement> */}
     </VerticalTimeline>
   );
 }
