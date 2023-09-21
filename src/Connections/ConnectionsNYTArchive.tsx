@@ -36,7 +36,12 @@ function ConnectionsNYTArchive() {
       return (
         <Button
           style={{
-            margin: '6px 0', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', justifyContent: 'center', padding: '0 24px',
+            marginBottom: '12px',
+            display: 'grid',
+            gridTemplateColumns: '1fr auto 1fr',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 24px',
           }}
           key={id}
           onClick={() => {
@@ -61,7 +66,11 @@ function ConnectionsNYTArchive() {
       <ConnectionsMenu />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <div style={{
-          padding: '36px 12px', maxWidth: '768px', width: '100%', display: 'flex', flexDirection: 'column',
+          padding: '36px 12px',
+          maxWidth: '768px',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
         }}
         >
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
@@ -71,7 +80,7 @@ function ConnectionsNYTArchive() {
 
           <PlayTodayButton backTo="archive" />
 
-          <div style={{ borderBottom: '1px solid #d9d9d9', marginTop: '24px', marginBottom: '24px' }} />
+          <div style={{ borderBottom: '1px solid #d9d9d9', marginTop: '12px', marginBottom: '24px' }} />
 
           {contents}
         </div>
