@@ -342,7 +342,7 @@ function ConnectionsPlay({ categories, backTo, debug }: { categories: Connection
         {/* Guesses */}
         {guesses.length > 0 && (
           <div style={{ marginBottom: '36px' }}>
-            <Title level={4} style={{ display: 'flex', justifyContent: 'center' }}>
+            <Title level={4} style={{ display: 'flex', justifyContent: 'center', marginTop: 0 }}>
               Guesses
             </Title>
 
