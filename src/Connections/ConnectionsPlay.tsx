@@ -213,25 +213,25 @@ function ConnectionsPlay({ categories, backTo, debug }: { categories: Connection
     switch (location.state?.backTo || backTo) {
       case 'landing':
         return (
-          <Button className="button" onClick={() => navigate('/connections')} icon={<CaretLeftOutlined />}>
+          <Button className="button" type="dashed" onClick={() => navigate('/connections')} icon={<CaretLeftOutlined />}>
             Back to menu
           </Button>
         );
       case 'archive':
         return (
-          <Button className="button" onClick={() => navigate('/connections/archive')} icon={<CaretLeftOutlined />}>
+          <Button className="button" type="dashed" onClick={() => navigate('/connections/archive')} icon={<CaretLeftOutlined />}>
             Back to archive
           </Button>
         );
       case 'edit':
         return (
-          <Button className="button" onClick={() => navigate('/connections/create', { state: { categories: normalizedCategories } })} icon={<CaretLeftOutlined />}>
+          <Button className="button" type="dashed" onClick={() => navigate('/connections/create', { state: { categories: normalizedCategories } })} icon={<CaretLeftOutlined />}>
             Edit puzzle
           </Button>
         );
       default:
         return (
-          <Button className="button" onClick={() => navigate('/connections')} icon={<CaretLeftOutlined />}>
+          <Button className="button" type="dashed" onClick={() => navigate('/connections')} icon={<CaretLeftOutlined />}>
             Back to menu
           </Button>
         );
@@ -306,12 +306,14 @@ function ConnectionsPlay({ categories, backTo, debug }: { categories: Connection
           {victory
             ? (
               <>
-                <Button style={{ height: '54px' }} className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
+                <Button className="button with-margin" type="primary" onClick={() => setShowModal(true)}>
                   View results
                 </Button>
-                <Button style={{ height: '54px' }} className="button with-margin" onClick={resetPuzzle}>
+                <Button className="button with-margin" onClick={resetPuzzle}>
                   Reset puzzle
                 </Button>
+
+                {backButton()}
               </>
             )
             : (
@@ -339,38 +341,42 @@ function ConnectionsPlay({ categories, backTo, debug }: { categories: Connection
 
         {/* Guesses */}
         {guesses.length > 0 && (
-          <Title level={4} style={{ display: 'flex', justifyContent: 'center' }}>
-            Guesses
-          </Title>
+          <div style={{ marginBottom: '36px' }}>
+            <Title level={4} style={{ display: 'flex', justifyContent: 'center' }}>
+              Guesses
+            </Title>
+
+            {
+              guesses.map((guess) => (
+                <div
+                  key={guess.words.join(', ')}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    backgroundColor: guess.correct ? COLORS_BY_DIFFICULTY[allWords[guess.words[0]].difficulty] : 'darkgray',
+                    border: '1px solid',
+                    borderRadius: '8px',
+                    height: '42px',
+                    marginBottom: '8px',
+                    color: 'white',
+                  }}
+                >
+                  <span style={{ margin: '0 24px', fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(', ')}</span>
+                  <span style={{
+                    paddingRight: '24px', minWidth: '64px', display: 'flex', justifyContent: 'right',
+                  }}
+                  >
+                    {' '}
+                    {guess.off > 0 ? `${guess.off} off` : 'Correct!'}
+                  </span>
+                </div>
+              ))
+            }
+
+            {bodiedText && <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '8px' }}>{bodiedText}</div>}
+          </div>
         )}
-        {
-          guesses.map((guess) => (
-            <div
-              key={guess.words.join(', ')}
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                backgroundColor: guess.correct ? COLORS_BY_DIFFICULTY[allWords[guess.words[0]].difficulty] : 'darkgray',
-                border: '1px solid',
-                borderRadius: '8px',
-                height: '42px',
-                marginBottom: '8px',
-                color: 'white',
-              }}
-            >
-              <span style={{ margin: '0 24px', fontSize: correctFontSizeForAnswers(guess.words) }}>{guess.words.join(', ')}</span>
-              <span style={{
-                paddingRight: '24px', minWidth: '64px', display: 'flex', justifyContent: 'right',
-              }}
-              >
-                {' '}
-                {guess.off > 0 ? `${guess.off} off` : 'Correct!'}
-              </span>
-            </div>
-          ))
-        }
-        {bodiedText && <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '8px' }}>{bodiedText}</div>}
 
         <div style={{
           display: 'flex',
