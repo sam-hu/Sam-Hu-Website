@@ -5,7 +5,21 @@ import Papa from 'papaparse';
 import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
 import Title from 'antd/es/typography/Title';
 import {
-  ConnectionCategories, BODIED_TEXTS, COLORS_BY_DIFFICULTY, correctFontSize, isMobile, normalizeCategories, shuffleArray, getTodayOffset, setPuzzleState, getPuzzleState, isSolved, CategoriesState, RecordedGuess, WordState,
+  ConnectionCategories,
+  BODIED_TEXTS,
+  COLORS_BY_DIFFICULTY,
+  correctFontSize,
+  isMobile,
+  normalizeCategories,
+  shuffleArray,
+  getTodayOffset,
+  setPuzzleState,
+  getPuzzleState,
+  isSolved,
+  CategoriesState,
+  RecordedGuess,
+  WordState,
+  isDebug,
 } from './utils';
 import VictoryModal from './VictoryModal';
 
@@ -315,6 +329,8 @@ function ConnectionsPlay({ categories, backTo, debug }: { categories: Connection
                     Deselect all
                   </Button>
                 </div>
+
+                {backButton()}
               </>
             )}
         </div>
@@ -360,7 +376,6 @@ function ConnectionsPlay({ categories, backTo, debug }: { categories: Connection
           display: 'flex',
           justifyContent: 'center',
           flexDirection: 'column',
-          marginTop: '36px',
           width: '100%',
           backgroundColor: 'white',
         }}
@@ -387,13 +402,12 @@ function ConnectionsPlay({ categories, backTo, debug }: { categories: Connection
           >
             {copied ? 'Copied to clipboard!' : 'Share puzzle'}
           </Button>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
-            {backButton()}
 
+          {isDebug() && (
             <Button className="button" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
               Export as CSV
             </Button>
-          </div>
+          )}
         </div>
       </div>
     </div>

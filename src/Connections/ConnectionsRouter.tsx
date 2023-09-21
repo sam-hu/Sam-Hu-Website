@@ -1,7 +1,7 @@
 import { useLocation, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import {
-  ConnectionCategories, decodeCategories, normalizeCategories, validateCategories,
+  ConnectionCategories, decodeCategories, isDebug, normalizeCategories, validateCategories,
 } from './utils';
 import ConnectionsPlay from './ConnectionsPlay';
 import { ConnectionsContext } from './ConnectionsContext';
@@ -25,7 +25,7 @@ function ConnectionsRouter() {
     categories = nytConnections[id - 1];
   } else if (location.state?.categories && validateCategories(location.state.categories)) {
     categories = location.state.categories;
-  } else if (searchParams.has('debug')) {
+  } else if (isDebug()) {
     debug = true;
     categories = [
       {

@@ -14,7 +14,12 @@ import {
 } from 'react-beautiful-dnd';
 import ConnectionsMenu from './ConnectionsMenu';
 import {
-  ConnectionCategories, COLORS_BY_DIFFICULTY, generateLink, validateCategories, checkWordsUnique,
+  ConnectionCategories,
+  COLORS_BY_DIFFICULTY,
+  generateLink,
+  validateCategories,
+  checkWordsUnique,
+  isDebug,
 } from './utils';
 
 const defaultCategories: ConnectionCategories = [
@@ -320,19 +325,21 @@ function ConnectionsCreate() {
               Create puzzle
             </Button>
 
-            <Upload
-              accept=".csv"
-              maxCount={1}
-              beforeUpload={handleUpload}
-              showUploadList={false}
-            >
-              <Button
-                className="button with-margin"
-                icon={<UploadOutlined />}
+            {isDebug() && (
+              <Upload
+                accept=".csv"
+                maxCount={1}
+                beforeUpload={handleUpload}
+                showUploadList={false}
               >
-                Upload CSV
-              </Button>
-            </Upload>
+                <Button
+                  className="button with-margin"
+                  icon={<UploadOutlined />}
+                >
+                  Upload CSV
+                </Button>
+              </Upload>
+            )}
 
             <Button
               className="button with-margin"

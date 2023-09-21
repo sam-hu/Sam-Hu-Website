@@ -156,7 +156,7 @@ export const daysBetween = (now: Date, then: Date): number => {
 export const getTodayOffset = (): number => daysBetween(new Date(), FIRST_DAY);
 
 export const formatDate = (date: Date): string => date.toLocaleDateString('en-US', {
-  month: 'long',
+  month: 'short',
   day: 'numeric',
   year: 'numeric',
 });
@@ -165,4 +165,9 @@ export const getDateString = (offset: number): string => {
   const newDate = new Date(FIRST_DAY);
   newDate.setDate(FIRST_DAY.getDate() + offset);
   return formatDate(newDate);
+};
+
+export const isDebug = (): boolean => {
+  const searchParams = new URLSearchParams(window.location.search);
+  return searchParams.has('debug');
 };
