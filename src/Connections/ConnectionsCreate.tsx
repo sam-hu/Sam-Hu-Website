@@ -237,7 +237,7 @@ function ConnectionsCreate() {
 
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px' }}>
               <EditOutlined height="36px" width="36px" style={{ fontSize: '36px' }} />
-              <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: '12px' }}>Create</Title>
+              <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: '12px' }}>Create a puzzle</Title>
             </div>
 
             <DragDropContext onDragEnd={onDragEnd}>
