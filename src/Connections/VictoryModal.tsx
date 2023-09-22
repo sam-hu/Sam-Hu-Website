@@ -2,7 +2,7 @@ import { Button, Modal } from 'antd';
 import { useState } from 'react';
 import { ShareAltOutlined } from '@ant-design/icons';
 import {
-  ICONS_BY_DIFFICULTY, RecordedGuess, WordState, getDateString,
+  ICONS_BY_DIFFICULTY, RecordedGuess, WordState, getDateString, toInt,
 } from './utils';
 
 function VictoryModal({
@@ -13,8 +13,8 @@ function VictoryModal({
 
   const onShare = () => {
     let text = '';
-    if (id && !Number.isNaN(parseInt(id, 10))) {
-      text += `${getDateString(parseInt(id, 10) - 1)}\n`;
+    if (id && toInt(id)) {
+      text += `${getDateString(toInt(id)! - 1)}\n`;
       text += `Connections #${id}\n`;
     }
     text += guessList.join('\n');

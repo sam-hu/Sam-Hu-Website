@@ -167,6 +167,11 @@ export const getDateString = (offset: number): string => {
   return formatDate(newDate);
 };
 
+export const toInt = (str: string): number | null => {
+  const num = parseInt(str, 10);
+  return Number.isNaN(num) ? null : num;
+};
+
 export const isDebug = (): boolean => {
   const searchParams = new URLSearchParams(window.location.search);
   return searchParams.has('debug');

@@ -1,7 +1,7 @@
 import { useLocation, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import {
-  ConnectionCategories, decodeCategories, isDebug, normalizeCategories, validateCategories,
+  ConnectionCategories, decodeCategories, isDebug, normalizeCategories, toInt, validateCategories,
 } from './utils';
 import ConnectionsPlay from './ConnectionsPlay';
 import { ConnectionsContext } from './ConnectionsContext';
@@ -21,7 +21,7 @@ function ConnectionsRouter() {
     if (!loadedConnections) {
       return <LoadingSpinner />;
     }
-    const id = parseInt(searchParams.get('id')!, 10);
+    const id = toInt(searchParams.get('id')!)!;
     categories = nytConnections[id - 1];
   } else if (location.state?.categories && validateCategories(location.state.categories)) {
     categories = location.state.categories;
@@ -49,7 +49,9 @@ function ConnectionsRouter() {
         words: ['jabberwockies', 'abdominoplasty', 'objectification', 'hieroglyphically'],
       },
     ];
-  } else {
+  }
+
+  if (!categories || categories.length === 0) {
     return <Navigate to="/connections" />;
   }
 
