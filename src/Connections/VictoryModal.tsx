@@ -13,7 +13,7 @@ function VictoryModal({
 
   const onShare = () => {
     let text = '';
-    if (id) {
+    if (id && !Number.isNaN(parseInt(id, 10))) {
       text += `${getDateString(parseInt(id, 10) - 1)}\n`;
       text += `Connections #${id}\n`;
     }
