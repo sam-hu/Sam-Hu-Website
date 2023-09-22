@@ -14,7 +14,6 @@ function ConnectionsRouter() {
 
   let categories: ConnectionCategories = [];
   const urlCategories = decodeCategories(searchParams.get('categories'));
-  let debug;
   if (urlCategories) {
     categories = urlCategories;
   } else if (searchParams.has('id')) {
@@ -26,7 +25,6 @@ function ConnectionsRouter() {
   } else if (location.state?.categories && validateCategories(location.state.categories)) {
     categories = location.state.categories;
   } else if (isDebug()) {
-    debug = true;
     categories = [
       {
         description: 'Test Description 1',
@@ -56,7 +54,7 @@ function ConnectionsRouter() {
   }
 
   const startingCategories = normalizeCategories(categories, true);
-  return <ConnectionsPlay categories={startingCategories} debug={debug} />;
+  return <ConnectionsPlay categories={startingCategories} debug={isDebug()} />;
 }
 
 export default ConnectionsRouter;
