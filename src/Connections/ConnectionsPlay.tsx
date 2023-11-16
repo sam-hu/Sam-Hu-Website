@@ -25,6 +25,7 @@ import {
 } from './utils';
 import VictoryModal from './VictoryModal';
 import ConnectionsMenu from './ConnectionsMenu';
+import ConnectionsBackButton from './ConnectionsBackButton';
 
 const correctFontSizeForAnswers = (guess: string[]) => correctFontSize(guess.join(', '), isMobile() ? 200 : 300, 14);
 
@@ -78,7 +79,7 @@ function Box({
   );
 }
 
-function ConnectionsPlay({ game, debug }: { game: ConnectionsGame, debug?: boolean }) {
+function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backTo?: string, debug?: boolean }) {
   const normalizedCategories = normalizeCategories(game.categories);
   const allWords: { [key: string]: WordState } = {};
   const wordArr: string[] = [];
@@ -264,6 +265,7 @@ function ConnectionsPlay({ game, debug }: { game: ConnectionsGame, debug?: boole
   return (
     <>
       <ConnectionsMenu />
+      <ConnectionsBackButton backTo={backTo} />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <div style={{ padding: '24px 12px', maxWidth: '768px', width: '100%' }}>
           {guesses.length > 0 && <VictoryModal id={id} guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}

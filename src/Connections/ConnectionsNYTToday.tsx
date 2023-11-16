@@ -14,7 +14,7 @@ function ConnectionsNYTToday() {
   }
 
   game.categories = normalizeCategories(game.categories, true);
-  return <ConnectionsPlay game={game} />;
+  return <ConnectionsPlay game={game} backTo="archive" />;
 }
 
 export default ConnectionsNYTToday;

@@ -102,12 +102,30 @@ div.ant-upload {
   top: 48px;
 }
 
+.back-button-mobile {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: 18px;
+  top: 48px;
+  font-size: 24px;
+}
+
 .bm-burger-button-desktop {
   position: absolute;
   width: 24px;
   height: 24px;
   right: 48px;
   top: 48px;
+}
+
+.back-button-desktop {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  left: 48px;
+  top: 48px;
+  font-size: 24px;
 }
 
 /* Color/shape of burger icon bars */
