@@ -1,8 +1,8 @@
 import { Button } from 'antd';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Papa from 'papaparse';
-import { DownloadOutlined, CaretLeftOutlined, ShareAltOutlined } from '@ant-design/icons';
+import { DownloadOutlined, ShareAltOutlined } from '@ant-design/icons';
 import Title from 'antd/es/typography/Title';
 import {
   ConnectionsGame,
@@ -78,7 +78,7 @@ function Box({
   );
 }
 
-function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backTo?: string, debug?: boolean }) {
+function ConnectionsPlay({ game, debug }: { game: ConnectionsGame, debug?: boolean }) {
   const normalizedCategories = normalizeCategories(game.categories);
   const allWords: { [key: string]: WordState } = {};
   const wordArr: string[] = [];
@@ -97,7 +97,6 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
   }
 
   const location = useLocation();
-  const navigate = useNavigate();
   const [wordOrder, setWordOrder] = useState<string[]>(debug ? wordArr : shuffleArray(wordArr));
   const [wordState, setWordState] = useState<{ [key: string]: WordState }>(allWords);
   const [categoriesState, setCategoriesState] = useState(categoryMap);
@@ -213,34 +212,46 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
     setSelectedWords([...selectedWords, word]);
   };
 
-  const backButton = () => {
-    switch (location.state?.backTo || backTo) {
-      case 'landing':
-        return (
-          <Button className="button" type="dashed" onClick={() => navigate('/connections')} icon={<CaretLeftOutlined />}>
-            Back to menu
-          </Button>
-        );
-      case 'archive':
-        return (
-          <Button className="button" type="dashed" onClick={() => navigate('/connections/archive')} icon={<CaretLeftOutlined />}>
-            Back to archive
-          </Button>
-        );
-      case 'edit':
-        return (
-          <Button className="button" type="dashed" onClick={() => navigate('/connections/create', { state: { game: { ...game, categories: normalizedCategories } } })} icon={<CaretLeftOutlined />}>
-            Edit puzzle
-          </Button>
-        );
-      default:
-        return (
-          <Button className="button" type="dashed" onClick={() => navigate('/connections')} icon={<CaretLeftOutlined />}>
-            Back to menu
-          </Button>
-        );
-    }
-  };
+  const shareButton = () => (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      width: '100%',
+      backgroundColor: 'white',
+    }}
+    >
+      <Button
+        className="button with-margin"
+        type="dashed"
+        onClick={() => {
+          if (navigator.share) {
+            const shareData = {
+              text: window.location.href,
+            };
+            navigator.share(shareData);
+          } else {
+            if (!copied) {
+              setCopied(true);
+              setTimeout(() => {
+                setCopied(false);
+              }, 2000);
+            }
+            navigator.clipboard.writeText(window.location.href);
+          }
+        }}
+        icon={<ShareAltOutlined />}
+      >
+        {copied ? 'Copied to clipboard!' : 'Share puzzle'}
+      </Button>
+
+      {isDebug() && (
+        <Button className="button" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
+          Export as CSV
+        </Button>
+      )}
+    </div>
+  );
 
   const resetPuzzle = () => {
     setVictory(false);
@@ -344,7 +355,7 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
                     Reset puzzle
                   </Button>
 
-                  {backButton()}
+                  {shareButton()}
                 </>
               )
               : (
@@ -363,7 +374,7 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
                     </Button>
                   </div>
 
-                  {backButton()}
+                  {shareButton()}
                 </>
               )}
           </div>
@@ -408,45 +419,6 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
               {bodiedText && <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '8px' }}>{bodiedText}</div>}
             </div>
           )}
-
-          {/* Share button */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexDirection: 'column',
-            width: '100%',
-            backgroundColor: 'white',
-          }}
-          >
-            <Button
-              className="button with-margin"
-              onClick={() => {
-                if (navigator.share) {
-                  const shareData = {
-                    text: window.location.href,
-                  };
-                  navigator.share(shareData);
-                } else {
-                  if (!copied) {
-                    setCopied(true);
-                    setTimeout(() => {
-                      setCopied(false);
-                    }, 2000);
-                  }
-                  navigator.clipboard.writeText(window.location.href);
-                }
-              }}
-              icon={<ShareAltOutlined />}
-            >
-              {copied ? 'Copied to clipboard!' : 'Share puzzle'}
-            </Button>
-
-            {isDebug() && (
-              <Button className="button" onClick={() => serializeAndDownloadCSV()} icon={<DownloadOutlined />}>
-                Export as CSV
-              </Button>
-            )}
-          </div>
         </div>
       </div>
     </>
