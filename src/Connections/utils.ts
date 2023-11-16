@@ -9,6 +9,12 @@ export type ConnectionCategory = {
 
 export type ConnectionCategories = ConnectionCategory[];
 
+export type ConnectionsGame = {
+  title?: string;
+  author?: string;
+  categories: ConnectionCategories;
+};
+
 export type RecordedGuess = {
   words: string[];
   correct: boolean;
@@ -49,9 +55,12 @@ export const normalizeCategories = (categories: ConnectionCategories, reset = fa
   return categories;
 };
 
-export const generateLink = (categories: ConnectionCategories): string => {
-  const startingCategories = normalizeCategories(categories, true);
-  const jsonString = JSON.stringify(startingCategories);
+export const generateLink = (game: ConnectionsGame): string => {
+  const normalizedGame = {
+    ...game,
+    categories: normalizeCategories(game.categories, true),
+  };
+  const jsonString = JSON.stringify(normalizedGame);
   const encodedBase64String = encodeURI(jsonString);
   return `/connections/play?categories=${encodedBase64String}`;
 };
@@ -69,24 +78,28 @@ export function shuffleArray(array: string[]): string[] {
   return shuffledArray;
 }
 
-export const decodeCategories = (encodedValue: string | null): ConnectionCategories | null => {
+export const decodeCategories = (encodedValue: string | null): ConnectionsGame | null => {
   if (!encodedValue) {
     return null;
   }
 
-  let parsedCategories;
+  let parsedGame;
   try {
     const decodedCategories = decode(encodedValue);
-    parsedCategories = JSON.parse(decodedCategories);
+    parsedGame = JSON.parse(decodedCategories);
+    // Check if this is old version (ConnectionCategories instead of ConnectionsGame)
+    if (!parsedGame.categories) {
+      parsedGame = { categories: parsedGame } as ConnectionsGame;
+    }
   } catch {
     return null;
   }
 
-  if (!validateCategories(parsedCategories)) {
+  if (!validateCategories(parsedGame.categories)) {
     return null;
   }
 
-  return parsedCategories;
+  return parsedGame;
 };
 
 export const correctFontSize = (str: string, elementWidth: number, originalSize = 16) => {

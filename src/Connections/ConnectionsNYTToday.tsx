@@ -7,14 +7,14 @@ import LoadingSpinner from './Loading';
 function ConnectionsNYTToday() {
   const { nytConnections, loadedConnections } = useContext(ConnectionsContext);
 
-  const categories = nytConnections[getTodayOffset()];
+  const game = nytConnections[getTodayOffset()];
 
   if (!loadedConnections) {
     return <LoadingSpinner />;
   }
 
-  const startingCategories = normalizeCategories(categories, true);
-  return <ConnectionsPlay categories={startingCategories} backTo="archive" />;
+  game.categories = normalizeCategories(game.categories, true);
+  return <ConnectionsPlay game={game} backTo="archive" />;
 }
 
 export default ConnectionsNYTToday;

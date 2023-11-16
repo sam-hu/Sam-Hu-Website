@@ -175,16 +175,25 @@ const formItemLayout = {
 
 function ConnectionsCreate() {
   const location = useLocation();
-  const [categories, setCategories] = useState<ConnectionCategories>(location.state?.categories || defaultCategories);
+  const locationGame = location.state?.game;
+  const [title, setTitle] = useState<string>(locationGame?.title);
+  const [author, setAuthor] = useState<string>(locationGame?.author);
+  const [categories, setCategories] = useState<ConnectionCategories>(location.state?.game?.categories || defaultCategories);
   const [clearInputs, setClearInputs] = useState(false);
   const navigate = useNavigate();
   const validCategories = validateCategories(categories);
 
   useEffect(() => {
-    if (location.state?.categories) {
-      setCategories(location.state.categories);
+    if (locationGame?.title) {
+      setTitle(location.state.game.title);
     }
-  }, [location.state?.categories]);
+    if (locationGame?.author) {
+      setAuthor(location.state.game.author);
+    }
+    if (locationGame?.categories) {
+      setCategories(location.state.game?.categories);
+    }
+  }, [locationGame?.title, locationGame?.author, locationGame?.categories]);
 
   const handleUpload = (file: RcFile) => {
     const reader = new FileReader();
@@ -269,7 +278,7 @@ function ConnectionsCreate() {
                               >
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                   <Title level={4} style={{ color: 'white', margin: 0, paddingBottom: '4px' }}>{difficulties[index]}</Title>
-                                  <HolderOutlined style={{ fontSize: '18px', color: 'white', marginTop: '4px' }} />
+                                  <HolderOutlined style={{ fontSize: '18px', color: 'white' }} />
                                 </div>
 
                                 <DescriptionInput
@@ -307,7 +316,39 @@ function ConnectionsCreate() {
               </Droppable>
             </DragDropContext>
 
-            {!checkWordsUnique(categories) && <div style={{ color: 'red' }}>⚠️ All words must be unique</div>}
+            {(
+              !checkWordsUnique(categories)
+                ? <div style={{ color: 'red', marginBottom: '12px' }}>⚠️ All words must be unique</div>
+                : <div style={{ marginBottom: '12px' }}>ℹ️ Tip: drag and drop categories into the order you like</div>
+            )}
+
+            <div style={{
+              border: '1px solid black',
+              borderRadius: '8px',
+              padding: '16px 12px',
+              backgroundColor: 'white',
+              WebkitUserSelect: 'none',
+            }}
+            >
+              <Title level={4} style={{ color: 'black', margin: 0, paddingBottom: '4px' }}>Optional</Title>
+              <Form.Item>
+                <Input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Name this puzzle"
+                />
+              </Form.Item>
+
+              <Form.Item>
+                <Input
+                  type="text"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                  placeholder="Author"
+                />
+              </Form.Item>
+            </div>
 
             <Button
               style={{ marginTop: '24px' }}
@@ -316,7 +357,8 @@ function ConnectionsCreate() {
               disabled={!validCategories}
               onClick={() => {
                 if (validCategories) {
-                  const link = generateLink(categories);
+                  const game = { title, author, categories };
+                  const link = generateLink(game);
                   navigate(link, { state: { backTo: 'edit' } });
                 }
               }}

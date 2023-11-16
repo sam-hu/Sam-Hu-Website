@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { Handler } from '@netlify/functions';
 import axios from 'axios';
-import { ConnectionCategories, ConnectionCategory } from '../../../src/Connections/utils';
+import { ConnectionsGame, ConnectionCategory } from '../../../src/Connections/utils';
 
 export const handler: Handler = async () => {
   try {
@@ -19,7 +19,7 @@ export const handler: Handler = async () => {
   }
 };
 
-const GetAndParseNYTConnections = async (): Promise<ConnectionCategories[]> => {
+const GetAndParseNYTConnections = async (): Promise<ConnectionsGame[]> => {
   const response = await axios.get('https://www.nytimes.com/games-assets/connections/game-data-by-day.json');
   return ParseNYTConnections(response.data);
 };
@@ -36,11 +36,11 @@ type NYTPuzzle = {
 
 type NYTPuzzlesData = NYTPuzzle[];
 
-const ParseNYTConnections = (nytData: NYTPuzzlesData): ConnectionCategories[] => {
-  const parsedConnections: ConnectionCategories[] = [];
+const ParseNYTConnections = (nytData: NYTPuzzlesData): ConnectionsGame[] => {
+  const parsedConnections: ConnectionsGame[] = [];
 
   for (const item of nytData) {
-    const connectionGame: ConnectionCategories = [];
+    const connectionGame: ConnectionsGame = { categories: [] };
     for (const groupName in item.groups) {
       const group = item.groups[groupName];
       const category: ConnectionCategory = {
@@ -48,9 +48,9 @@ const ParseNYTConnections = (nytData: NYTPuzzlesData): ConnectionCategories[] =>
         id: group.level,
         words: group.members,
       };
-      connectionGame.push(category);
+      connectionGame.categories.push(category);
     }
-    parsedConnections.push(connectionGame.sort((a, b) => a.id - b.id));
+    parsedConnections.push({ categories: connectionGame.categories.sort((a, b) => a.id - b.id) });
   }
 
   return parsedConnections;
