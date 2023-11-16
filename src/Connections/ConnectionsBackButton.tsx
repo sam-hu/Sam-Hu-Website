@@ -10,21 +10,13 @@ function ConnectionsBackButton({ backTo }: { backTo?: string }) {
   const link = () => {
     switch (back) {
       case 'landing':
-        return (
-          '/connections'
-        );
+        return '/connections';
       case 'archive':
-        return (
-          '/connections/archive'
-        );
+        return '/connections/archive';
       case 'edit':
-        return (
-          '/connections/create'
-        );
+        return '/connections/create';
       default:
-        return (
-          '/connections'
-        );
+        return '/connections';
     }
   };
 
