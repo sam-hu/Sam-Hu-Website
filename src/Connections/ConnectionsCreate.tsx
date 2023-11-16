@@ -319,18 +319,18 @@ function ConnectionsCreate() {
             {(
               !checkWordsUnique(categories)
                 ? <div style={{ color: 'red', marginBottom: '12px' }}>⚠️ All words must be unique</div>
-                : <div style={{ marginBottom: '12px' }}>ℹ️ Tip: drag and drop categories into the order you like</div>
+                : <div style={{ color: 'gray', marginBottom: '12px' }}>ℹ️ Tip: drag and drop categories into the order you like</div>
             )}
 
             <div style={{
-              border: '1px solid black',
+              border: '1px solid gray',
               borderRadius: '8px',
               padding: '16px 12px',
               backgroundColor: 'white',
               WebkitUserSelect: 'none',
             }}
             >
-              <Title level={4} style={{ color: 'black', margin: 0, paddingBottom: '4px' }}>Optional</Title>
+              <Title level={4} style={{ color: 'gray', margin: 0, paddingBottom: '4px' }}>Optional</Title>
               <Form.Item>
                 <Input
                   type="text"
