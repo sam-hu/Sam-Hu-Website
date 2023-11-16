@@ -20,6 +20,8 @@ import {
   RecordedGuess,
   WordState,
   isDebug,
+  getDateString,
+  toInt,
 } from './utils';
 import VictoryModal from './VictoryModal';
 import ConnectionsMenu from './ConnectionsMenu';
@@ -109,6 +111,7 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
   const id: string | null = window.location.pathname === '/connections/today'
     ? (getTodayOffset() + 1).toString()
     : (searchParams.get('id') || searchParams.get('categories') || searchParams.get('game') || null);
+  const isNYTPuzzle = id && parseInt(id, 10) > 0;
 
   // Load puzzleState from localStorage
   useEffect(() => {
@@ -254,6 +257,7 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
         <div style={{ padding: '24px 12px', maxWidth: '768px', width: '100%' }}>
           {guesses.length > 0 && <VictoryModal id={id} guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}
 
+          {/* Title and author */}
           <div style={{
             display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '82px',
           }}
@@ -264,14 +268,14 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
                 display: 'flex', justifyContent: 'center', margin: 0,
               }}
             >
-              {game.title}
+              {isNYTPuzzle ? `New York Times #${id}` : game.title}
             </Title>
             <div
               style={{
                 display: 'flex', justifyContent: 'center', marginTop: '4px', marginBottom: '16px',
               }}
             >
-              {game.author}
+              {isNYTPuzzle ? getDateString(toInt(id)! - 1) : game.author}
             </div>
           </div>
 
