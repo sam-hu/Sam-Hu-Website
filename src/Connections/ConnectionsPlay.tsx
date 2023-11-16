@@ -259,20 +259,20 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
 
           {/* Title and author */}
           <div style={{
-            display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '82px',
+            display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '82px',
           }}
           >
             <Title
               level={3}
               style={{
-                display: 'flex', justifyContent: 'center', margin: 0,
+                display: 'flex', justifyContent: 'center', margin: 0, textAlign: 'center', maxWidth: '85%',
               }}
             >
               {isNYTPuzzle ? `New York Times #${id}` : game.title}
             </Title>
             <div
               style={{
-                display: 'flex', justifyContent: 'center', marginTop: '4px', marginBottom: '16px',
+                display: 'flex', justifyContent: 'center', marginTop: '4px', marginBottom: '16px', textAlign: 'center', maxWidth: '85%',
               }}
             >
               {isNYTPuzzle ? getDateString(toInt(id)! - 1) : game.author}
