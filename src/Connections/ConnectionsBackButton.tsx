@@ -30,7 +30,6 @@ function ConnectionsBackButton({ backTo }: { backTo?: string }) {
 
   return (
     <CaretLeftOutlined
-      width="1000px"
       className={isMobile() ? 'back-button-mobile' : 'back-button-desktop'}
       onClick={() => navigate(link())}
     />
