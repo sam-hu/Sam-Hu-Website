@@ -13,7 +13,7 @@ function ConnectionsRouter() {
   const searchParams = new URLSearchParams(location.search);
 
   let game: ConnectionsGame = { categories: [] };
-  const urlGame = decodeCategories(searchParams.get('categories'));
+  const urlGame = decodeCategories(searchParams.get('categories') || searchParams.get('game'));
   if (urlGame) {
     game = urlGame;
   } else if (searchParams.has('id')) {

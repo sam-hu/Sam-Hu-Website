@@ -62,7 +62,7 @@ export const generateLink = (game: ConnectionsGame): string => {
   };
   const jsonString = JSON.stringify(normalizedGame);
   const encodedBase64String = encodeURI(jsonString);
-  return `/connections/play?categories=${encodedBase64String}`;
+  return `/connections/play?game=${encodedBase64String}`;
 };
 
 export function shuffleArray(array: string[]): string[] {
@@ -89,7 +89,7 @@ export const decodeCategories = (encodedValue: string | null): ConnectionsGame |
     parsedGame = JSON.parse(decodedCategories);
     // Check if this is old version (ConnectionCategories instead of ConnectionsGame)
     if (!parsedGame.categories) {
-      parsedGame = { categories: parsedGame } as ConnectionsGame;
+      parsedGame = { categories: parsedGame };
     }
   } catch {
     return null;

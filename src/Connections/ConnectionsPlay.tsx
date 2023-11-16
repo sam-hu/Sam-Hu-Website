@@ -108,7 +108,7 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
   const searchParams = new URLSearchParams(location.search);
   const id: string | null = window.location.pathname === '/connections/today'
     ? (getTodayOffset() + 1).toString()
-    : (searchParams.get('id') || searchParams.get('categories') || null);
+    : (searchParams.get('id') || searchParams.get('categories') || searchParams.get('game') || null);
 
   // Load puzzleState from localStorage
   useEffect(() => {
