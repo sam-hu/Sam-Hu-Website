@@ -254,6 +254,35 @@ function ConnectionsCreate() {
               <Title level={1} style={{ marginTop: 0, marginBottom: 0, marginLeft: '12px' }}>Create a puzzle</Title>
             </div>
 
+            <div style={{
+              border: '1px solid gray',
+              borderRadius: '8px',
+              padding: '16px 12px',
+              backgroundColor: 'white',
+              WebkitUserSelect: 'none',
+              marginBottom: '12px',
+            }}
+            >
+              <Title level={4} style={{ color: 'gray', margin: 0, paddingBottom: '4px' }}>Optional</Title>
+              <Form.Item>
+                <Input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Name this puzzle"
+                />
+              </Form.Item>
+
+              <Form.Item>
+                <Input
+                  type="text"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
+                  placeholder="Author"
+                />
+              </Form.Item>
+            </div>
+
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="list">
                 {(provided) => (
@@ -322,36 +351,8 @@ function ConnectionsCreate() {
                 : <div style={{ color: 'gray', marginBottom: '12px' }}>ⓘ Tip: drag and drop categories into the order you like</div>
             )}
 
-            <div style={{
-              border: '1px solid gray',
-              borderRadius: '8px',
-              padding: '16px 12px',
-              backgroundColor: 'white',
-              WebkitUserSelect: 'none',
-            }}
-            >
-              <Title level={4} style={{ color: 'gray', margin: 0, paddingBottom: '4px' }}>Optional</Title>
-              <Form.Item>
-                <Input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Name this puzzle"
-                />
-              </Form.Item>
-
-              <Form.Item>
-                <Input
-                  type="text"
-                  value={author}
-                  onChange={(e) => setAuthor(e.target.value)}
-                  placeholder="Author"
-                />
-              </Form.Item>
-            </div>
-
             <Button
-              style={{ marginTop: '24px' }}
+              style={{ marginTop: '12px' }}
               className="button with-margin"
               icon={<CaretRightOutlined />}
               disabled={!validCategories}
