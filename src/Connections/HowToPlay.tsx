@@ -40,7 +40,11 @@ function HowToPlay({ open, onClose }: { open: boolean; onClose: () => void; }) {
         </div>
       </div>
       <small>
-        Connections was created by the New York Times. The original version of this game can be found on their website.
+        Connections was created by the New York Times. The original version of this game can be found at
+        {' '}
+        <a href="https://www.nytimes.com/games/connections" target="_blank" rel="noopener noreferrer">
+          https://www.nytimes.com/games/connections
+        </a>
       </small>
     </Modal>
   );
