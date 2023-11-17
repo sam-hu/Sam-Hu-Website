@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ConnectionsContext } from './ConnectionsContext';
-import { getTodayOffset, normalizeCategories } from './utils';
+import { getTodayOffset, normalizeGame } from './utils';
 import ConnectionsPlay from './ConnectionsPlay';
 import LoadingSpinner from './Loading';
 
@@ -13,8 +13,7 @@ function ConnectionsNYTToday() {
     return <LoadingSpinner />;
   }
 
-  game.categories = normalizeCategories(game.categories, true);
-  return <ConnectionsPlay game={game} backTo="archive" />;
+  return <ConnectionsPlay game={normalizeGame(game, true)} backTo="archive" />;
 }
 
 export default ConnectionsNYTToday;

@@ -10,7 +10,6 @@ import {
   COLORS_BY_DIFFICULTY,
   correctFontSize,
   isMobile,
-  normalizeCategories,
   shuffleArray,
   getTodayOffset,
   setPuzzleState,
@@ -22,6 +21,7 @@ import {
   isDebug,
   getDateString,
   toInt,
+  normalizeGame,
 } from './utils';
 import VictoryModal from './VictoryModal';
 import ConnectionsMenu from './ConnectionsMenu';
@@ -80,7 +80,8 @@ function Box({
 }
 
 function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backTo?: string, debug?: boolean }) {
-  const normalizedCategories = normalizeCategories(game.categories);
+  const normalizedGame = normalizeGame(game, false);
+  const normalizedCategories = normalizedGame.categories;
   const allWords: { [key: string]: WordState } = {};
   const wordArr: string[] = [];
   const groupedWords: string[][] = [];

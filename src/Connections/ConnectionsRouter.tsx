@@ -1,7 +1,7 @@
 import { useLocation, Navigate } from 'react-router-dom';
 import { useContext } from 'react';
 import {
-  ConnectionsGame, decodeCategories, isDebug, normalizeCategories, toInt, validateCategories,
+  ConnectionsGame, decodeCategories, isDebug, normalizeGame, toInt, validateCategories,
 } from './utils';
 import ConnectionsPlay from './ConnectionsPlay';
 import { ConnectionsContext } from './ConnectionsContext';
@@ -55,8 +55,7 @@ function ConnectionsRouter() {
     return <Navigate to="/connections" />;
   }
 
-  game.categories = normalizeCategories(game.categories, true);
-  return <ConnectionsPlay game={game} debug={isDebug()} />;
+  return <ConnectionsPlay game={normalizeGame(game, true)} debug={isDebug()} />;
 }
 
 export default ConnectionsRouter;

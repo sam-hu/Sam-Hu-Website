@@ -42,7 +42,7 @@ export const validateCategories = (categories: ConnectionCategories): boolean =>
   return checkWordsUnique(categories);
 };
 
-export const normalizeCategories = (categories: ConnectionCategories, reset = false): ConnectionCategories => {
+const normalizeCategories = (categories: ConnectionCategories, reset: boolean): ConnectionCategories => {
   for (let i = 0; i < categories.length; i++) {
     const c = categories[i];
     c.id = i;
@@ -55,11 +55,14 @@ export const normalizeCategories = (categories: ConnectionCategories, reset = fa
   return categories;
 };
 
+export const normalizeGame = (game: ConnectionsGame, reset: boolean): ConnectionsGame => ({
+  title: game.title?.trim(),
+  author: game.author?.trim(),
+  categories: normalizeCategories(game.categories, reset),
+});
+
 export const generateLink = (game: ConnectionsGame): string => {
-  const normalizedGame = {
-    ...game,
-    categories: normalizeCategories(game.categories, true),
-  };
+  const normalizedGame = normalizeGame(game, true);
   const jsonString = JSON.stringify(normalizedGame);
   const encodedBase64String = encodeURI(jsonString);
   return `/connections/play?game=${encodedBase64String}`;
