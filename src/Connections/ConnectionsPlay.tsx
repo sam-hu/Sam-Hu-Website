@@ -22,43 +22,12 @@ import {
   getDateString,
   toInt,
   normalizeGame,
+  correctFontSizeForAnswers,
+  calcOffBy,
 } from './utils';
 import VictoryModal from './VictoryModal';
 import ConnectionsMenu from './ConnectionsMenu';
 import ConnectionsBackButton from './ConnectionsBackButton';
-
-const correctFontSizeForAnswers = (guess: string[]) => correctFontSize(guess.join(', '), isMobile() ? 200 : 300, 14);
-
-const minChangesToEqualLists = (list1: string[], list2: string[]): number => {
-  const freq1: { [key: string]: number } = {};
-
-  // Count the frequency of strings in list1
-  for (const string of list1) {
-    freq1[string] = (freq1[string] || 0) + 1;
-  }
-
-  // Calculate the total changes needed
-  let changesNeeded = 0;
-
-  // Iterate through the strings in list2
-  for (const string of list2) {
-    if (freq1[string] && freq1[string] > 0) {
-      freq1[string] -= 1; // Mark the string as used
-    } else {
-      changesNeeded += 1; // Count strings that need to be changed
-    }
-  }
-
-  return changesNeeded;
-};
-
-const calcOffBy = (words: string[][], guess: string[]): number => {
-  const offs = [];
-  for (const word of words) {
-    offs.push(minChangesToEqualLists(word, guess));
-  }
-  return Math.min(...offs);
-};
 
 function Box({
   word, selected, solved, onClick,
