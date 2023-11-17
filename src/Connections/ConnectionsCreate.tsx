@@ -348,7 +348,7 @@ function ConnectionsCreate() {
             {(
               !checkWordsUnique(categories)
                 ? <div style={{ color: 'red', marginBottom: '12px' }}>⚠️ All words must be unique</div>
-                : <div style={{ color: 'gray', marginBottom: '12px' }}>ⓘ Tip: drag and drop categories into the order you like</div>
+                : <div style={{ color: 'gray', marginBottom: '12px' }}>ⓘ Tip: drag and drop categories into any order</div>
             )}
 
             <Button
