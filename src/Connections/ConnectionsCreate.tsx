@@ -178,7 +178,7 @@ function ConnectionsCreate() {
   const locationGame = location.state?.game;
   const [title, setTitle] = useState<string>(locationGame?.title);
   const [author, setAuthor] = useState<string>(locationGame?.author);
-  const [categories, setCategories] = useState<ConnectionCategories>(location.state?.game?.categories || defaultCategories);
+  const [categories, setCategories] = useState<ConnectionCategories>(locationGame?.categories || defaultCategories);
   const [clearInputs, setClearInputs] = useState(false);
   const navigate = useNavigate();
   const validCategories = validateCategories(categories);
