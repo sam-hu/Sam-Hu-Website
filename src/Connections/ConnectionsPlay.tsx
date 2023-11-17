@@ -265,7 +265,7 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
   return (
     <>
       <ConnectionsMenu />
-      <ConnectionsBackButton backTo={backTo} />
+      <ConnectionsBackButton backTo={backTo} currentGame={{ ...game, categories: normalizedCategories }} />
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <div style={{ padding: '24px 12px', maxWidth: '768px', width: '100%' }}>
           {guesses.length > 0 && <VictoryModal id={id} guesses={guesses} allWords={allWords} visible={victory && showModal} onClose={() => setShowModal(false)} />}

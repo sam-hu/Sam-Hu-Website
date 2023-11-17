@@ -1,8 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CaretLeftOutlined } from '@ant-design/icons';
-import { isMobile } from './utils';
+import { ConnectionsGame, isMobile } from './utils';
 
-function ConnectionsBackButton({ backTo }: { backTo?: string }) {
+function ConnectionsBackButton({ backTo, currentGame }: { backTo?: string, currentGame?: ConnectionsGame }) {
   const location = useLocation();
   const navigate = useNavigate();
   const back = backTo || location.state?.backTo;
@@ -23,7 +23,7 @@ function ConnectionsBackButton({ backTo }: { backTo?: string }) {
   return (
     <CaretLeftOutlined
       className={isMobile() ? 'back-button-mobile' : 'back-button-desktop'}
-      onClick={() => navigate(link())}
+      onClick={() => navigate(link(), { state: { game: currentGame } })}
     />
   );
 }
