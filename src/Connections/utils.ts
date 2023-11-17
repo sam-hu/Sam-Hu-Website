@@ -9,6 +9,12 @@ export type ConnectionCategory = {
 
 export type ConnectionCategories = ConnectionCategory[];
 
+export type ConnectionsGame = {
+  title?: string;
+  author?: string;
+  categories: ConnectionCategories;
+};
+
 export type RecordedGuess = {
   words: string[];
   correct: boolean;
@@ -36,7 +42,7 @@ export const validateCategories = (categories: ConnectionCategories): boolean =>
   return checkWordsUnique(categories);
 };
 
-export const normalizeCategories = (categories: ConnectionCategories, reset = false): ConnectionCategories => {
+const normalizeCategories = (categories: ConnectionCategories, reset: boolean): ConnectionCategories => {
   for (let i = 0; i < categories.length; i++) {
     const c = categories[i];
     c.id = i;
@@ -49,11 +55,17 @@ export const normalizeCategories = (categories: ConnectionCategories, reset = fa
   return categories;
 };
 
-export const generateLink = (categories: ConnectionCategories): string => {
-  const startingCategories = normalizeCategories(categories, true);
-  const jsonString = JSON.stringify(startingCategories);
+export const normalizeGame = (game: ConnectionsGame, reset: boolean): ConnectionsGame => ({
+  title: game.title?.trim(),
+  author: game.author?.trim(),
+  categories: normalizeCategories(game.categories, reset),
+});
+
+export const generateLink = (game: ConnectionsGame): string => {
+  const normalizedGame = normalizeGame(game, true);
+  const jsonString = JSON.stringify(normalizedGame);
   const encodedBase64String = encodeURI(jsonString);
-  return `/connections/play?categories=${encodedBase64String}`;
+  return `/connections/play?game=${encodedBase64String}`;
 };
 
 export function shuffleArray(array: string[]): string[] {
@@ -69,24 +81,28 @@ export function shuffleArray(array: string[]): string[] {
   return shuffledArray;
 }
 
-export const decodeCategories = (encodedValue: string | null): ConnectionCategories | null => {
+export const decodeCategories = (encodedValue: string | null): ConnectionsGame | null => {
   if (!encodedValue) {
     return null;
   }
 
-  let parsedCategories;
+  let parsedGame;
   try {
     const decodedCategories = decode(encodedValue);
-    parsedCategories = JSON.parse(decodedCategories);
+    parsedGame = JSON.parse(decodedCategories);
+    // Check if this is old version (ConnectionCategories instead of ConnectionsGame)
+    if (!parsedGame.categories) {
+      parsedGame = { categories: parsedGame };
+    }
   } catch {
     return null;
   }
 
-  if (!validateCategories(parsedCategories)) {
+  if (!validateCategories(parsedGame.categories)) {
     return null;
   }
 
-  return parsedCategories;
+  return parsedGame;
 };
 
 export const correctFontSize = (str: string, elementWidth: number, originalSize = 16) => {

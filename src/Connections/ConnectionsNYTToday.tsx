@@ -1,20 +1,22 @@
 import { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ConnectionsContext } from './ConnectionsContext';
-import { getTodayOffset, normalizeCategories } from './utils';
+import { getTodayOffset, normalizeGame } from './utils';
 import ConnectionsPlay from './ConnectionsPlay';
 import LoadingSpinner from './Loading';
 
 function ConnectionsNYTToday() {
+  const location = useLocation();
   const { nytConnections, loadedConnections } = useContext(ConnectionsContext);
 
-  const categories = nytConnections[getTodayOffset()];
+  const game = nytConnections[getTodayOffset()];
+  const backTo = location.state?.backTo || 'archive';
 
   if (!loadedConnections) {
     return <LoadingSpinner />;
   }
 
-  const startingCategories = normalizeCategories(categories, true);
-  return <ConnectionsPlay categories={startingCategories} backTo="archive" />;
+  return <ConnectionsPlay game={normalizeGame(game, true)} backTo={backTo} />;
 }
 
 export default ConnectionsNYTToday;

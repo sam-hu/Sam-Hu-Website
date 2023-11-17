@@ -32,7 +32,7 @@ function ConnectionsNYTArchive() {
     ? <LoadingSpinner />
     : nytConnections.slice(0, today).map((_, index) => {
       const id = index + 1;
-      const buttonText = `${getDateString(index)} - #${id}`;
+      const buttonText = `#${id} - ${getDateString(index)}`;
       return (
         <Button
           style={{

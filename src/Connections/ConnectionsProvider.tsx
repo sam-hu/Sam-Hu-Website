@@ -2,11 +2,11 @@ import { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { ConnectionsProviderProps, ConnectionsContext } from './ConnectionsContext';
-import { ConnectionCategories } from './utils';
+import { ConnectionsGame } from './utils';
 import './connections.scss';
 
 function ConnectionsProvider({ children }: ConnectionsProviderProps) {
-  const [nytConnections, setNytConnections] = useState<ConnectionCategories[]>([]);
+  const [nytConnections, setNytConnections] = useState<ConnectionsGame[]>([]);
   const [loadedConnections, setLoadedConnections] = useState(false);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
 
     axios.get('/.netlify/functions/parse-nyt')
       .then((response) => {
-        const connections = response.data as ConnectionCategories[];
+        const connections = response.data as ConnectionsGame[];
         setNytConnections(connections);
       })
       .finally(() => { setLoadedConnections(true); });

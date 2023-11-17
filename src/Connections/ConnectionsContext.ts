@@ -1,8 +1,8 @@
 import React, { createContext } from 'react';
-import { ConnectionCategories } from './utils';
+import { ConnectionsGame } from './utils';
 
 type ConnectionsContextType = {
-  nytConnections: ConnectionCategories[];
+  nytConnections: ConnectionsGame[];
   loadedConnections: boolean;
 };
 
