@@ -227,8 +227,8 @@ const saveGame = async (game: ConnectionsGame): Promise<string> => {
 };
 
 export const loadGame = async (id: string): Promise<ConnectionsGame | null> => {
-  const resp = axios.get('/.netlify/functions/load-game', { params: { id } });
-  return (await resp).data;
+  const resp = await axios.get('/.netlify/functions/load-game', { params: { id } });
+  return resp.data;
 };
 
 export const isDebug = (): boolean => {
