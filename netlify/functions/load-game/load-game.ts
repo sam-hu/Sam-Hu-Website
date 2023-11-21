@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { Handler } from '@netlify/functions';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../../firestore/firestore';
+import { db, gamesCollection } from '../../shared/firestore';
 
 export const handler: Handler = async (event) => {
   try {
@@ -13,7 +13,7 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    const resp = await getDoc(doc(db, 'games', id));
+    const resp = await getDoc(doc(db, gamesCollection(), id));
     const game = JSON.stringify(resp.data());
     return {
       statusCode: 200,

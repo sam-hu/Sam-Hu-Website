@@ -2,7 +2,7 @@
 import { Handler } from '@netlify/functions';
 import { humanId } from 'human-id';
 import { setDoc, doc } from 'firebase/firestore';
-import { db } from '../../firestore/firestore';
+import { db, gamesCollection } from '../../shared/firestore';
 
 export const handler: Handler = async (event) => {
   try {
@@ -16,7 +16,7 @@ export const handler: Handler = async (event) => {
 
     const requestBody = JSON.parse(payload);
     const id = humanId({ separator: '-', capitalize: false });
-    await setDoc(doc(db, 'games', id), requestBody);
+    await setDoc(doc(db, gamesCollection(), id), requestBody);
     return {
       statusCode: 200,
       body: id,

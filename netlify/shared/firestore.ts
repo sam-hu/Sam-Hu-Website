@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { isProd } from './env';
 
 const firebaseApp = initializeApp({
   apiKey: process.env.FIRESTORE_KEY,
@@ -13,3 +14,5 @@ const firebaseApp = initializeApp({
 });
 
 export const db = getFirestore(firebaseApp);
+
+export const gamesCollection = () => (isProd() ? 'games' : 'games-dev');
