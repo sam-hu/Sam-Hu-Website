@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { Handler } from '@netlify/functions';
 import { doc, getDoc } from 'firebase/firestore';
-import { db, gamesCollection } from '../../shared/firestore';
+import { db, gamesCollection } from '../../shared';
 
 export const handler: Handler = async (event) => {
   try {

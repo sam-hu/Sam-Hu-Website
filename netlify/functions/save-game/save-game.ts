@@ -2,7 +2,7 @@
 import { Handler } from '@netlify/functions';
 import { humanId } from 'human-id';
 import { setDoc, doc } from 'firebase/firestore';
-import { db, gamesCollection } from '../../shared/firestore';
+import { db, gamesCollection } from '../../shared';
 
 export const handler: Handler = async (event) => {
   try {
