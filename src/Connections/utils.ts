@@ -1,4 +1,5 @@
-import { encodeURI, decode } from 'js-base64';
+import axios from 'axios';
+import { decode } from 'js-base64';
 
 export type ConnectionCategory = {
   description: string;
@@ -61,11 +62,10 @@ export const normalizeGame = (game: ConnectionsGame, reset: boolean): Connection
   categories: normalizeCategories(game.categories, reset),
 });
 
-export const generateLink = (game: ConnectionsGame): string => {
+export const generateLink = async (game: ConnectionsGame): Promise<string> => {
   const normalizedGame = normalizeGame(game, true);
-  const jsonString = JSON.stringify(normalizedGame);
-  const encodedBase64String = encodeURI(jsonString);
-  return `/connections/play?game=${encodedBase64String}`;
+  const id = await saveGame(normalizedGame);
+  return `/connections/play?game=${id}`;
 };
 
 export const decodeCategories = (encodedValue: string | null): ConnectionsGame | null => {
@@ -219,6 +219,16 @@ export const getDateString = (offset: number): string => {
 export const toInt = (str: string): number | null => {
   const num = parseInt(str, 10);
   return Number.isNaN(num) ? null : num;
+};
+
+const saveGame = async (game: ConnectionsGame): Promise<string> => {
+  const resp = await axios.post('/.netlify/functions/save-game', game);
+  return resp.data;
+};
+
+export const loadGame = async (id: string): Promise<ConnectionsGame | null> => {
+  const resp = axios.get('/.netlify/functions/load-game', { params: { id } });
+  return (await resp).data;
 };
 
 export const isDebug = (): boolean => {

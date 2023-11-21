@@ -180,6 +180,7 @@ function ConnectionsCreate() {
   const [author, setAuthor] = useState<string>(locationGame?.author);
   const [categories, setCategories] = useState<ConnectionCategories>(locationGame?.categories || defaultCategories);
   const [clearInputs, setClearInputs] = useState(false);
+  const [loadingCreate, setLoadingCreate] = useState(false);
   const navigate = useNavigate();
   const validCategories = validateCategories(categories);
 
@@ -358,11 +359,15 @@ function ConnectionsCreate() {
               disabled={!validCategories}
               onClick={() => {
                 if (validCategories) {
+                  setLoadingCreate(true);
                   const game = { title, author, categories };
-                  const link = generateLink(game);
-                  navigate(link, { state: { backTo: 'edit' } });
+                  generateLink(game).then((link) => {
+                    setLoadingCreate(false);
+                    navigate(link, { state: { backTo: 'edit' } });
+                  });
                 }
               }}
+              loading={loadingCreate}
               type="primary"
             >
               Create puzzle

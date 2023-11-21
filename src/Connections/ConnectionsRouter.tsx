@@ -1,7 +1,7 @@
 import { useLocation, Navigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
-  ConnectionsGame, decodeCategories, isDebug, normalizeGame, toInt, validateCategories,
+  ConnectionsGame, decodeCategories, isDebug, loadGame, normalizeGame, toInt, validateCategories,
 } from './utils';
 import ConnectionsPlay from './ConnectionsPlay';
 import { ConnectionsContext } from './ConnectionsContext';
@@ -12,10 +12,34 @@ function ConnectionsRouter() {
   const { nytConnections, loadedConnections } = useContext(ConnectionsContext);
   const searchParams = new URLSearchParams(location.search);
 
+  const shouldLoadSavedGame = searchParams.get('game')?.split('-').length === 3;
+  const [savedGame, setSavedGame] = useState<ConnectionsGame | null>(null);
+  const [loadingSavedGame, setLoadingSavedGame] = useState(shouldLoadSavedGame);
+
   let game: ConnectionsGame = { categories: [] };
   const urlGame = decodeCategories(searchParams.get('categories') || searchParams.get('game'));
+
+  useEffect(() => {
+    if (!loadingSavedGame) {
+      return;
+    }
+
+    loadGame(searchParams.get('game')!)
+      .then((game) => {
+        if (game) {
+          setSavedGame(game);
+        }
+      })
+      .finally(() => setLoadingSavedGame(false));
+  }, [loadingSavedGame, searchParams]);
+
   if (urlGame) {
     game = urlGame;
+  } else if (shouldLoadSavedGame) {
+    if (loadingSavedGame) {
+      return <LoadingSpinner />;
+    }
+    game = savedGame!;
   } else if (searchParams.has('id')) {
     if (!loadedConnections) {
       return <LoadingSpinner />;
