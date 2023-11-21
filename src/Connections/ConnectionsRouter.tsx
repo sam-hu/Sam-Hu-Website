@@ -12,26 +12,28 @@ function ConnectionsRouter() {
   const { nytConnections, loadedConnections } = useContext(ConnectionsContext);
   const searchParams = new URLSearchParams(location.search);
 
-  const shouldLoadSavedGame = searchParams.get('game')?.split('-').length === 3;
+  const gameId = searchParams.get('game');
+  const shouldLoadSavedGame = gameId?.split('-').length === 3;
   const [savedGame, setSavedGame] = useState<ConnectionsGame | null>(null);
   const [loadingSavedGame, setLoadingSavedGame] = useState(shouldLoadSavedGame);
 
-  let game: ConnectionsGame = { categories: [] };
-  const urlGame = decodeCategories(searchParams.get('categories') || searchParams.get('game'));
+  const urlGame = decodeCategories(searchParams.get('categories') || gameId);
 
   useEffect(() => {
-    if (!loadingSavedGame) {
+    if (!loadingSavedGame || !gameId) {
       return;
     }
 
-    loadGame(searchParams.get('game')!)
+    loadGame(gameId)
       .then((game) => {
         if (game) {
           setSavedGame(game);
         }
       })
       .finally(() => setLoadingSavedGame(false));
-  }, [loadingSavedGame, searchParams]);
+  }, [loadingSavedGame, gameId]);
+
+  let game: ConnectionsGame = { categories: [] };
 
   if (urlGame) {
     game = urlGame;
