@@ -9,29 +9,46 @@ import LoadingSpinner from './Loading';
 
 function ConnectionsRouter() {
   const location = useLocation();
-  const { nytConnections, loadedConnections } = useContext(ConnectionsContext);
+  const { getGame } = useContext(ConnectionsContext);
   const searchParams = new URLSearchParams(location.search);
 
-  const gameId = searchParams.get('game');
-  const shouldLoadSavedGame = gameId?.split('-').length === 3;
+  const savedGameId = searchParams.get('game');
+  const shouldLoadSavedGame = savedGameId?.split('-').length === 3;
   const [savedGame, setSavedGame] = useState<ConnectionsGame | null>(null);
   const [loadingSavedGame, setLoadingSavedGame] = useState(shouldLoadSavedGame);
 
-  const urlGame = decodeCategories(searchParams.get('categories') || gameId);
+  const shouldLoadNytGame = searchParams.has('id');
+  const [nytGame, setNytGame] = useState<ConnectionsGame | null>(null);
+  const [loadingNytGame, setLoadingNytGame] = useState(shouldLoadNytGame);
+
+  const urlGame = decodeCategories(searchParams.get('categories') || savedGameId);
 
   useEffect(() => {
-    if (!loadingSavedGame || !gameId) {
+    if (!shouldLoadSavedGame || !loadingSavedGame || savedGame) {
       return;
     }
 
-    loadGame(gameId)
+    loadGame(savedGameId)
       .then((game) => {
         if (game) {
           setSavedGame(game);
         }
       })
       .finally(() => setLoadingSavedGame(false));
-  }, [loadingSavedGame, gameId]);
+  }, [loadingSavedGame, savedGameId]);
+
+  useEffect(() => {
+    if (!shouldLoadNytGame || !loadingNytGame || nytGame) {
+      return;
+    }
+
+    const id = toInt(searchParams.get('id')!)!;
+    getGame(id)
+      .then((game: ConnectionsGame) => {
+        setNytGame(game);
+      })
+      .finally(() => setLoadingNytGame(false));
+  }, [loadingNytGame, nytGame]);
 
   let game: ConnectionsGame = { categories: [] };
 
@@ -42,12 +59,11 @@ function ConnectionsRouter() {
       return <LoadingSpinner />;
     }
     game = savedGame!;
-  } else if (searchParams.has('id')) {
-    if (!loadedConnections) {
+  } else if (shouldLoadNytGame) {
+    if (loadingNytGame) {
       return <LoadingSpinner />;
     }
-    const id = toInt(searchParams.get('id')!)!;
-    game = nytConnections[id - 1];
+    game = nytGame!;
   } else if (location.state?.game && validateCategories(location.state.game.categories)) {
     game = location.state.game;
   } else if (isDebug()) {

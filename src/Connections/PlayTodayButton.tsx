@@ -45,10 +45,7 @@ function PlayTodayButton({ style, backTo }: { style?: React.CSSProperties, backT
             Today's puzzle
           </div>
           <div>
-            {getDateString(today)}
-            {' '}
-            - #
-            {today + 1}
+            {`#${today + 1} - ${getDateString(today)}`}
           </div>
         </div>
       </div>

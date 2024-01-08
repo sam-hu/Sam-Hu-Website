@@ -210,11 +210,13 @@ export const formatDate = (date: Date): string => date.toLocaleDateString('en-US
   year: 'numeric',
 });
 
-export const getDateString = (offset: number): string => {
+export const getDateByOffset = (offset: number): Date => {
   const newDate = new Date(FIRST_DAY);
   newDate.setDate(FIRST_DAY.getDate() + offset);
-  return formatDate(newDate);
+  return newDate;
 };
+
+export const getDateString = (offset: number): string => formatDate(getDateByOffset(offset));
 
 export const toInt = (str: string): number | null => {
   const num = parseInt(str, 10);
