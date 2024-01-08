@@ -16,10 +16,10 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    const connections = await GetAndParseGame(toInt(payload)!);
+    const game = await GetAndParseGame(toInt(payload)!);
     return {
       statusCode: 200,
-      body: JSON.stringify(connections),
+      body: JSON.stringify(game),
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {

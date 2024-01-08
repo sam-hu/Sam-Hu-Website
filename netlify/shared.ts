@@ -28,8 +28,6 @@ export type NYTPuzzle = {
   startingGroups: string[][];
 };
 
-export type NYTPuzzles = NYTPuzzle[];
-
 export const ParseGame = (nytData: NYTPuzzle): ConnectionsGame => {
   const connectionGame: ConnectionsGame = { categories: [] };
   for (const groupName in nytData.groups) {
