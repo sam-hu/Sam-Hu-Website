@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { ConnectionCategory, ConnectionsGame } from '../src/Connections/utils';
 
 const firebaseApp = initializeApp({
   apiKey: process.env.FIRESTORE_KEY,
@@ -16,3 +17,29 @@ export const db = getFirestore(firebaseApp);
 export const gamesCollection = () => (isProd() ? 'games' : 'games-dev');
 
 export const isProd = () => process.env.ENV === 'prod';
+
+export type NYTGroup = {
+  level: 0 | 1 | 2 | 3;
+  members: string[];
+};
+
+export type NYTPuzzle = {
+  groups: { [groupName: string]: NYTGroup; };
+  startingGroups: string[][];
+};
+
+export type NYTPuzzles = NYTPuzzle[];
+
+export const ParseGame = (nytData: NYTPuzzle): ConnectionsGame => {
+  const connectionGame: ConnectionsGame = { categories: [] };
+  for (const groupName in nytData.groups) {
+    const group = nytData.groups[groupName];
+    const category: ConnectionCategory = {
+      description: groupName,
+      id: group.level,
+      words: group.members,
+    };
+    connectionGame.categories.push(category);
+  }
+  return { categories: connectionGame.categories.sort((a, b) => a.id - b.id) };
+};

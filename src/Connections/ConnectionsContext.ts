@@ -2,13 +2,11 @@ import React, { createContext } from 'react';
 import { ConnectionsGame } from './utils';
 
 type ConnectionsContextType = {
-  nytConnections: ConnectionsGame[];
-  loadedConnections: boolean;
+  getGame: (id: number) => Promise<ConnectionsGame>;
 };
 
 export const ConnectionsContext = createContext<ConnectionsContextType>({
-  nytConnections: [],
-  loadedConnections: false,
+  getGame: async () => Promise.resolve({ categories: [] }),
 });
 
 export type ConnectionsProviderProps = {

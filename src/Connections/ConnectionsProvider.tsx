@@ -29,7 +29,15 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
       .finally(() => { setLoadedConnections(true); });
   }, [loadedConnections]);
 
-  const connectionsValue = useMemo(() => ({ nytConnections, loadedConnections }), [nytConnections, loadedConnections]);
+  const getGame = async (id: number): Promise<ConnectionsGame> => {
+    if (id <= nytConnections.length) {
+      return nytConnections[id - 1];
+    }
+
+    return (await axios.post('/.netlify/functions/parse-nyt-by-id', id)).data;
+  };
+
+  const connectionsValue = useMemo(() => ({ getGame }), [nytConnections, loadedConnections]);
 
   return (
     <ConnectionsContext.Provider value={connectionsValue}>

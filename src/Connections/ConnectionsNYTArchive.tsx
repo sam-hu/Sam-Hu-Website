@@ -1,18 +1,14 @@
-import { useContext } from 'react';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Title from 'antd/es/typography/Title';
 import { BookOutlined, CheckCircleFilled, HourglassOutlined } from '@ant-design/icons';
-import { ConnectionsContext } from './ConnectionsContext';
 import ConnectionsMenu from './ConnectionsMenu';
 import {
   getDateString, getPuzzleStates, getTodayOffset, isSolved,
 } from './utils';
-import LoadingSpinner from './Loading';
 import PlayTodayButton from './PlayTodayButton';
 
 function ConnectionsNYTArchive() {
-  const { nytConnections, loadedConnections } = useContext(ConnectionsContext);
   const navigate = useNavigate();
   const today = getTodayOffset();
   const puzzleStates = getPuzzleStates();
@@ -28,12 +24,12 @@ function ConnectionsNYTArchive() {
     return null;
   };
 
-  const contents = !loadedConnections
-    ? <LoadingSpinner />
-    : nytConnections.slice(0, today).map((_, index) => {
+  const gameButtons = () => {
+    const buttons = [];
+    for (let index = 0; index < today; index++) {
       const id = index + 1;
       const buttonText = `#${id} - ${getDateString(index)}`;
-      return (
+      buttons.push(
         <Button
           style={{
             marginBottom: '12px',
@@ -57,9 +53,11 @@ function ConnectionsNYTArchive() {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
             {progressIcon(id)}
           </div>
-        </Button>
+        </Button>,
       );
-    }).reverse();
+    }
+    return buttons.reverse();
+  };
 
   return (
     <>
@@ -82,7 +80,7 @@ function ConnectionsNYTArchive() {
 
           <div style={{ borderBottom: '1px solid #d9d9d9', marginTop: '12px', marginBottom: '24px' }} />
 
-          {contents}
+          {gameButtons()}
         </div>
       </div>
     </>

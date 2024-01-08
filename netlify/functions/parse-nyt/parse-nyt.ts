@@ -1,7 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import { Handler } from '@netlify/functions';
 import axios from 'axios';
-import { ConnectionsGame, ConnectionCategory } from '../../../src/Connections/utils';
+import { ConnectionsGame } from '../../../src/Connections/utils';
+import { NYTPuzzles, ParseGame } from '../../shared';
 
 export const handler: Handler = async () => {
   try {
@@ -24,34 +25,4 @@ const GetAndParseNYTConnections = async (): Promise<ConnectionsGame[]> => {
   return ParseNYTConnections(response.data);
 };
 
-type NYTGroup = {
-  level: 0 | 1 | 2 | 3;
-  members: string[];
-};
-
-type NYTPuzzle = {
-  groups: { [groupName: string]: NYTGroup; };
-  startingGroups: string[][];
-};
-
-type NYTPuzzlesData = NYTPuzzle[];
-
-const ParseNYTConnections = (nytData: NYTPuzzlesData): ConnectionsGame[] => {
-  const parsedConnections: ConnectionsGame[] = [];
-
-  for (const item of nytData) {
-    const connectionGame: ConnectionsGame = { categories: [] };
-    for (const groupName in item.groups) {
-      const group = item.groups[groupName];
-      const category: ConnectionCategory = {
-        description: groupName,
-        id: group.level,
-        words: group.members,
-      };
-      connectionGame.categories.push(category);
-    }
-    parsedConnections.push({ categories: connectionGame.categories.sort((a, b) => a.id - b.id) });
-  }
-
-  return parsedConnections;
-};
+const ParseNYTConnections = (nytData: NYTPuzzles): ConnectionsGame[] => nytData.map((game) => ParseGame(game));
