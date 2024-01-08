@@ -6,7 +6,7 @@ type ConnectionsContextType = {
 };
 
 export const ConnectionsContext = createContext<ConnectionsContextType>({
-  getGame: async () => Promise.resolve({ categories: [] }),
+  getGame: () => Promise.resolve({ categories: [] }),
 });
 
 export type ConnectionsProviderProps = {

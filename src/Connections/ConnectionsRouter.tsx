@@ -24,7 +24,7 @@ function ConnectionsRouter() {
   const urlGame = decodeCategories(searchParams.get('categories') || savedGameId);
 
   useEffect(() => {
-    if (!loadingSavedGame || !savedGameId) {
+    if (!shouldLoadSavedGame || !loadingSavedGame || savedGame) {
       return;
     }
 
@@ -38,7 +38,7 @@ function ConnectionsRouter() {
   }, [loadingSavedGame, savedGameId]);
 
   useEffect(() => {
-    if (!loadingNytGame || nytGame) {
+    if (!shouldLoadNytGame || !loadingNytGame || nytGame) {
       return;
     }
 
