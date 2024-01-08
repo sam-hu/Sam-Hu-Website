@@ -102,7 +102,7 @@ function ConnectionsPlay({ game, backTo, debug }: { game: ConnectionsGame, backT
   // Save puzzleState to localStorage when categoriesState or guesses change
   useEffect(() => {
     if (id) {
-      setPuzzleState(id, guesses, categoriesState);
+      setPuzzleState(id, normalizeGame(game, true), guesses, categoriesState);
     }
   }, [categoriesState, guesses]);
 

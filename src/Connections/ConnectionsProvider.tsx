@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import { ConnectionsProviderProps, ConnectionsContext } from './ConnectionsContext';
-import { ConnectionsGame } from './utils';
+import { ConnectionsGame, getPuzzleState } from './utils';
 import './connections.scss';
 
 function ConnectionsProvider({ children }: ConnectionsProviderProps) {
@@ -30,6 +30,11 @@ function ConnectionsProvider({ children }: ConnectionsProviderProps) {
   }, [loadedConnections]);
 
   const getGame = async (id: number): Promise<ConnectionsGame> => {
+    const cachedPuzzle = getPuzzleState(id.toString());
+    if (cachedPuzzle?.game) {
+      return cachedPuzzle.game;
+    }
+
     if (id <= nytConnections.length) {
       return nytConnections[id - 1];
     }

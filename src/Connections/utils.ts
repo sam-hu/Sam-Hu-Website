@@ -155,6 +155,7 @@ export const BODIED_TEXTS = ['Damn bruh 💀', 'Down bad 😔', 'Try harder', 'S
 const PUZZLE_STATES_KEY = 'puzzle_states';
 
 type PuzzleState = {
+  game?: ConnectionsGame,
   categoriesState?: CategoriesState,
   guesses?: RecordedGuess[],
 };
@@ -177,22 +178,23 @@ export const getPuzzleState = (id: string): PuzzleState => {
   return {};
 };
 
+export const setPuzzleState = (id: string, game: ConnectionsGame, guesses?: RecordedGuess[], categoriesState?: CategoriesState): void => {
+  const puzzleStates = getPuzzleStates();
+  const puzzleState = puzzleStates[id];
+  puzzleStates[id] = {
+    game,
+    guesses: guesses || puzzleState.guesses,
+    categoriesState: categoriesState || puzzleState.categoriesState,
+  };
+  window.localStorage.setItem(PUZZLE_STATES_KEY, JSON.stringify(puzzleStates));
+};
+
 export const isSolved = (categoriesState?: CategoriesState): boolean => {
   if (!categoriesState) {
     return false;
   }
 
   return Object.values(categoriesState).every((category) => category.solved);
-};
-
-export const setPuzzleState = (id: string, guesses?: RecordedGuess[], categoriesState?: CategoriesState): void => {
-  const puzzleStates = getPuzzleStates();
-  const puzzleState = puzzleStates[id];
-  puzzleStates[id] = {
-    guesses: guesses || puzzleState.guesses,
-    categoriesState: categoriesState || puzzleState.categoriesState,
-  };
-  window.localStorage.setItem(PUZZLE_STATES_KEY, JSON.stringify(puzzleStates));
 };
 
 const FIRST_DAY = new Date(2023, 5, 12);
