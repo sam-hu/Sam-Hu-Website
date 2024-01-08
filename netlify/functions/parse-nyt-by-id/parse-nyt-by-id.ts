@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import { Handler } from '@netlify/functions';
 import axios from 'axios';
+import moment from 'moment';
 import {
   ConnectionsGame, getDateByOffset, toInt,
 } from '../../../src/Connections/utils';
@@ -32,7 +33,7 @@ export const handler: Handler = async (event) => {
 
 const GetAndParseGame = async (id: number): Promise<ConnectionsGame> => {
   const date = getDateByOffset(id - 1);
-  const formattedDate = date.toISOString().substring(0, 10);
+  const formattedDate = moment(date).format('YYYY-MM-DD');
   const response = await axios.get(`https://www.nytimes.com/svc/connections/v1/${formattedDate}.json`);
   return ParseGame(response.data);
 };
