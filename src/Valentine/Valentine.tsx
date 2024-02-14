@@ -39,13 +39,34 @@ function Valentine(): JSX.Element {
     <button
       type="button"
       style={{
-        width: '144px', height: '48px', margin: '0 24px', fontSize: '16px',
+        width: '144px', height: '48px', margin: '0 24px', fontSize: '16px', zIndex: 100,
       }}
       onClick={handleClick}
     >
       Yes
     </button>
   );
+
+  if (window.innerWidth < 768) {
+    return (
+      <div style={{
+        color: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        verticalAlign: 'middle',
+        justifyContent: 'center',
+        height: '100vh',
+        backgroundColor: 'pink',
+        overflow: 'hidden',
+        position: 'relative',
+        fontSize: '24px',
+      }}
+      >
+        Come back on desktop!
+      </div>
+    );
+  }
 
   return (
     <div style={{
@@ -192,7 +213,7 @@ function Valentine(): JSX.Element {
       />
 
       <div style={{
-        fontSize: '24px', margin: '24px', fontWeight: 'bold', textShadow: '1px 1px 1px rgba(0, 0, 0, 0.5)',
+        fontSize: '24px', margin: '24px', fontWeight: 'bold', textShadow: '1px 1px 1px rgba(0, 0, 0, 0.5)', zIndex: 100,
       }}
       >
         Emi, will you be my valentine?
